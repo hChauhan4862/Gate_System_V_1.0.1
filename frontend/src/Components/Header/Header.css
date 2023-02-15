@@ -1,0 +1,157 @@
+.header{
+    background: linear-gradient(45deg, #623AA2, #9853af);
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    margin-left: 200px;
+    transition: all 300ms ease;
+}
+
+.header-toggled{
+    margin-left: 60px;
+    transition: all 300ms ease;
+}
+
+.menu-icon{
+    cursor: pointer;
+    float: left;
+    padding: 15px;
+    color:#fff;
+}
+
+.search-btn {
+    padding: 10px 0px;
+    color: #fff;
+}
+
+
+.first-half {
+    width: 50%;
+    float: left;
+}
+
+.second-half {
+    width: 50%;
+    float: left;
+}
+
+#desktop-timer {
+
+}
+
+.timer {
+    position: fixed;
+    right: 200px;
+    background: #03000036;
+    color: #fff;
+    padding: 0px 16px;
+}
+
+.time-icon {
+    float: left;
+    padding-top: 4px;
+}
+
+.time-icon img{
+    width: 42px;
+}
+
+.main-time {
+    float: left;
+    font-size: 26px;
+    font-weight: 800;
+    padding: 8px 10px 2px 8px;
+}
+
+.main-time span {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.main-date {
+    float: left;
+    text-transform: uppercase;
+    text-align: right;
+}
+
+.main-date h5 {
+    margin-bottom: 2px;
+    margin-top: 4px;
+    font-weight: 700;
+    color: #fcdc1b;
+}
+
+
+.main-date h6 {
+    margin: 0;
+    font-size: 12px;
+    
+}
+
+.navbar {
+    
+}
+
+.top-header-list {
+    float: right;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    z-index: -1;
+}
+
+ul.top-header-list {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.top-header-list li {
+    list-style: none;
+    float: left;
+    color: #fff;
+}
+
+ul.top-header-list li a {
+    color: #fff;
+    margin: 13px;
+    display: block;
+}
+
+
+
+@media screen and (max-width: 690px) {
+
+    .timer {
+        padding: 10px;
+        background:linear-gradient(45deg, #623AA2, #9853af);
+        overflow: auto;
+        border-radius: 5px;
+    }
+
+    .main-time {
+        font-size: 22px;
+        padding:13px 10px 0px 8px;
+    }
+    .time-icon img {
+        width: 35px;
+    }
+    #desktop-timer {
+        display: none;
+    }
+
+    .main-date h5 {
+        font-size: 19px;
+    }
+
+    #mobile-timer {
+        position:initial;
+         width: 100%;
+    }
+}
+
+@media screen and (min-width: 690px) { 
+    #mobile-timer {
+        display: none;
+    }
+}

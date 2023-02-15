@@ -1,0 +1,86 @@
+
+#main-body {
+    position: absolute;
+    left: 200px;
+    top: 50px;
+    right: 0px;
+    padding: 10px;
+    transition: all 300ms ease;
+    z-index: -2;
+}
+
+
+
+.main-body-toggle {
+    left:60px !important;
+    transition: all 300ms ease;
+}
+
+
+
+.edit{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.delete{
+    text-decoration: none;
+    cursor: pointer;
+    color:red;
+}
+.map{
+    text-decoration: none;
+    cursor: pointer;
+    color:blue
+}
+
+.device-list {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.device-list ul {
+    margin: 0px;
+    padding:0px;
+}
+
+.device-list li {
+    list-style: none;
+    padding: 10px 10px 10px 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.device-list li:last-child {
+    border-bottom: none;    
+}
+
+.device-list li span {
+
+
+}
+
+.device-list li span i{
+    color: green;
+
+}
+
+.list-status {
+    margin-right: 10px;
+}
+
+.list-status i{
+    font-size: 11px;
+}
+
+.add-list{
+    float: right;
+    cursor: pointer;
+
+}
+
+.refresh-list{
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+}

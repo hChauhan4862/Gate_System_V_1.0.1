@@ -1,0 +1,29 @@
+
+#main-body {
+    position: absolute;
+    left: 200px;
+    top: 50px;
+    right: 0px;
+    padding: 10px;
+    transition: all 300ms ease;
+    z-index: -2;
+}
+
+
+
+.main-body-toggle {
+    left:60px !important;
+    transition: all 300ms ease;
+}
+
+.edit{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.delete{
+    text-decoration: none;
+    cursor: pointer;
+    color:red;
+}

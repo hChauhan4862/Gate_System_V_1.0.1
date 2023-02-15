@@ -1,0 +1,119 @@
+.sidebar{
+    width:200px;
+    height:100vh;
+    background-color: #ffffff;
+    position: fixed;
+    box-shadow:0px 0px 14px 5px #21212114;
+    border-right: 1px solid #eaeaea;
+    transition: all 300ms ease;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.sidebar .logo {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo a {
+    text-decoration: none;
+    color:black;
+}
+
+.sidebar .logo img {
+    width: 40px;
+}
+
+.sidebar .logo span {
+    
+}
+
+.sidebar .logo span img {
+    width: 100px;
+    margin-left: 8px;
+}
+
+.sidebar .toggle-btn {
+    float: right;
+    padding: 22px 16px;
+}
+
+/* if toggler button clicked than width will be */
+.sidebar.toggled {
+    width: 60px;
+    transition: all 300ms ease;
+}
+
+.sidebar.toggled:hover {
+    width: 200px;
+}
+
+.logo-text-toggle {
+    display: none;
+}
+
+.navbar-list {
+    float: left;
+    width: 100%;
+}
+
+.navbar-list ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar-list li a {
+    display: block;
+    transition: all 500ms ease;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 500;
+    color: #4f5366;
+    float: left;
+    text-transform: uppercase;
+    padding: 14px 15px;
+    border-top: 1px solid #eee;
+    text-decoration: none;
+}
+
+.navbar-list li a.active {
+    background:linear-gradient(45deg, #623AA2, #9853af);
+    border-left: 7px solid #a79cdf;
+    color: #fff;
+}
+
+.navbar-list li a.active i {
+    color: #fff;
+    margin-left: 2px;
+}
+
+
+.navbar-list li span {
+    /* display: none; */
+    
+}
+
+.navbar-list li i {
+    color: #423c3c;
+    font-size: 16px;
+    float: left;
+    margin-right: 12px;
+    margin-left: 7px;
+}
+
+.navbar-list li a:hover {
+    background: linear-gradient(45deg, #623AA2, #9853af);
+    color:#fff;
+    transition: all 500ms ease;
+}
+
+.navbar-list li a:hover i {
+    color:#fff;
+}
+
+.menu-item-toggle {
+    display: none;
+  
+}

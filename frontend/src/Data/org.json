@@ -1,0 +1,292 @@
+[
+    {
+        "id": 1,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "Life Insurance Corporation of India",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 3,
+        "name": "Reliance Industries Ltd.",
+        "c_adress": "Australia",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 4,
+        "name": "Indian Oil Corporation Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 5,
+        "name": "Oil And Natural Gas Corporation Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 6,
+        "name": "State Bank of India",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 7,
+        "name": "Hindustan Petroleum Corporation Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 8,
+        "name": "Bharat Petroleum Corporation Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 9,
+        "name": "Tata Motors Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 10,
+        "name": "Tata Steel Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 11,
+        "name": "ARajesh Exports Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 12,
+        "name": "Hindalco Industries Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 13,
+        "name": "Tata Consultancy Services Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 14,
+        "name": "HDFC Bank Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 15,
+        "name": "Larsen & Toubro Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 16,
+        "name": "ICICI Bank Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Deactive"
+    },
+    {
+        "id": 17,
+        "name": "JSW Steel Ltd.",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 18,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 19,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 20,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 21,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 22,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 23,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 24,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 25,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 26,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 27,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Active"
+    },
+    {
+        "id": 28,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Deactive"
+    },
+    {
+        "id": 29,
+        "name": "Wise Neosco India Pvt Ltd",
+        "c_adress": "India",
+        "contact": "9876543210",
+        "contact_person": "Rajesh",
+        "description": "This is a description of the company",
+        "email": "abc@wise.com",
+        "status": "Deactive"
+    }
+]

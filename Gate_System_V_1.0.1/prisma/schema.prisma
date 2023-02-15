@@ -1,0 +1,228 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//migration command :: npx prisma generate client
+//migration command :: npx prisma migrate dev --name init
+
+  // url      = "mysql://gate_system_v_1_0_1:Wise123@141.148.200.98:3306/gate_system_v_1_0_1"
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./generated/mysql-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url = "mysql://root:@localhost:3306/gate_system_v_1.0.0"
+}
+
+
+model organization{
+  id              Int       @default(autoincrement())
+  name            String    @db.VarChar(100)
+  address         String    @db.VarChar(255)
+  contact_no      String    @db.VarChar(50)
+  contact_person  String    @db.VarChar(100)
+  description     String    @db.VarChar(255)
+  // logo_image      Bytes?      @db.VarBinary(255)
+  email           String?    @db.VarChar(100)
+  isActive        Boolean    @default(true)
+  updatedAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+
+  @@id([id])
+  org_group organization_group[]
+  user user[]
+  user_group user_group[]
+  doors doors[]
+  // devices devices[]
+  device_log device_log[]
+  students students[]
+}
+
+// 1.2.	orgaization group
+model organization_group{
+  id              Int       @default(autoincrement())
+  org  organization @relation(fields: [org_id], references: [id])
+  org_id          Int    
+  name            String    @db.VarChar(100)
+  description     String    @db.VarChar(255)
+  isActive        Boolean   @default(true)
+  updatedAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@id([id])
+}
+
+model user{
+  id              Int       @default(autoincrement())
+  org_id          Int       
+  org organization @relation(fields: [org_id], references: [id])
+  name            String    @db.VarChar(100)
+  email           String    @db.VarChar(100)
+  password        String    @db.VarChar(100)
+  phone_no        String    @db.VarChar(50)
+  address         String    @db.VarChar(255)
+  description     String    @db.VarChar(255)
+  user_img String? @db.LongText
+  user_group_id   Int?      @db.Int
+  rfid_card_id         Int?      @db.Int
+  rfid_card   rfid_card?   @relation(fields: [rfid_card_id], references: [id])
+  user_group user_group?   @relation(fields: [user_group_id], references: [id])
+  isActive        Boolean?   @default(true)
+  updatedAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@id([id ])
+  @@unique([id, rfid_card_id])
+  device_log device_log[]
+}
+
+model user_group{
+  id              Int       @default(autoincrement())
+  org_id          Int
+  org organization @relation(fields: [org_id], references: [id])
+  group_name      String    @db.VarChar(100)
+  permission_id   Int
+  permission permission @relation(fields: [permission_id], references: [id])
+  isActive        Boolean?   @default(true)
+  updatedAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@id([id])
+  user user[]
+  students students[]
+}
+
+model permission{
+  id              Int       @default(autoincrement())
+  name            String    @db.VarChar(100)
+  description     String    @db.VarChar(255)
+  isActive        Boolean?   @default(true)
+  updatedAt       DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@id([id])
+  user_group user_group[]
+}
+
+model doors{
+  id            Int       @default(autoincrement())
+  org_id        Int
+  org organization @relation(fields: [org_id], references: [id])
+  name          String    @db.VarChar(100)
+  description   String    @db.VarChar(255)
+  door_no       String    @db.VarChar(50)
+  isActive      Boolean?   @default(true)
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@id([id])
+  device_log device_log[]
+  // devices devices[]
+  devices_setup devices_setup[]
+  
+}
+
+model device_type{
+  id            Int       @default(autoincrement())
+  name          String    @db.VarChar(100)
+  description   String    @db.VarChar(255)
+  operation    String    @db.VarChar(50)
+  isActive      Boolean?   @default(true)
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@id([id])
+  // devices devices[]
+  devices_setup devices_setup[]
+}
+
+model device_log{
+  id            Int       @default(autoincrement())
+  org_id        Int
+  org organization @relation(fields: [org_id], references: [id])
+  // device_id     Int
+  // device devices @relation(fields: [device_id], references: [id])
+  door_id       Int
+  door doors @relation(fields: [door_id], references: [id])
+  user_id       Int
+  user user @relation(fields: [user_id], references: [id])
+  log_type      String    @db.VarChar(50)
+  log_date      DateTime?
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@id([id])
+}
+
+
+
+model commands{
+  id            Int       @default(autoincrement())
+  name      String    @db.VarChar(100)
+  command_value   String    @db.VarChar(100)
+  description   String    @db.VarChar(255)
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  @@id([id])
+
+}
+
+
+model rfid_card{
+  id            Int       @default(autoincrement())
+  card_no      String    @db.VarChar(100)
+  description   String    @db.VarChar(255)
+  isActive    Boolean   @default(true)
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@id([id])
+  user user[]
+  students students[]
+}
+
+
+model devices_setup{
+  id            Int       @default(autoincrement())
+  friendlyName  String    @db.VarChar(100)
+  locationId  String?    @db.VarChar(100)
+  manufacturer  String    @db.VarChar(100)
+  path  String    @db.VarChar(100)
+  pnpId  String    @db.VarChar(100)
+  productId String?    @db.VarChar(100)
+  serialNumber String?    @db.VarChar(100)
+  vendorId String?    @db.VarChar(100)
+  devicesType Int?
+  device_type device_type? @relation(fields: [devicesType], references: [id])
+  door_id       Int?
+  door doors? @relation(fields: [door_id], references: [id])
+  isActive    Boolean   @default(true)
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  @@id([id])
+}
+
+
+model students{
+  id            Int       @default(autoincrement())
+  org_id        Int?      @db.Int
+  student_id    String    @db.VarChar(100)
+  name          String    @db.VarChar(100)
+  email         String    @db.VarChar(100)
+  phone         String    @db.VarChar(100)
+  address       String    @db.VarChar(255)
+  isActive      Boolean?   @default(true)
+  barcode       String?    
+  user_group_id   Int?      
+  rfid_card_id    Int?      
+  updatedAt     DateTime?
+  createdAt     DateTime  @default(now())     
+  org organization? @relation(fields: [org_id], references: [id])
+  user_group user_group?   @relation(fields: [user_group_id], references: [id])
+  rfid_card   rfid_card?   @relation(fields: [rfid_card_id], references: [id])
+
+  @@id([id])
+}
