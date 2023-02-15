@@ -1,2 +1,5 @@
-src/node_module
-frontend/node_module
+Gate_System_V_1.0.1/node_modules
+Gate_System_V_1.0.1/package-lock.json
+
+frontend/node_modules
+frontend/package-lock.json

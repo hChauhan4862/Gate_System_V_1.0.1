@@ -278,7 +278,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Test Frontend\\byHari_formated\\WISE PROJECT-HC\\Gate_System_V_1.0.1\\prisma\\generated\\mysql-client",
+      "value": "E:\\WISE PROJECT-HC\\Gate_System_V_1.0.1\\prisma\\generated\\mysql-client",
       "fromEnvVar": null
     },
     "config": {
@@ -289,8 +289,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "..\\..\\..\\.env",
-    "schemaEnvPath": "..\\..\\..\\.env"
+    "rootEnvPath": null
   },
   "relativePath": "..\\..",
   "clientVersion": "4.10.1",
