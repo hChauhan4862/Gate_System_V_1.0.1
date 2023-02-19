@@ -41,8 +41,11 @@
     "http-error": "^0.0.6",
     "http-status": "^1.6.2",
     "joi": "^17.7.1",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
-    "serialport": "^10.5.0"
+    "mysql": "^2.18.1",
+    "serialport": "^10.5.0",
+    "sqlite": "^4.1.2"
   },
   "devDependencies": {
     "builder": "^5.0.0",

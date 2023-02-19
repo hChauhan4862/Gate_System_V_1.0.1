@@ -222,7 +222,7 @@ const issueCard = async(req, res) => {
                     });
 
                     serialPort.on("readable", () => {
-                        console.log(data);
+                        // console.log(data);
                         setTimeout(() => {
                             data = serialPort.read();
                         if(data){
@@ -260,6 +260,13 @@ const issueCard = async(req, res) => {
                                         };
                                         res.status(httpStatus.OK).send(message)
                                         setTimeout(() => {
+                                            serialPort.close((err) => {
+                                                if (err) {
+                                                    return console.log("Error closing port: ", err.message);
+                                                }
+                                                console.log("Port closed");
+                                            });
+                                            
                                         serialPort.on("close", () => {
                                             console.log("Port closed");
                                         });
@@ -286,6 +293,12 @@ const issueCard = async(req, res) => {
 
                     serialPort.on("error", (err) => {
                         console.log("Error: ", err.message);
+                    });
+                    serialPort.close((err) => {
+                        if (err) {
+                            return console.log("Error closing port: ", err.message);
+                        }
+                        console.log("Port closed");
                     });
             }
 

@@ -5,7 +5,8 @@ let DB_URL = wnConfig('DATABASE_URL') || process.env.DATABASE_URL;
 
 
 PROVIDER = (DB_URL==="") ? "SQLITE" : PROVIDER;
-DB_URL   = (DB_URL==="") ? "sqlite:///C:/database.sqlite" : DB_URL;
+// DB_URL   = (DB_URL==="") ? "sqlite:///C:/database.sqlite" : DB_URL;
+DB_URL   = (DB_URL==="") ? "file:/Users/database.sqlite" : DB_URL;
 let prisma = null;
 
 // const { PrismaClient } = require("../prisma/generated/mysql-client");
@@ -32,7 +33,6 @@ else {
     const { PrismaClient } = require("../prisma/generated/sqlite-client");
     prisma = new PrismaClient(DB_OBJ);
 }
-
 
 
 module.exports = {

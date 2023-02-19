@@ -5,14 +5,15 @@ const fs = require('fs');
 CONFIG_DIR = app.getPath('userData') + '/wnc.dll';
 LEGAL_KEYS_VALUES = {
     "APP_PASSWORD" : "",
-    "DB_PROVIDER" : "",
+    "DB_PROVIDER" : "MYSQL",
     "DB_HOST" : "",
     "DB_USER" : "",
     "DB_PASSWORD" : "",
     "DB_NAME" : "",
     "DB_PORT" : "",
     "DATABASE_URL" : "",
-    "SERVER_HOST" : "0.0.0.0",
+    "SERVER_HOST_TYPE" : "myNetwork",
+    "SERVER_HOST" : "",
     "SERVER_PORT" : "8082",
 }
 
@@ -38,13 +39,14 @@ const wnConfig = (k,v) => {
         let FINAL = decrypted.toString();
         config = JSON.parse(FINAL);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 
     if(!k){
         return config;
     }
-    if(!v) {
+    // check if v is null or undefined
+    if ((typeof v === 'undefined' || v === null)) {
         try {
             return config[k] || null;
         } catch (error) {

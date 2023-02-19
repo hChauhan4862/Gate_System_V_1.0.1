@@ -1,6 +1,3 @@
-module.exports.managerController = require("./manager.controller");
-module.exports.managerGroupController = require("./managerGroup.controller");
-module.exports.nameGroupMstController = require("./nameGroupMst.controller");
 module.exports.organizationController = require("./organization.controller");
 module.exports.orgGroupController = require("./orgGroup.controller");
 module.exports.userController = require('./user.controller');
@@ -15,3 +12,4 @@ module.exports.rfidController = require('./rfid_card.controller');
 module.exports.portsController = require('./ports.controller');
 module.exports.devicesSetupController = require('./devicesSetup.controller');
 module.exports.studentsController = require('./students.controller');
+module.exports.logController = require('./log.controller')

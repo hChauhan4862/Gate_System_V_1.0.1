@@ -98,17 +98,6 @@ exports.Prisma.CommandsScalarFieldEnum = makeEnum({
   createdAt: 'createdAt'
 });
 
-exports.Prisma.Device_logScalarFieldEnum = makeEnum({
-  id: 'id',
-  org_id: 'org_id',
-  door_id: 'door_id',
-  user_id: 'user_id',
-  log_type: 'log_type',
-  log_date: 'log_date',
-  updatedAt: 'updatedAt',
-  createdAt: 'createdAt'
-});
-
 exports.Prisma.Device_typeScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -143,6 +132,22 @@ exports.Prisma.DoorsScalarFieldEnum = makeEnum({
   description: 'description',
   door_no: 'door_no',
   isActive: 'isActive',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+});
+
+exports.Prisma.Inout_logScalarFieldEnum = makeEnum({
+  id: 'id',
+  organization: 'organization',
+  org_id: 'org_id',
+  devicePort: 'devicePort',
+  device_id: 'device_id',
+  doorNo: 'doorNo',
+  door_id: 'door_id',
+  studentName: 'studentName',
+  student_id: 'student_id',
+  operation: 'operation',
+  log_date: 'log_date',
   updatedAt: 'updatedAt',
   createdAt: 'createdAt'
 });
@@ -252,7 +257,7 @@ exports.Prisma.ModelName = makeEnum({
   permission: 'permission',
   doors: 'doors',
   device_type: 'device_type',
-  device_log: 'device_log',
+  inout_log: 'inout_log',
   commands: 'commands',
   rfid_card: 'rfid_card',
   devices_setup: 'devices_setup',

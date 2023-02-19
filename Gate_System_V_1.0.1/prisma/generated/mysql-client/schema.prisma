@@ -6,6 +6,9 @@
 
   // url      = "mysql://gate_system_v_1_0_1:Wise123@141.148.200.98:3306/gate_system_v_1_0_1"
 
+
+
+// **********************************MYSQL**********************************
 generator client {
   provider = "prisma-client-js"
   output = "./generated/mysql-client"
@@ -15,6 +18,7 @@ datasource db {
   provider = "mysql"
   url = "mysql://root:@localhost:3306/gate_system_v_1.0.0"
 }
+
 
 
 model organization{
@@ -37,7 +41,7 @@ model organization{
   user_group user_group[]
   doors doors[]
   // devices devices[]
-  device_log device_log[]
+  inout_log inout_log[]
   students students[]
 }
 
@@ -76,7 +80,7 @@ model user{
 
   @@id([id ])
   @@unique([id, rfid_card_id])
-  device_log device_log[]
+
 }
 
 model user_group{
@@ -119,7 +123,7 @@ model doors{
   createdAt     DateTime  @default(now())
 
   @@id([id])
-  device_log device_log[]
+  inout_log inout_log[]
   // devices devices[]
   devices_setup devices_setup[]
   
@@ -139,18 +143,21 @@ model device_type{
   devices_setup devices_setup[]
 }
 
-model device_log{
+model inout_log{
   id            Int       @default(autoincrement())
+  organization  String?    @db.VarChar(100)
   org_id        Int
   org organization @relation(fields: [org_id], references: [id])
-  // device_id     Int
-  // device devices @relation(fields: [device_id], references: [id])
+  devicePort       String?    @db.VarChar(100)
+  device_id     Int?     @db.Int
+  doorNo         String?    @db.VarChar(100)
   door_id       Int
   door doors @relation(fields: [door_id], references: [id])
-  user_id       Int
-  user user @relation(fields: [user_id], references: [id])
-  log_type      String    @db.VarChar(50)
-  log_date      DateTime?
+  studentName    String?    @db.VarChar(100)
+  student_id       Int
+  students students @relation(fields: [student_id], references: [id])
+  operation     String    @db.VarChar(50)
+  log_date      DateTime  @default(now())
   updatedAt     DateTime?
   createdAt     DateTime  @default(now())
 
@@ -225,4 +232,229 @@ model students{
   rfid_card   rfid_card?   @relation(fields: [rfid_card_id], references: [id])
 
   @@id([id])
+  inout_log inout_log[]
 }
+
+
+
+
+
+
+
+// ***************************************SQLITE***************************************
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "./generated/sqlite-client"
+// }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:/Users/database.sqlite"
+// }
+
+// model organization {
+//   id             Int                  @default(autoincrement())
+//   name           String
+//   address        String
+//   contact_no     String
+//   contact_person String
+//   description    String
+//   // logo_image      Bytes?      @db.VarBinary(255)
+//   email          String?
+//   isActive       Boolean              @default(true)
+//   updatedAt      DateTime?
+//   createdAt      DateTime             @default(now())
+//   org_group      organization_group[]
+//   user           user[]
+//   user_group     user_group[]
+//   doors          doors[]
+//   // devices devices[]
+//   inout_log      inout_log[]
+//   students       students[]
+
+//   @@id([id])
+// }
+
+// // 1.2.	orgaization group
+// model organization_group {
+//   id          Int          @default(autoincrement())
+//   org         organization @relation(fields: [org_id], references: [id])
+//   org_id      Int
+//   name        String
+//   description String
+//   isActive    Boolean      @default(true)
+//   updatedAt   DateTime?
+//   createdAt   DateTime     @default(now())
+
+//   @@id([id])
+// }
+
+// model user {
+//   id            Int          @default(autoincrement())
+//   org_id        Int
+//   org           organization @relation(fields: [org_id], references: [id])
+//   name          String
+//   email         String
+//   password      String
+//   phone_no      String
+//   address       String
+//   description   String
+//   user_img      String? 
+//   user_group_id Int?
+//   rfid_card_id  Int?
+//   rfid_card     rfid_card?   @relation(fields: [rfid_card_id], references: [id])
+//   user_group    user_group?  @relation(fields: [user_group_id], references: [id])
+//   isActive      Boolean?     @default(true)
+//   updatedAt     DateTime?
+//   createdAt     DateTime     @default(now())
+
+//   @@id([id])
+//   @@unique([id, rfid_card_id])
+// }
+
+// model user_group {
+//   id            Int          @default(autoincrement())
+//   org_id        Int
+//   org           organization @relation(fields: [org_id], references: [id])
+//   group_name    String
+//   permission_id Int
+//   permission    permission   @relation(fields: [permission_id], references: [id])
+//   isActive      Boolean?     @default(true)
+//   updatedAt     DateTime?
+//   createdAt     DateTime     @default(now())
+//   user          user[]
+//   students      students[]
+
+//   @@id([id])
+// }
+
+// model permission {
+//   id          Int          @default(autoincrement())
+//   name        String
+//   description String
+//   isActive    Boolean?     @default(true)
+//   updatedAt   DateTime?
+//   createdAt   DateTime     @default(now())
+//   user_group  user_group[]
+
+//   @@id([id])
+// }
+
+// model doors {
+//   id            Int             @default(autoincrement())
+//   org_id        Int
+//   org           organization    @relation(fields: [org_id], references: [id])
+//   name          String
+//   description   String
+//   door_no       String
+//   isActive      Boolean?        @default(true)
+//   updatedAt     DateTime?
+//   createdAt     DateTime        @default(now())
+//   inout_log     inout_log[]
+//   // devices devices[]
+//   devices_setup devices_setup[]
+
+//   @@id([id])
+// }
+
+// model device_type {
+//   id            Int             @default(autoincrement())
+//   name          String
+//   description   String
+//   operation     String
+//   isActive      Boolean?        @default(true)
+//   updatedAt     DateTime?
+//   createdAt     DateTime        @default(now())
+//   // devices devices[]
+//   devices_setup devices_setup[]
+
+//   @@id([id])
+// }
+
+// model inout_log {
+//   id           Int          @default(autoincrement())
+//   organization String?
+//   org_id       Int
+//   org          organization @relation(fields: [org_id], references: [id])
+//   devicePort   String?
+//   device_id    Int?
+//   doorNo       String?
+//   door_id      Int
+//   door         doors        @relation(fields: [door_id], references: [id])
+//   studentName  String?
+//   student_id   Int
+//   students     students     @relation(fields: [student_id], references: [id])
+//   operation    String
+//   log_date     DateTime     @default(now())
+//   updatedAt    DateTime?
+//   createdAt    DateTime     @default(now())
+
+//   @@id([id])
+// }
+
+// model commands {
+//   id            Int       @default(autoincrement())
+//   name          String
+//   command_value String
+//   description   String
+//   updatedAt     DateTime?
+//   createdAt     DateTime  @default(now())
+
+//   @@id([id])
+// }
+
+// model rfid_card {
+//   id          Int        @default(autoincrement())
+//   card_no     String
+//   description String
+//   isActive    Boolean    @default(true)
+//   updatedAt   DateTime?
+//   createdAt   DateTime   @default(now())
+//   user        user[]
+//   students    students[]
+
+//   @@id([id])
+// }
+
+// model devices_setup {
+//   id           Int          @default(autoincrement())
+//   friendlyName String
+//   locationId   String?
+//   manufacturer String
+//   path         String
+//   pnpId        String
+//   productId    String?
+//   serialNumber String?
+//   vendorId     String?
+//   devicesType  Int?
+//   device_type  device_type? @relation(fields: [devicesType], references: [id])
+//   door_id      Int?
+//   door         doors?       @relation(fields: [door_id], references: [id])
+//   isActive     Boolean      @default(true)
+//   updatedAt    DateTime?
+//   createdAt    DateTime     @default(now())
+
+//   @@id([id])
+// }
+
+// model students {
+//   id            Int           @default(autoincrement())
+//   org_id        Int?
+//   student_id    String
+//   name          String
+//   email         String
+//   phone         String
+//   address       String
+//   isActive      Boolean?      @default(true)
+//   barcode       String?
+//   user_group_id Int?
+//   rfid_card_id  Int?
+//   updatedAt     DateTime?
+//   createdAt     DateTime      @default(now())
+//   org           organization? @relation(fields: [org_id], references: [id])
+//   user_group    user_group?   @relation(fields: [user_group_id], references: [id])
+//   rfid_card     rfid_card?    @relation(fields: [rfid_card_id], references: [id])
+//   inout_log     inout_log[]
+
+//   @@id([id])
+// }

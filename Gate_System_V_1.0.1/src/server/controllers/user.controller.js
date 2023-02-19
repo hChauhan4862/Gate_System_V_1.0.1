@@ -52,7 +52,7 @@ const createUser = async(req, res) => {
                 description: description,
                 user_img: user_img,
                 user_group_id: parseInt(user_group_id),
-                rfid_card_id: parseInt(rfid_card_id),
+                // rfid_card_id: parseInt(rfid_card_id),
             }
         });
         message = {
@@ -69,47 +69,37 @@ const createUser = async(req, res) => {
 // get all users
 const getAllUsers = async(req, res) => {
     try {
-        const users = await prisma.user.findMany();
-        //get orgainzation name
-        const usersWithOrgName = await Promise.all(users.map(async(user) => {
-            const org = await prisma.organization.findUnique({
-                where: {
-                    id: user.org_id
-                }
-            });
+        const users = await prisma.user.findMany({
+            include: {
+                org: true,
+                user_group: true,
+                rfid_card: true,
+            },
+        });
+
+        const trasformedUsers = users.map((user) => {
+            user.rfid_card_id === null ? rfid_card_name =null : rfid_card_name = user.rfid_card.card_no;
             return {
-                ...user,
-                org_name: org.name
+                id: user.id,
+                org_id: user.org_id,
+                name: user.name,
+                email: user.email,
+                password: user.password,
+                phone_no: user.phone_no,
+                address: user.address,
+                description: user.description,
+                user_img: user.user_img,
+                user_group_id: user.user_group_id,
+                rfid_card_id: user.rfid_card_id,
+                isActive: user.isActive,
+                org_name:  user.org.name,
+                user_group_name: user.user_group.group_name,
+                rfid_card_name: rfid_card_name,
             };
-        }
-        ));
-        //get user group name
-        const usersWithUserGroupName = await Promise.all(usersWithOrgName.map(async(user) => {
-            const userGroup = await prisma.user_group.findUnique({
-                where: {
-                    id: user.user_group_id
-                }
-            });
-            return {
-                ...user,
-                user_group_name: userGroup.group_name
-            };
-        }
-        ));
-        //get rfid card name
-        const usersWithRfidCardName = await Promise.all(usersWithUserGroupName.map(async(user) => {
-            const rfidCard = await prisma.rfid_card.findUnique({
-                where: {
-                    id: user.rfid_card_id
-                }
-            });
-            return {
-                ...user,
-                rfid_card_name: rfidCard.card_no
-            };
-        }
-        ));
-        res.status(httpStatus.OK).send(usersWithRfidCardName);
+        });
+
+        res.status(httpStatus.OK).send(trasformedUsers);
+       
 
 
     } catch (error) {

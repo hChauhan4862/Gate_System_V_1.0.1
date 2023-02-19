@@ -1,7 +1,10 @@
 const { app, BrowserWindow, Tray, Menu, nativeImage, dialog } = require('electron');
 const { createWindow, mainWindow } = require('./myWindow');
+const createConfigWindow = require('./configWindow');
 const path = require('path');
 const verifyPassword = require('./askVerifyPassword');
+
+
 
 
 const menuTemplate = [
@@ -26,18 +29,7 @@ const menuTemplate = [
     {
         label: 'Configure',
         click: () => {
-            verifyPassword(() => {
-                const z = new BrowserWindow({
-                    width: 500,
-                    height: 500,
-                    webPreferences: {
-                        nodeIntegration: true,
-                    },
-                    autoHideMenuBar: true,
-                    resizable: false,
-                });
-                z.loadFile(path.join(__dirname, 'serverConfig', 'config.html'));
-            })
+            verifyPassword(createConfigWindow)
         }
     },
     {

@@ -119,16 +119,21 @@ export type device_type = {
 }
 
 /**
- * Model device_log
+ * Model inout_log
  * 
  */
-export type device_log = {
+export type inout_log = {
   id: number
+  organization: string | null
   org_id: number
+  devicePort: string | null
+  device_id: number | null
+  doorNo: string | null
   door_id: number
-  user_id: number
-  log_type: string
-  log_date: Date | null
+  studentName: string | null
+  student_id: number
+  operation: string
+  log_date: Date
   updatedAt: Date | null
   createdAt: Date
 }
@@ -389,14 +394,14 @@ export class PrismaClient<
   get device_type(): Prisma.device_typeDelegate<GlobalReject>;
 
   /**
-   * `prisma.device_log`: Exposes CRUD operations for the **device_log** model.
+   * `prisma.inout_log`: Exposes CRUD operations for the **inout_log** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Device_logs
-    * const device_logs = await prisma.device_log.findMany()
+    * // Fetch zero or more Inout_logs
+    * const inout_logs = await prisma.inout_log.findMany()
     * ```
     */
-  get device_log(): Prisma.device_logDelegate<GlobalReject>;
+  get inout_log(): Prisma.inout_logDelegate<GlobalReject>;
 
   /**
    * `prisma.commands`: Exposes CRUD operations for the **commands** model.
@@ -913,7 +918,7 @@ export namespace Prisma {
     permission: 'permission',
     doors: 'doors',
     device_type: 'device_type',
-    device_log: 'device_log',
+    inout_log: 'inout_log',
     commands: 'commands',
     rfid_card: 'rfid_card',
     devices_setup: 'devices_setup',
@@ -1088,7 +1093,7 @@ export namespace Prisma {
     user: number
     user_group: number
     doors: number
-    device_log: number
+    inout_log: number
     students: number
   }
 
@@ -1097,7 +1102,7 @@ export namespace Prisma {
     user?: boolean
     user_group?: boolean
     doors?: boolean
-    device_log?: boolean
+    inout_log?: boolean
     students?: boolean
   }
 
@@ -1127,49 +1132,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the OrganizationCountOutputType
      */
     select?: OrganizationCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type UserCountOutputType
-   */
-
-
-  export type UserCountOutputType = {
-    device_log: number
-  }
-
-  export type UserCountOutputTypeSelect = {
-    device_log?: boolean
-  }
-
-  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (UserCountOutputTypeArgs)
-    ? UserCountOutputType 
-    : S extends { select: any } & (UserCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
-  } 
-      : UserCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: UserCountOutputTypeSelect | null
   }
 
 
@@ -1268,12 +1230,12 @@ export namespace Prisma {
 
 
   export type DoorsCountOutputType = {
-    device_log: number
+    inout_log: number
     devices_setup: number
   }
 
   export type DoorsCountOutputTypeSelect = {
-    device_log?: boolean
+    inout_log?: boolean
     devices_setup?: boolean
   }
 
@@ -1391,6 +1353,49 @@ export namespace Prisma {
      * Select specific fields to fetch from the Rfid_cardCountOutputType
      */
     select?: Rfid_cardCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type StudentsCountOutputType
+   */
+
+
+  export type StudentsCountOutputType = {
+    inout_log: number
+  }
+
+  export type StudentsCountOutputTypeSelect = {
+    inout_log?: boolean
+  }
+
+  export type StudentsCountOutputTypeGetPayload<S extends boolean | null | undefined | StudentsCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? StudentsCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (StudentsCountOutputTypeArgs)
+    ? StudentsCountOutputType 
+    : S extends { select: any } & (StudentsCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof StudentsCountOutputType ? StudentsCountOutputType[P] : never
+  } 
+      : StudentsCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * StudentsCountOutputType without action
+   */
+  export type StudentsCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the StudentsCountOutputType
+     */
+    select?: StudentsCountOutputTypeSelect | null
   }
 
 
@@ -1643,7 +1648,7 @@ export namespace Prisma {
     user?: boolean | organization$userArgs
     user_group?: boolean | organization$user_groupArgs
     doors?: boolean | organization$doorsArgs
-    device_log?: boolean | organization$device_logArgs
+    inout_log?: boolean | organization$inout_logArgs
     students?: boolean | organization$studentsArgs
     _count?: boolean | OrganizationCountOutputTypeArgs
   }
@@ -1654,7 +1659,7 @@ export namespace Prisma {
     user?: boolean | organization$userArgs
     user_group?: boolean | organization$user_groupArgs
     doors?: boolean | organization$doorsArgs
-    device_log?: boolean | organization$device_logArgs
+    inout_log?: boolean | organization$inout_logArgs
     students?: boolean | organization$studentsArgs
     _count?: boolean | OrganizationCountOutputTypeArgs
   }
@@ -1670,7 +1675,7 @@ export namespace Prisma {
         P extends 'user' ? Array < userGetPayload<S['include'][P]>>  :
         P extends 'user_group' ? Array < user_groupGetPayload<S['include'][P]>>  :
         P extends 'doors' ? Array < doorsGetPayload<S['include'][P]>>  :
-        P extends 'device_log' ? Array < device_logGetPayload<S['include'][P]>>  :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['include'][P]>>  :
         P extends 'students' ? Array < studentsGetPayload<S['include'][P]>>  :
         P extends '_count' ? OrganizationCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -1681,7 +1686,7 @@ export namespace Prisma {
         P extends 'user' ? Array < userGetPayload<S['select'][P]>>  :
         P extends 'user_group' ? Array < user_groupGetPayload<S['select'][P]>>  :
         P extends 'doors' ? Array < doorsGetPayload<S['select'][P]>>  :
-        P extends 'device_log' ? Array < device_logGetPayload<S['select'][P]>>  :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['select'][P]>>  :
         P extends 'students' ? Array < studentsGetPayload<S['select'][P]>>  :
         P extends '_count' ? OrganizationCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof organization ? organization[P] : never
   } 
@@ -2063,7 +2068,7 @@ export namespace Prisma {
 
     doors<T extends organization$doorsArgs= {}>(args?: Subset<T, organization$doorsArgs>): Prisma.PrismaPromise<Array<doorsGetPayload<T>>| Null>;
 
-    device_log<T extends organization$device_logArgs= {}>(args?: Subset<T, organization$device_logArgs>): Prisma.PrismaPromise<Array<device_logGetPayload<T>>| Null>;
+    inout_log<T extends organization$inout_logArgs= {}>(args?: Subset<T, organization$inout_logArgs>): Prisma.PrismaPromise<Array<inout_logGetPayload<T>>| Null>;
 
     students<T extends organization$studentsArgs= {}>(args?: Subset<T, organization$studentsArgs>): Prisma.PrismaPromise<Array<studentsGetPayload<T>>| Null>;
 
@@ -2507,23 +2512,23 @@ export namespace Prisma {
 
 
   /**
-   * organization.device_log
+   * organization.inout_log
    */
-  export type organization$device_logArgs = {
+  export type organization$inout_logArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
-    where?: device_logWhereInput
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
-    cursor?: device_logWhereUniqueInput
+    include?: inout_logInclude | null
+    where?: inout_logWhereInput
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
+    cursor?: inout_logWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<Device_logScalarFieldEnum>
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
   }
 
 
@@ -3836,8 +3841,6 @@ export namespace Prisma {
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
-    device_log?: boolean | user$device_logArgs
-    _count?: boolean | UserCountOutputTypeArgs
   }
 
 
@@ -3845,8 +3848,6 @@ export namespace Prisma {
     org?: boolean | organizationArgs
     rfid_card?: boolean | rfid_cardArgs
     user_group?: boolean | user_groupArgs
-    device_log?: boolean | user$device_logArgs
-    _count?: boolean | UserCountOutputTypeArgs
   }
 
   export type userGetPayload<S extends boolean | null | undefined | userArgs> =
@@ -3858,18 +3859,14 @@ export namespace Prisma {
     [P in TruthyKeys<S['include']>]:
         P extends 'org' ? organizationGetPayload<S['include'][P]> :
         P extends 'rfid_card' ? rfid_cardGetPayload<S['include'][P]> | null :
-        P extends 'user_group' ? user_groupGetPayload<S['include'][P]> | null :
-        P extends 'device_log' ? Array < device_logGetPayload<S['include'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'user_group' ? user_groupGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (userArgs | userFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'org' ? organizationGetPayload<S['select'][P]> :
         P extends 'rfid_card' ? rfid_cardGetPayload<S['select'][P]> | null :
-        P extends 'user_group' ? user_groupGetPayload<S['select'][P]> | null :
-        P extends 'device_log' ? Array < device_logGetPayload<S['select'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof user ? user[P] : never
+        P extends 'user_group' ? user_groupGetPayload<S['select'][P]> | null :  P extends keyof user ? user[P] : never
   } 
       : user
 
@@ -4247,8 +4244,6 @@ export namespace Prisma {
 
     user_group<T extends user_groupArgs= {}>(args?: Subset<T, user_groupArgs>): Prisma__user_groupClient<user_groupGetPayload<T> | Null>;
 
-    device_log<T extends user$device_logArgs= {}>(args?: Subset<T, user$device_logArgs>): Prisma.PrismaPromise<Array<device_logGetPayload<T>>| Null>;
-
     private get _document();
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4601,27 +4596,6 @@ export namespace Prisma {
      * Filter which users to delete
      */
     where?: userWhereInput
-  }
-
-
-  /**
-   * user.device_log
-   */
-  export type user$device_logArgs = {
-    /**
-     * Select specific fields to fetch from the device_log
-     */
-    select?: device_logSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: device_logInclude | null
-    where?: device_logWhereInput
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
-    cursor?: device_logWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<Device_logScalarFieldEnum>
   }
 
 
@@ -6921,7 +6895,7 @@ export namespace Prisma {
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
-    device_log?: boolean | doors$device_logArgs
+    inout_log?: boolean | doors$inout_logArgs
     devices_setup?: boolean | doors$devices_setupArgs
     _count?: boolean | DoorsCountOutputTypeArgs
   }
@@ -6929,7 +6903,7 @@ export namespace Prisma {
 
   export type doorsInclude = {
     org?: boolean | organizationArgs
-    device_log?: boolean | doors$device_logArgs
+    inout_log?: boolean | doors$inout_logArgs
     devices_setup?: boolean | doors$devices_setupArgs
     _count?: boolean | DoorsCountOutputTypeArgs
   }
@@ -6942,7 +6916,7 @@ export namespace Prisma {
     ? doors  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'org' ? organizationGetPayload<S['include'][P]> :
-        P extends 'device_log' ? Array < device_logGetPayload<S['include'][P]>>  :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['include'][P]>>  :
         P extends 'devices_setup' ? Array < devices_setupGetPayload<S['include'][P]>>  :
         P extends '_count' ? DoorsCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -6950,7 +6924,7 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'org' ? organizationGetPayload<S['select'][P]> :
-        P extends 'device_log' ? Array < device_logGetPayload<S['select'][P]>>  :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['select'][P]>>  :
         P extends 'devices_setup' ? Array < devices_setupGetPayload<S['select'][P]>>  :
         P extends '_count' ? DoorsCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof doors ? doors[P] : never
   } 
@@ -7326,7 +7300,7 @@ export namespace Prisma {
 
     org<T extends organizationArgs= {}>(args?: Subset<T, organizationArgs>): Prisma__organizationClient<organizationGetPayload<T> | Null>;
 
-    device_log<T extends doors$device_logArgs= {}>(args?: Subset<T, doors$device_logArgs>): Prisma.PrismaPromise<Array<device_logGetPayload<T>>| Null>;
+    inout_log<T extends doors$inout_logArgs= {}>(args?: Subset<T, doors$inout_logArgs>): Prisma.PrismaPromise<Array<inout_logGetPayload<T>>| Null>;
 
     devices_setup<T extends doors$devices_setupArgs= {}>(args?: Subset<T, doors$devices_setupArgs>): Prisma.PrismaPromise<Array<devices_setupGetPayload<T>>| Null>;
 
@@ -7686,23 +7660,23 @@ export namespace Prisma {
 
 
   /**
-   * doors.device_log
+   * doors.inout_log
    */
-  export type doors$device_logArgs = {
+  export type doors$inout_logArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
-    where?: device_logWhereInput
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
-    cursor?: device_logWhereUniqueInput
+    include?: inout_logInclude | null
+    where?: inout_logWhereInput
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
+    cursor?: inout_logWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<Device_logScalarFieldEnum>
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
   }
 
 
@@ -8750,60 +8724,77 @@ export namespace Prisma {
 
 
   /**
-   * Model device_log
+   * Model inout_log
    */
 
 
-  export type AggregateDevice_log = {
-    _count: Device_logCountAggregateOutputType | null
-    _avg: Device_logAvgAggregateOutputType | null
-    _sum: Device_logSumAggregateOutputType | null
-    _min: Device_logMinAggregateOutputType | null
-    _max: Device_logMaxAggregateOutputType | null
+  export type AggregateInout_log = {
+    _count: Inout_logCountAggregateOutputType | null
+    _avg: Inout_logAvgAggregateOutputType | null
+    _sum: Inout_logSumAggregateOutputType | null
+    _min: Inout_logMinAggregateOutputType | null
+    _max: Inout_logMaxAggregateOutputType | null
   }
 
-  export type Device_logAvgAggregateOutputType = {
+  export type Inout_logAvgAggregateOutputType = {
     id: number | null
     org_id: number | null
+    device_id: number | null
     door_id: number | null
-    user_id: number | null
+    student_id: number | null
   }
 
-  export type Device_logSumAggregateOutputType = {
+  export type Inout_logSumAggregateOutputType = {
     id: number | null
     org_id: number | null
+    device_id: number | null
     door_id: number | null
-    user_id: number | null
+    student_id: number | null
   }
 
-  export type Device_logMinAggregateOutputType = {
+  export type Inout_logMinAggregateOutputType = {
     id: number | null
+    organization: string | null
     org_id: number | null
+    devicePort: string | null
+    device_id: number | null
+    doorNo: string | null
     door_id: number | null
-    user_id: number | null
-    log_type: string | null
+    studentName: string | null
+    student_id: number | null
+    operation: string | null
     log_date: Date | null
     updatedAt: Date | null
     createdAt: Date | null
   }
 
-  export type Device_logMaxAggregateOutputType = {
+  export type Inout_logMaxAggregateOutputType = {
     id: number | null
+    organization: string | null
     org_id: number | null
+    devicePort: string | null
+    device_id: number | null
+    doorNo: string | null
     door_id: number | null
-    user_id: number | null
-    log_type: string | null
+    studentName: string | null
+    student_id: number | null
+    operation: string | null
     log_date: Date | null
     updatedAt: Date | null
     createdAt: Date | null
   }
 
-  export type Device_logCountAggregateOutputType = {
+  export type Inout_logCountAggregateOutputType = {
     id: number
+    organization: number
     org_id: number
+    devicePort: number
+    device_id: number
+    doorNo: number
     door_id: number
-    user_id: number
-    log_type: number
+    studentName: number
+    student_id: number
+    operation: number
     log_date: number
     updatedAt: number
     createdAt: number
@@ -8811,360 +8802,387 @@ export namespace Prisma {
   }
 
 
-  export type Device_logAvgAggregateInputType = {
+  export type Inout_logAvgAggregateInputType = {
     id?: true
     org_id?: true
+    device_id?: true
     door_id?: true
-    user_id?: true
+    student_id?: true
   }
 
-  export type Device_logSumAggregateInputType = {
+  export type Inout_logSumAggregateInputType = {
     id?: true
     org_id?: true
+    device_id?: true
     door_id?: true
-    user_id?: true
+    student_id?: true
   }
 
-  export type Device_logMinAggregateInputType = {
+  export type Inout_logMinAggregateInputType = {
     id?: true
+    organization?: true
     org_id?: true
+    devicePort?: true
+    device_id?: true
+    doorNo?: true
     door_id?: true
-    user_id?: true
-    log_type?: true
+    studentName?: true
+    student_id?: true
+    operation?: true
     log_date?: true
     updatedAt?: true
     createdAt?: true
   }
 
-  export type Device_logMaxAggregateInputType = {
+  export type Inout_logMaxAggregateInputType = {
     id?: true
+    organization?: true
     org_id?: true
+    devicePort?: true
+    device_id?: true
+    doorNo?: true
     door_id?: true
-    user_id?: true
-    log_type?: true
+    studentName?: true
+    student_id?: true
+    operation?: true
     log_date?: true
     updatedAt?: true
     createdAt?: true
   }
 
-  export type Device_logCountAggregateInputType = {
+  export type Inout_logCountAggregateInputType = {
     id?: true
+    organization?: true
     org_id?: true
+    devicePort?: true
+    device_id?: true
+    doorNo?: true
     door_id?: true
-    user_id?: true
-    log_type?: true
+    studentName?: true
+    student_id?: true
+    operation?: true
     log_date?: true
     updatedAt?: true
     createdAt?: true
     _all?: true
   }
 
-  export type Device_logAggregateArgs = {
+  export type Inout_logAggregateArgs = {
     /**
-     * Filter which device_log to aggregate.
+     * Filter which inout_log to aggregate.
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of device_logs to fetch.
+     * Determine the order of inout_logs to fetch.
      */
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: device_logWhereUniqueInput
+    cursor?: inout_logWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` device_logs from the position of the cursor.
+     * Take `±n` inout_logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` device_logs.
+     * Skip the first `n` inout_logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned device_logs
+     * Count returned inout_logs
     **/
-    _count?: true | Device_logCountAggregateInputType
+    _count?: true | Inout_logCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: Device_logAvgAggregateInputType
+    _avg?: Inout_logAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: Device_logSumAggregateInputType
+    _sum?: Inout_logSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Device_logMinAggregateInputType
+    _min?: Inout_logMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Device_logMaxAggregateInputType
+    _max?: Inout_logMaxAggregateInputType
   }
 
-  export type GetDevice_logAggregateType<T extends Device_logAggregateArgs> = {
-        [P in keyof T & keyof AggregateDevice_log]: P extends '_count' | 'count'
+  export type GetInout_logAggregateType<T extends Inout_logAggregateArgs> = {
+        [P in keyof T & keyof AggregateInout_log]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateDevice_log[P]>
-      : GetScalarType<T[P], AggregateDevice_log[P]>
+        : GetScalarType<T[P], AggregateInout_log[P]>
+      : GetScalarType<T[P], AggregateInout_log[P]>
   }
 
 
 
 
-  export type Device_logGroupByArgs = {
-    where?: device_logWhereInput
-    orderBy?: Enumerable<device_logOrderByWithAggregationInput>
-    by: Device_logScalarFieldEnum[]
-    having?: device_logScalarWhereWithAggregatesInput
+  export type Inout_logGroupByArgs = {
+    where?: inout_logWhereInput
+    orderBy?: Enumerable<inout_logOrderByWithAggregationInput>
+    by: Inout_logScalarFieldEnum[]
+    having?: inout_logScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Device_logCountAggregateInputType | true
-    _avg?: Device_logAvgAggregateInputType
-    _sum?: Device_logSumAggregateInputType
-    _min?: Device_logMinAggregateInputType
-    _max?: Device_logMaxAggregateInputType
+    _count?: Inout_logCountAggregateInputType | true
+    _avg?: Inout_logAvgAggregateInputType
+    _sum?: Inout_logSumAggregateInputType
+    _min?: Inout_logMinAggregateInputType
+    _max?: Inout_logMaxAggregateInputType
   }
 
 
-  export type Device_logGroupByOutputType = {
+  export type Inout_logGroupByOutputType = {
     id: number
+    organization: string | null
     org_id: number
+    devicePort: string | null
+    device_id: number | null
+    doorNo: string | null
     door_id: number
-    user_id: number
-    log_type: string
-    log_date: Date | null
+    studentName: string | null
+    student_id: number
+    operation: string
+    log_date: Date
     updatedAt: Date | null
     createdAt: Date
-    _count: Device_logCountAggregateOutputType | null
-    _avg: Device_logAvgAggregateOutputType | null
-    _sum: Device_logSumAggregateOutputType | null
-    _min: Device_logMinAggregateOutputType | null
-    _max: Device_logMaxAggregateOutputType | null
+    _count: Inout_logCountAggregateOutputType | null
+    _avg: Inout_logAvgAggregateOutputType | null
+    _sum: Inout_logSumAggregateOutputType | null
+    _min: Inout_logMinAggregateOutputType | null
+    _max: Inout_logMaxAggregateOutputType | null
   }
 
-  type GetDevice_logGroupByPayload<T extends Device_logGroupByArgs> = Prisma.PrismaPromise<
+  type GetInout_logGroupByPayload<T extends Inout_logGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<Device_logGroupByOutputType, T['by']> &
+      PickArray<Inout_logGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Device_logGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof Inout_logGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Device_logGroupByOutputType[P]>
-            : GetScalarType<T[P], Device_logGroupByOutputType[P]>
+              : GetScalarType<T[P], Inout_logGroupByOutputType[P]>
+            : GetScalarType<T[P], Inout_logGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type device_logSelect = {
+  export type inout_logSelect = {
     id?: boolean
+    organization?: boolean
     org_id?: boolean
     org?: boolean | organizationArgs
+    devicePort?: boolean
+    device_id?: boolean
+    doorNo?: boolean
     door_id?: boolean
     door?: boolean | doorsArgs
-    user_id?: boolean
-    user?: boolean | userArgs
-    log_type?: boolean
+    studentName?: boolean
+    student_id?: boolean
+    students?: boolean | studentsArgs
+    operation?: boolean
     log_date?: boolean
     updatedAt?: boolean
     createdAt?: boolean
   }
 
 
-  export type device_logInclude = {
+  export type inout_logInclude = {
     org?: boolean | organizationArgs
     door?: boolean | doorsArgs
-    user?: boolean | userArgs
+    students?: boolean | studentsArgs
   }
 
-  export type device_logGetPayload<S extends boolean | null | undefined | device_logArgs> =
+  export type inout_logGetPayload<S extends boolean | null | undefined | inout_logArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? device_log :
+    S extends true ? inout_log :
     S extends undefined ? never :
-    S extends { include: any } & (device_logArgs | device_logFindManyArgs)
-    ? device_log  & {
+    S extends { include: any } & (inout_logArgs | inout_logFindManyArgs)
+    ? inout_log  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'org' ? organizationGetPayload<S['include'][P]> :
         P extends 'door' ? doorsGetPayload<S['include'][P]> :
-        P extends 'user' ? userGetPayload<S['include'][P]> :  never
+        P extends 'students' ? studentsGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (device_logArgs | device_logFindManyArgs)
+    : S extends { select: any } & (inout_logArgs | inout_logFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'org' ? organizationGetPayload<S['select'][P]> :
         P extends 'door' ? doorsGetPayload<S['select'][P]> :
-        P extends 'user' ? userGetPayload<S['select'][P]> :  P extends keyof device_log ? device_log[P] : never
+        P extends 'students' ? studentsGetPayload<S['select'][P]> :  P extends keyof inout_log ? inout_log[P] : never
   } 
-      : device_log
+      : inout_log
 
 
-  type device_logCountArgs = 
-    Omit<device_logFindManyArgs, 'select' | 'include'> & {
-      select?: Device_logCountAggregateInputType | true
+  type inout_logCountArgs = 
+    Omit<inout_logFindManyArgs, 'select' | 'include'> & {
+      select?: Inout_logCountAggregateInputType | true
     }
 
-  export interface device_logDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface inout_logDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Device_log that matches the filter.
-     * @param {device_logFindUniqueArgs} args - Arguments to find a Device_log
+     * Find zero or one Inout_log that matches the filter.
+     * @param {inout_logFindUniqueArgs} args - Arguments to find a Inout_log
      * @example
-     * // Get one Device_log
-     * const device_log = await prisma.device_log.findUnique({
+     * // Get one Inout_log
+     * const inout_log = await prisma.inout_log.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends device_logFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, device_logFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'device_log'> extends True ? Prisma__device_logClient<device_logGetPayload<T>> : Prisma__device_logClient<device_logGetPayload<T> | null, null>
+    findUnique<T extends inout_logFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, inout_logFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'inout_log'> extends True ? Prisma__inout_logClient<inout_logGetPayload<T>> : Prisma__inout_logClient<inout_logGetPayload<T> | null, null>
 
     /**
-     * Find one Device_log that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Inout_log that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {device_logFindUniqueOrThrowArgs} args - Arguments to find a Device_log
+     * @param {inout_logFindUniqueOrThrowArgs} args - Arguments to find a Inout_log
      * @example
-     * // Get one Device_log
-     * const device_log = await prisma.device_log.findUniqueOrThrow({
+     * // Get one Inout_log
+     * const inout_log = await prisma.inout_log.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends device_logFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, device_logFindUniqueOrThrowArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    findUniqueOrThrow<T extends inout_logFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, inout_logFindUniqueOrThrowArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Find the first Device_log that matches the filter.
+     * Find the first Inout_log that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {device_logFindFirstArgs} args - Arguments to find a Device_log
+     * @param {inout_logFindFirstArgs} args - Arguments to find a Inout_log
      * @example
-     * // Get one Device_log
-     * const device_log = await prisma.device_log.findFirst({
+     * // Get one Inout_log
+     * const inout_log = await prisma.inout_log.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends device_logFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, device_logFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'device_log'> extends True ? Prisma__device_logClient<device_logGetPayload<T>> : Prisma__device_logClient<device_logGetPayload<T> | null, null>
+    findFirst<T extends inout_logFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, inout_logFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'inout_log'> extends True ? Prisma__inout_logClient<inout_logGetPayload<T>> : Prisma__inout_logClient<inout_logGetPayload<T> | null, null>
 
     /**
-     * Find the first Device_log that matches the filter or
+     * Find the first Inout_log that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {device_logFindFirstOrThrowArgs} args - Arguments to find a Device_log
+     * @param {inout_logFindFirstOrThrowArgs} args - Arguments to find a Inout_log
      * @example
-     * // Get one Device_log
-     * const device_log = await prisma.device_log.findFirstOrThrow({
+     * // Get one Inout_log
+     * const inout_log = await prisma.inout_log.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends device_logFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, device_logFindFirstOrThrowArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    findFirstOrThrow<T extends inout_logFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, inout_logFindFirstOrThrowArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Find zero or more Device_logs that matches the filter.
+     * Find zero or more Inout_logs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {device_logFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {inout_logFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Device_logs
-     * const device_logs = await prisma.device_log.findMany()
+     * // Get all Inout_logs
+     * const inout_logs = await prisma.inout_log.findMany()
      * 
-     * // Get first 10 Device_logs
-     * const device_logs = await prisma.device_log.findMany({ take: 10 })
+     * // Get first 10 Inout_logs
+     * const inout_logs = await prisma.inout_log.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const device_logWithIdOnly = await prisma.device_log.findMany({ select: { id: true } })
+     * const inout_logWithIdOnly = await prisma.inout_log.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends device_logFindManyArgs>(
-      args?: SelectSubset<T, device_logFindManyArgs>
-    ): Prisma.PrismaPromise<Array<device_logGetPayload<T>>>
+    findMany<T extends inout_logFindManyArgs>(
+      args?: SelectSubset<T, inout_logFindManyArgs>
+    ): Prisma.PrismaPromise<Array<inout_logGetPayload<T>>>
 
     /**
-     * Create a Device_log.
-     * @param {device_logCreateArgs} args - Arguments to create a Device_log.
+     * Create a Inout_log.
+     * @param {inout_logCreateArgs} args - Arguments to create a Inout_log.
      * @example
-     * // Create one Device_log
-     * const Device_log = await prisma.device_log.create({
+     * // Create one Inout_log
+     * const Inout_log = await prisma.inout_log.create({
      *   data: {
-     *     // ... data to create a Device_log
+     *     // ... data to create a Inout_log
      *   }
      * })
      * 
     **/
-    create<T extends device_logCreateArgs>(
-      args: SelectSubset<T, device_logCreateArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    create<T extends inout_logCreateArgs>(
+      args: SelectSubset<T, inout_logCreateArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Create many Device_logs.
-     *     @param {device_logCreateManyArgs} args - Arguments to create many Device_logs.
+     * Create many Inout_logs.
+     *     @param {inout_logCreateManyArgs} args - Arguments to create many Inout_logs.
      *     @example
-     *     // Create many Device_logs
-     *     const device_log = await prisma.device_log.createMany({
+     *     // Create many Inout_logs
+     *     const inout_log = await prisma.inout_log.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends device_logCreateManyArgs>(
-      args?: SelectSubset<T, device_logCreateManyArgs>
+    createMany<T extends inout_logCreateManyArgs>(
+      args?: SelectSubset<T, inout_logCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Device_log.
-     * @param {device_logDeleteArgs} args - Arguments to delete one Device_log.
+     * Delete a Inout_log.
+     * @param {inout_logDeleteArgs} args - Arguments to delete one Inout_log.
      * @example
-     * // Delete one Device_log
-     * const Device_log = await prisma.device_log.delete({
+     * // Delete one Inout_log
+     * const Inout_log = await prisma.inout_log.delete({
      *   where: {
-     *     // ... filter to delete one Device_log
+     *     // ... filter to delete one Inout_log
      *   }
      * })
      * 
     **/
-    delete<T extends device_logDeleteArgs>(
-      args: SelectSubset<T, device_logDeleteArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    delete<T extends inout_logDeleteArgs>(
+      args: SelectSubset<T, inout_logDeleteArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Update one Device_log.
-     * @param {device_logUpdateArgs} args - Arguments to update one Device_log.
+     * Update one Inout_log.
+     * @param {inout_logUpdateArgs} args - Arguments to update one Inout_log.
      * @example
-     * // Update one Device_log
-     * const device_log = await prisma.device_log.update({
+     * // Update one Inout_log
+     * const inout_log = await prisma.inout_log.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9174,34 +9192,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends device_logUpdateArgs>(
-      args: SelectSubset<T, device_logUpdateArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    update<T extends inout_logUpdateArgs>(
+      args: SelectSubset<T, inout_logUpdateArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Delete zero or more Device_logs.
-     * @param {device_logDeleteManyArgs} args - Arguments to filter Device_logs to delete.
+     * Delete zero or more Inout_logs.
+     * @param {inout_logDeleteManyArgs} args - Arguments to filter Inout_logs to delete.
      * @example
-     * // Delete a few Device_logs
-     * const { count } = await prisma.device_log.deleteMany({
+     * // Delete a few Inout_logs
+     * const { count } = await prisma.inout_log.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends device_logDeleteManyArgs>(
-      args?: SelectSubset<T, device_logDeleteManyArgs>
+    deleteMany<T extends inout_logDeleteManyArgs>(
+      args?: SelectSubset<T, inout_logDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Device_logs.
+     * Update zero or more Inout_logs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {device_logUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {inout_logUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Device_logs
-     * const device_log = await prisma.device_log.updateMany({
+     * // Update many Inout_logs
+     * const inout_log = await prisma.inout_log.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9211,59 +9229,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends device_logUpdateManyArgs>(
-      args: SelectSubset<T, device_logUpdateManyArgs>
+    updateMany<T extends inout_logUpdateManyArgs>(
+      args: SelectSubset<T, inout_logUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Device_log.
-     * @param {device_logUpsertArgs} args - Arguments to update or create a Device_log.
+     * Create or update one Inout_log.
+     * @param {inout_logUpsertArgs} args - Arguments to update or create a Inout_log.
      * @example
-     * // Update or create a Device_log
-     * const device_log = await prisma.device_log.upsert({
+     * // Update or create a Inout_log
+     * const inout_log = await prisma.inout_log.upsert({
      *   create: {
-     *     // ... data to create a Device_log
+     *     // ... data to create a Inout_log
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Device_log we want to update
+     *     // ... the filter for the Inout_log we want to update
      *   }
      * })
     **/
-    upsert<T extends device_logUpsertArgs>(
-      args: SelectSubset<T, device_logUpsertArgs>
-    ): Prisma__device_logClient<device_logGetPayload<T>>
+    upsert<T extends inout_logUpsertArgs>(
+      args: SelectSubset<T, inout_logUpsertArgs>
+    ): Prisma__inout_logClient<inout_logGetPayload<T>>
 
     /**
-     * Count the number of Device_logs.
+     * Count the number of Inout_logs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {device_logCountArgs} args - Arguments to filter Device_logs to count.
+     * @param {inout_logCountArgs} args - Arguments to filter Inout_logs to count.
      * @example
-     * // Count the number of Device_logs
-     * const count = await prisma.device_log.count({
+     * // Count the number of Inout_logs
+     * const count = await prisma.inout_log.count({
      *   where: {
-     *     // ... the filter for the Device_logs we want to count
+     *     // ... the filter for the Inout_logs we want to count
      *   }
      * })
     **/
-    count<T extends device_logCountArgs>(
-      args?: Subset<T, device_logCountArgs>,
+    count<T extends inout_logCountArgs>(
+      args?: Subset<T, inout_logCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Device_logCountAggregateOutputType>
+          : GetScalarType<T['select'], Inout_logCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Device_log.
+     * Allows you to perform aggregations operations on a Inout_log.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Device_logAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {Inout_logAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -9283,13 +9301,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Device_logAggregateArgs>(args: Subset<T, Device_logAggregateArgs>): Prisma.PrismaPromise<GetDevice_logAggregateType<T>>
+    aggregate<T extends Inout_logAggregateArgs>(args: Subset<T, Inout_logAggregateArgs>): Prisma.PrismaPromise<GetInout_logAggregateType<T>>
 
     /**
-     * Group by Device_log.
+     * Group by Inout_log.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Device_logGroupByArgs} args - Group by arguments.
+     * @param {Inout_logGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -9304,14 +9322,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends Device_logGroupByArgs,
+      T extends Inout_logGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Device_logGroupByArgs['orderBy'] }
-        : { orderBy?: Device_logGroupByArgs['orderBy'] },
+        ? { orderBy: Inout_logGroupByArgs['orderBy'] }
+        : { orderBy?: Inout_logGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -9360,17 +9378,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, Device_logGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDevice_logGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, Inout_logGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInout_logGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for device_log.
+   * The delegate class that acts as a "Promise-like" for inout_log.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__device_logClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__inout_logClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -9389,7 +9407,7 @@ export namespace Prisma {
 
     door<T extends doorsArgs= {}>(args?: Subset<T, doorsArgs>): Prisma__doorsClient<doorsGetPayload<T> | Null>;
 
-    user<T extends userArgs= {}>(args?: Subset<T, userArgs>): Prisma__userClient<userGetPayload<T> | Null>;
+    students<T extends studentsArgs= {}>(args?: Subset<T, studentsArgs>): Prisma__studentsClient<studentsGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -9419,27 +9437,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * device_log base type for findUnique actions
+   * inout_log base type for findUnique actions
    */
-  export type device_logFindUniqueArgsBase = {
+  export type inout_logFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter, which device_log to fetch.
+     * Filter, which inout_log to fetch.
      */
-    where: device_logWhereUniqueInput
+    where: inout_logWhereUniqueInput
   }
 
   /**
-   * device_log findUnique
+   * inout_log findUnique
    */
-  export interface device_logFindUniqueArgs extends device_logFindUniqueArgsBase {
+  export interface inout_logFindUniqueArgs extends inout_logFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -9449,76 +9467,76 @@ export namespace Prisma {
       
 
   /**
-   * device_log findUniqueOrThrow
+   * inout_log findUniqueOrThrow
    */
-  export type device_logFindUniqueOrThrowArgs = {
+  export type inout_logFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter, which device_log to fetch.
+     * Filter, which inout_log to fetch.
      */
-    where: device_logWhereUniqueInput
+    where: inout_logWhereUniqueInput
   }
 
 
   /**
-   * device_log base type for findFirst actions
+   * inout_log base type for findFirst actions
    */
-  export type device_logFindFirstArgsBase = {
+  export type inout_logFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter, which device_log to fetch.
+     * Filter, which inout_log to fetch.
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of device_logs to fetch.
+     * Determine the order of inout_logs to fetch.
      */
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for device_logs.
+     * Sets the position for searching for inout_logs.
      */
-    cursor?: device_logWhereUniqueInput
+    cursor?: inout_logWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` device_logs from the position of the cursor.
+     * Take `±n` inout_logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` device_logs.
+     * Skip the first `n` inout_logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of device_logs.
+     * Filter by unique combinations of inout_logs.
      */
-    distinct?: Enumerable<Device_logScalarFieldEnum>
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
   }
 
   /**
-   * device_log findFirst
+   * inout_log findFirst
    */
-  export interface device_logFindFirstArgs extends device_logFindFirstArgsBase {
+  export interface inout_logFindFirstArgs extends inout_logFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -9528,236 +9546,236 @@ export namespace Prisma {
       
 
   /**
-   * device_log findFirstOrThrow
+   * inout_log findFirstOrThrow
    */
-  export type device_logFindFirstOrThrowArgs = {
+  export type inout_logFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter, which device_log to fetch.
+     * Filter, which inout_log to fetch.
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of device_logs to fetch.
+     * Determine the order of inout_logs to fetch.
      */
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for device_logs.
+     * Sets the position for searching for inout_logs.
      */
-    cursor?: device_logWhereUniqueInput
+    cursor?: inout_logWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` device_logs from the position of the cursor.
+     * Take `±n` inout_logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` device_logs.
+     * Skip the first `n` inout_logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of device_logs.
+     * Filter by unique combinations of inout_logs.
      */
-    distinct?: Enumerable<Device_logScalarFieldEnum>
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
   }
 
 
   /**
-   * device_log findMany
+   * inout_log findMany
    */
-  export type device_logFindManyArgs = {
+  export type inout_logFindManyArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter, which device_logs to fetch.
+     * Filter, which inout_logs to fetch.
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of device_logs to fetch.
+     * Determine the order of inout_logs to fetch.
      */
-    orderBy?: Enumerable<device_logOrderByWithRelationInput>
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing device_logs.
+     * Sets the position for listing inout_logs.
      */
-    cursor?: device_logWhereUniqueInput
+    cursor?: inout_logWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` device_logs from the position of the cursor.
+     * Take `±n` inout_logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` device_logs.
+     * Skip the first `n` inout_logs.
      */
     skip?: number
-    distinct?: Enumerable<Device_logScalarFieldEnum>
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
   }
 
 
   /**
-   * device_log create
+   * inout_log create
    */
-  export type device_logCreateArgs = {
+  export type inout_logCreateArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * The data needed to create a device_log.
+     * The data needed to create a inout_log.
      */
-    data: XOR<device_logCreateInput, device_logUncheckedCreateInput>
+    data: XOR<inout_logCreateInput, inout_logUncheckedCreateInput>
   }
 
 
   /**
-   * device_log createMany
+   * inout_log createMany
    */
-  export type device_logCreateManyArgs = {
+  export type inout_logCreateManyArgs = {
     /**
-     * The data used to create many device_logs.
+     * The data used to create many inout_logs.
      */
-    data: Enumerable<device_logCreateManyInput>
+    data: Enumerable<inout_logCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * device_log update
+   * inout_log update
    */
-  export type device_logUpdateArgs = {
+  export type inout_logUpdateArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * The data needed to update a device_log.
+     * The data needed to update a inout_log.
      */
-    data: XOR<device_logUpdateInput, device_logUncheckedUpdateInput>
+    data: XOR<inout_logUpdateInput, inout_logUncheckedUpdateInput>
     /**
-     * Choose, which device_log to update.
+     * Choose, which inout_log to update.
      */
-    where: device_logWhereUniqueInput
+    where: inout_logWhereUniqueInput
   }
 
 
   /**
-   * device_log updateMany
+   * inout_log updateMany
    */
-  export type device_logUpdateManyArgs = {
+  export type inout_logUpdateManyArgs = {
     /**
-     * The data used to update device_logs.
+     * The data used to update inout_logs.
      */
-    data: XOR<device_logUpdateManyMutationInput, device_logUncheckedUpdateManyInput>
+    data: XOR<inout_logUpdateManyMutationInput, inout_logUncheckedUpdateManyInput>
     /**
-     * Filter which device_logs to update
+     * Filter which inout_logs to update
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
   }
 
 
   /**
-   * device_log upsert
+   * inout_log upsert
    */
-  export type device_logUpsertArgs = {
+  export type inout_logUpsertArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * The filter to search for the device_log to update in case it exists.
+     * The filter to search for the inout_log to update in case it exists.
      */
-    where: device_logWhereUniqueInput
+    where: inout_logWhereUniqueInput
     /**
-     * In case the device_log found by the `where` argument doesn't exist, create a new device_log with this data.
+     * In case the inout_log found by the `where` argument doesn't exist, create a new inout_log with this data.
      */
-    create: XOR<device_logCreateInput, device_logUncheckedCreateInput>
+    create: XOR<inout_logCreateInput, inout_logUncheckedCreateInput>
     /**
-     * In case the device_log was found with the provided `where` argument, update it with this data.
+     * In case the inout_log was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<device_logUpdateInput, device_logUncheckedUpdateInput>
+    update: XOR<inout_logUpdateInput, inout_logUncheckedUpdateInput>
   }
 
 
   /**
-   * device_log delete
+   * inout_log delete
    */
-  export type device_logDeleteArgs = {
+  export type inout_logDeleteArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
     /**
-     * Filter which device_log to delete.
+     * Filter which inout_log to delete.
      */
-    where: device_logWhereUniqueInput
+    where: inout_logWhereUniqueInput
   }
 
 
   /**
-   * device_log deleteMany
+   * inout_log deleteMany
    */
-  export type device_logDeleteManyArgs = {
+  export type inout_logDeleteManyArgs = {
     /**
-     * Filter which device_logs to delete
+     * Filter which inout_logs to delete
      */
-    where?: device_logWhereInput
+    where?: inout_logWhereInput
   }
 
 
   /**
-   * device_log without action
+   * inout_log without action
    */
-  export type device_logArgs = {
+  export type inout_logArgs = {
     /**
-     * Select specific fields to fetch from the device_log
+     * Select specific fields to fetch from the inout_log
      */
-    select?: device_logSelect | null
+    select?: inout_logSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: device_logInclude | null
+    include?: inout_logInclude | null
   }
 
 
@@ -13041,6 +13059,8 @@ export namespace Prisma {
     org?: boolean | organizationArgs
     user_group?: boolean | user_groupArgs
     rfid_card?: boolean | rfid_cardArgs
+    inout_log?: boolean | students$inout_logArgs
+    _count?: boolean | StudentsCountOutputTypeArgs
   }
 
 
@@ -13048,6 +13068,8 @@ export namespace Prisma {
     org?: boolean | organizationArgs
     user_group?: boolean | user_groupArgs
     rfid_card?: boolean | rfid_cardArgs
+    inout_log?: boolean | students$inout_logArgs
+    _count?: boolean | StudentsCountOutputTypeArgs
   }
 
   export type studentsGetPayload<S extends boolean | null | undefined | studentsArgs> =
@@ -13059,14 +13081,18 @@ export namespace Prisma {
     [P in TruthyKeys<S['include']>]:
         P extends 'org' ? organizationGetPayload<S['include'][P]> | null :
         P extends 'user_group' ? user_groupGetPayload<S['include'][P]> | null :
-        P extends 'rfid_card' ? rfid_cardGetPayload<S['include'][P]> | null :  never
+        P extends 'rfid_card' ? rfid_cardGetPayload<S['include'][P]> | null :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['include'][P]>>  :
+        P extends '_count' ? StudentsCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (studentsArgs | studentsFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'org' ? organizationGetPayload<S['select'][P]> | null :
         P extends 'user_group' ? user_groupGetPayload<S['select'][P]> | null :
-        P extends 'rfid_card' ? rfid_cardGetPayload<S['select'][P]> | null :  P extends keyof students ? students[P] : never
+        P extends 'rfid_card' ? rfid_cardGetPayload<S['select'][P]> | null :
+        P extends 'inout_log' ? Array < inout_logGetPayload<S['select'][P]>>  :
+        P extends '_count' ? StudentsCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof students ? students[P] : never
   } 
       : students
 
@@ -13444,6 +13470,8 @@ export namespace Prisma {
 
     rfid_card<T extends rfid_cardArgs= {}>(args?: Subset<T, rfid_cardArgs>): Prisma__rfid_cardClient<rfid_cardGetPayload<T> | Null>;
 
+    inout_log<T extends students$inout_logArgs= {}>(args?: Subset<T, students$inout_logArgs>): Prisma.PrismaPromise<Array<inout_logGetPayload<T>>| Null>;
+
     private get _document();
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -13800,6 +13828,27 @@ export namespace Prisma {
 
 
   /**
+   * students.inout_log
+   */
+  export type students$inout_logArgs = {
+    /**
+     * Select specific fields to fetch from the inout_log
+     */
+    select?: inout_logSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: inout_logInclude | null
+    where?: inout_logWhereInput
+    orderBy?: Enumerable<inout_logOrderByWithRelationInput>
+    cursor?: inout_logWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<Inout_logScalarFieldEnum>
+  }
+
+
+  /**
    * students without action
    */
   export type studentsArgs = {
@@ -13832,20 +13881,6 @@ export namespace Prisma {
   };
 
   export type CommandsScalarFieldEnum = (typeof CommandsScalarFieldEnum)[keyof typeof CommandsScalarFieldEnum]
-
-
-  export const Device_logScalarFieldEnum: {
-    id: 'id',
-    org_id: 'org_id',
-    door_id: 'door_id',
-    user_id: 'user_id',
-    log_type: 'log_type',
-    log_date: 'log_date',
-    updatedAt: 'updatedAt',
-    createdAt: 'createdAt'
-  };
-
-  export type Device_logScalarFieldEnum = (typeof Device_logScalarFieldEnum)[keyof typeof Device_logScalarFieldEnum]
 
 
   export const Device_typeScalarFieldEnum: {
@@ -13893,6 +13928,25 @@ export namespace Prisma {
   };
 
   export type DoorsScalarFieldEnum = (typeof DoorsScalarFieldEnum)[keyof typeof DoorsScalarFieldEnum]
+
+
+  export const Inout_logScalarFieldEnum: {
+    id: 'id',
+    organization: 'organization',
+    org_id: 'org_id',
+    devicePort: 'devicePort',
+    device_id: 'device_id',
+    doorNo: 'doorNo',
+    door_id: 'door_id',
+    studentName: 'studentName',
+    student_id: 'student_id',
+    operation: 'operation',
+    log_date: 'log_date',
+    updatedAt: 'updatedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type Inout_logScalarFieldEnum = (typeof Inout_logScalarFieldEnum)[keyof typeof Inout_logScalarFieldEnum]
 
 
   export const OrganizationScalarFieldEnum: {
@@ -14041,7 +14095,7 @@ export namespace Prisma {
     user?: UserListRelationFilter
     user_group?: User_groupListRelationFilter
     doors?: DoorsListRelationFilter
-    device_log?: Device_logListRelationFilter
+    inout_log?: Inout_logListRelationFilter
     students?: StudentsListRelationFilter
   }
 
@@ -14060,7 +14114,7 @@ export namespace Prisma {
     user?: userOrderByRelationAggregateInput
     user_group?: user_groupOrderByRelationAggregateInput
     doors?: doorsOrderByRelationAggregateInput
-    device_log?: device_logOrderByRelationAggregateInput
+    inout_log?: inout_logOrderByRelationAggregateInput
     students?: studentsOrderByRelationAggregateInput
   }
 
@@ -14180,7 +14234,6 @@ export namespace Prisma {
     isActive?: BoolNullableFilter | boolean | null
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
-    device_log?: Device_logListRelationFilter
   }
 
   export type userOrderByWithRelationInput = {
@@ -14201,7 +14254,6 @@ export namespace Prisma {
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
-    device_log?: device_logOrderByRelationAggregateInput
   }
 
   export type userWhereUniqueInput = {
@@ -14380,7 +14432,7 @@ export namespace Prisma {
     isActive?: BoolNullableFilter | boolean | null
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
-    device_log?: Device_logListRelationFilter
+    inout_log?: Inout_logListRelationFilter
     devices_setup?: Devices_setupListRelationFilter
   }
 
@@ -14394,7 +14446,7 @@ export namespace Prisma {
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
-    device_log?: device_logOrderByRelationAggregateInput
+    inout_log?: inout_logOrderByRelationAggregateInput
     devices_setup?: devices_setupOrderByRelationAggregateInput
   }
 
@@ -14489,67 +14541,87 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type device_logWhereInput = {
-    AND?: Enumerable<device_logWhereInput>
-    OR?: Enumerable<device_logWhereInput>
-    NOT?: Enumerable<device_logWhereInput>
+  export type inout_logWhereInput = {
+    AND?: Enumerable<inout_logWhereInput>
+    OR?: Enumerable<inout_logWhereInput>
+    NOT?: Enumerable<inout_logWhereInput>
     id?: IntFilter | number
+    organization?: StringNullableFilter | string | null
     org_id?: IntFilter | number
     org?: XOR<OrganizationRelationFilter, organizationWhereInput>
+    devicePort?: StringNullableFilter | string | null
+    device_id?: IntNullableFilter | number | null
+    doorNo?: StringNullableFilter | string | null
     door_id?: IntFilter | number
     door?: XOR<DoorsRelationFilter, doorsWhereInput>
-    user_id?: IntFilter | number
-    user?: XOR<UserRelationFilter, userWhereInput>
-    log_type?: StringFilter | string
-    log_date?: DateTimeNullableFilter | Date | string | null
+    studentName?: StringNullableFilter | string | null
+    student_id?: IntFilter | number
+    students?: XOR<StudentsRelationFilter, studentsWhereInput>
+    operation?: StringFilter | string
+    log_date?: DateTimeFilter | Date | string
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
   }
 
-  export type device_logOrderByWithRelationInput = {
+  export type inout_logOrderByWithRelationInput = {
     id?: SortOrder
+    organization?: SortOrder
     org_id?: SortOrder
     org?: organizationOrderByWithRelationInput
+    devicePort?: SortOrder
+    device_id?: SortOrder
+    doorNo?: SortOrder
     door_id?: SortOrder
     door?: doorsOrderByWithRelationInput
-    user_id?: SortOrder
-    user?: userOrderByWithRelationInput
-    log_type?: SortOrder
+    studentName?: SortOrder
+    student_id?: SortOrder
+    students?: studentsOrderByWithRelationInput
+    operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type device_logWhereUniqueInput = {
+  export type inout_logWhereUniqueInput = {
     id?: number
   }
 
-  export type device_logOrderByWithAggregationInput = {
+  export type inout_logOrderByWithAggregationInput = {
     id?: SortOrder
+    organization?: SortOrder
     org_id?: SortOrder
+    devicePort?: SortOrder
+    device_id?: SortOrder
+    doorNo?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
-    log_type?: SortOrder
+    studentName?: SortOrder
+    student_id?: SortOrder
+    operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
-    _count?: device_logCountOrderByAggregateInput
-    _avg?: device_logAvgOrderByAggregateInput
-    _max?: device_logMaxOrderByAggregateInput
-    _min?: device_logMinOrderByAggregateInput
-    _sum?: device_logSumOrderByAggregateInput
+    _count?: inout_logCountOrderByAggregateInput
+    _avg?: inout_logAvgOrderByAggregateInput
+    _max?: inout_logMaxOrderByAggregateInput
+    _min?: inout_logMinOrderByAggregateInput
+    _sum?: inout_logSumOrderByAggregateInput
   }
 
-  export type device_logScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<device_logScalarWhereWithAggregatesInput>
-    OR?: Enumerable<device_logScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<device_logScalarWhereWithAggregatesInput>
+  export type inout_logScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<inout_logScalarWhereWithAggregatesInput>
+    OR?: Enumerable<inout_logScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<inout_logScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    organization?: StringNullableWithAggregatesFilter | string | null
     org_id?: IntWithAggregatesFilter | number
+    devicePort?: StringNullableWithAggregatesFilter | string | null
+    device_id?: IntNullableWithAggregatesFilter | number | null
+    doorNo?: StringNullableWithAggregatesFilter | string | null
     door_id?: IntWithAggregatesFilter | number
-    user_id?: IntWithAggregatesFilter | number
-    log_type?: StringWithAggregatesFilter | string
-    log_date?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    studentName?: StringNullableWithAggregatesFilter | string | null
+    student_id?: IntWithAggregatesFilter | number
+    operation?: StringWithAggregatesFilter | string
+    log_date?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -14767,6 +14839,7 @@ export namespace Prisma {
     org?: XOR<OrganizationRelationFilter, organizationWhereInput> | null
     user_group?: XOR<User_groupRelationFilter, user_groupWhereInput> | null
     rfid_card?: XOR<Rfid_cardRelationFilter, rfid_cardWhereInput> | null
+    inout_log?: Inout_logListRelationFilter
   }
 
   export type studentsOrderByWithRelationInput = {
@@ -14786,6 +14859,7 @@ export namespace Prisma {
     org?: organizationOrderByWithRelationInput
     user_group?: user_groupOrderByWithRelationInput
     rfid_card?: rfid_cardOrderByWithRelationInput
+    inout_log?: inout_logOrderByRelationAggregateInput
   }
 
   export type studentsWhereUniqueInput = {
@@ -14846,7 +14920,7 @@ export namespace Prisma {
     user?: userCreateNestedManyWithoutOrgInput
     user_group?: user_groupCreateNestedManyWithoutOrgInput
     doors?: doorsCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
@@ -14865,7 +14939,7 @@ export namespace Prisma {
     user?: userUncheckedCreateNestedManyWithoutOrgInput
     user_group?: user_groupUncheckedCreateNestedManyWithoutOrgInput
     doors?: doorsUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -14883,7 +14957,7 @@ export namespace Prisma {
     user?: userUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUpdateManyWithoutOrgNestedInput
     doors?: doorsUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
@@ -14902,7 +14976,7 @@ export namespace Prisma {
     user?: userUncheckedUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUncheckedUpdateManyWithoutOrgNestedInput
     doors?: doorsUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -15024,7 +15098,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateInput = {
@@ -15042,7 +15115,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userUpdateInput = {
@@ -15059,7 +15131,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateInput = {
@@ -15077,7 +15148,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type userCreateManyInput = {
@@ -15272,7 +15342,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logCreateNestedManyWithoutDoorInput
     devices_setup?: devices_setupCreateNestedManyWithoutDoorInput
   }
 
@@ -15285,7 +15355,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutDoorInput
     devices_setup?: devices_setupUncheckedCreateNestedManyWithoutDoorInput
   }
 
@@ -15297,7 +15367,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUpdateManyWithoutDoorNestedInput
     devices_setup?: devices_setupUpdateManyWithoutDoorNestedInput
   }
 
@@ -15310,7 +15380,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutDoorNestedInput
     devices_setup?: devices_setupUncheckedUpdateManyWithoutDoorNestedInput
   }
 
@@ -15416,73 +15486,108 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logCreateInput = {
-    org: organizationCreateNestedOneWithoutDevice_logInput
-    door: doorsCreateNestedOneWithoutDevice_logInput
-    user: userCreateNestedOneWithoutDevice_logInput
-    log_type: string
-    log_date?: Date | string | null
+  export type inout_logCreateInput = {
+    organization?: string | null
+    org: organizationCreateNestedOneWithoutInout_logInput
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    door: doorsCreateNestedOneWithoutInout_logInput
+    studentName?: string | null
+    students: studentsCreateNestedOneWithoutInout_logInput
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logUncheckedCreateInput = {
+  export type inout_logUncheckedCreateInput = {
     id?: number
+    organization?: string | null
     org_id: number
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
     door_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logUpdateInput = {
-    org?: organizationUpdateOneRequiredWithoutDevice_logNestedInput
-    door?: doorsUpdateOneRequiredWithoutDevice_logNestedInput
-    user?: userUpdateOneRequiredWithoutDevice_logNestedInput
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type inout_logUpdateInput = {
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUncheckedUpdateInput = {
+  export type inout_logUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
     org_id?: IntFieldUpdateOperationsInput | number
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
     door_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    student_id?: IntFieldUpdateOperationsInput | number
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logCreateManyInput = {
+  export type inout_logCreateManyInput = {
     id?: number
+    organization?: string | null
     org_id: number
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
     door_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logUpdateManyMutationInput = {
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type inout_logUpdateManyMutationInput = {
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUncheckedUpdateManyInput = {
+  export type inout_logUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
     org_id?: IntFieldUpdateOperationsInput | number
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
     door_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    student_id?: IntFieldUpdateOperationsInput | number
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15742,6 +15847,7 @@ export namespace Prisma {
     org?: organizationCreateNestedOneWithoutStudentsInput
     user_group?: user_groupCreateNestedOneWithoutStudentsInput
     rfid_card?: rfid_cardCreateNestedOneWithoutStudentsInput
+    inout_log?: inout_logCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsUncheckedCreateInput = {
@@ -15758,6 +15864,7 @@ export namespace Prisma {
     rfid_card_id?: number | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsUpdateInput = {
@@ -15773,6 +15880,7 @@ export namespace Prisma {
     org?: organizationUpdateOneWithoutStudentsNestedInput
     user_group?: user_groupUpdateOneWithoutStudentsNestedInput
     rfid_card?: rfid_cardUpdateOneWithoutStudentsNestedInput
+    inout_log?: inout_logUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsUncheckedUpdateInput = {
@@ -15789,6 +15897,7 @@ export namespace Prisma {
     rfid_card_id?: NullableIntFieldUpdateOperationsInput | number | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inout_log?: inout_logUncheckedUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsCreateManyInput = {
@@ -15925,10 +16034,10 @@ export namespace Prisma {
     none?: doorsWhereInput
   }
 
-  export type Device_logListRelationFilter = {
-    every?: device_logWhereInput
-    some?: device_logWhereInput
-    none?: device_logWhereInput
+  export type Inout_logListRelationFilter = {
+    every?: inout_logWhereInput
+    some?: inout_logWhereInput
+    none?: inout_logWhereInput
   }
 
   export type StudentsListRelationFilter = {
@@ -15953,7 +16062,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type device_logOrderByRelationAggregateInput = {
+  export type inout_logOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16437,56 +16546,73 @@ export namespace Prisma {
     isNot?: doorsWhereInput | null
   }
 
-  export type UserRelationFilter = {
-    is?: userWhereInput
-    isNot?: userWhereInput
+  export type StudentsRelationFilter = {
+    is?: studentsWhereInput
+    isNot?: studentsWhereInput
   }
 
-  export type device_logCountOrderByAggregateInput = {
+  export type inout_logCountOrderByAggregateInput = {
     id?: SortOrder
+    organization?: SortOrder
     org_id?: SortOrder
+    devicePort?: SortOrder
+    device_id?: SortOrder
+    doorNo?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
-    log_type?: SortOrder
+    studentName?: SortOrder
+    student_id?: SortOrder
+    operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type device_logAvgOrderByAggregateInput = {
+  export type inout_logAvgOrderByAggregateInput = {
     id?: SortOrder
     org_id?: SortOrder
+    device_id?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
+    student_id?: SortOrder
   }
 
-  export type device_logMaxOrderByAggregateInput = {
+  export type inout_logMaxOrderByAggregateInput = {
     id?: SortOrder
+    organization?: SortOrder
     org_id?: SortOrder
+    devicePort?: SortOrder
+    device_id?: SortOrder
+    doorNo?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
-    log_type?: SortOrder
+    studentName?: SortOrder
+    student_id?: SortOrder
+    operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type device_logMinOrderByAggregateInput = {
+  export type inout_logMinOrderByAggregateInput = {
     id?: SortOrder
+    organization?: SortOrder
     org_id?: SortOrder
+    devicePort?: SortOrder
+    device_id?: SortOrder
+    doorNo?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
-    log_type?: SortOrder
+    studentName?: SortOrder
+    student_id?: SortOrder
+    operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
   }
 
-  export type device_logSumOrderByAggregateInput = {
+  export type inout_logSumOrderByAggregateInput = {
     id?: SortOrder
     org_id?: SortOrder
+    device_id?: SortOrder
     door_id?: SortOrder
-    user_id?: SortOrder
+    student_id?: SortOrder
   }
 
   export type commandsCountOrderByAggregateInput = {
@@ -16717,11 +16843,11 @@ export namespace Prisma {
     connect?: Enumerable<doorsWhereUniqueInput>
   }
 
-  export type device_logCreateNestedManyWithoutOrgInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutOrgInput>, Enumerable<device_logUncheckedCreateWithoutOrgInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutOrgInput>
-    createMany?: device_logCreateManyOrgInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
+  export type inout_logCreateNestedManyWithoutOrgInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutOrgInput>, Enumerable<inout_logUncheckedCreateWithoutOrgInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutOrgInput>
+    createMany?: inout_logCreateManyOrgInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
   }
 
   export type studentsCreateNestedManyWithoutOrgInput = {
@@ -16759,11 +16885,11 @@ export namespace Prisma {
     connect?: Enumerable<doorsWhereUniqueInput>
   }
 
-  export type device_logUncheckedCreateNestedManyWithoutOrgInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutOrgInput>, Enumerable<device_logUncheckedCreateWithoutOrgInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutOrgInput>
-    createMany?: device_logCreateManyOrgInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
+  export type inout_logUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutOrgInput>, Enumerable<inout_logUncheckedCreateWithoutOrgInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutOrgInput>
+    createMany?: inout_logCreateManyOrgInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
   }
 
   export type studentsUncheckedCreateNestedManyWithoutOrgInput = {
@@ -16849,18 +16975,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<doorsScalarWhereInput>
   }
 
-  export type device_logUpdateManyWithoutOrgNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutOrgInput>, Enumerable<device_logUncheckedCreateWithoutOrgInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutOrgInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutOrgInput>
-    createMany?: device_logCreateManyOrgInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutOrgInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutOrgInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
+  export type inout_logUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutOrgInput>, Enumerable<inout_logUncheckedCreateWithoutOrgInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutOrgInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutOrgInput>
+    createMany?: inout_logCreateManyOrgInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutOrgInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutOrgInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
   }
 
   export type studentsUpdateManyWithoutOrgNestedInput = {
@@ -16941,18 +17067,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<doorsScalarWhereInput>
   }
 
-  export type device_logUncheckedUpdateManyWithoutOrgNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutOrgInput>, Enumerable<device_logUncheckedCreateWithoutOrgInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutOrgInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutOrgInput>
-    createMany?: device_logCreateManyOrgInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutOrgInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutOrgInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
+  export type inout_logUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutOrgInput>, Enumerable<inout_logUncheckedCreateWithoutOrgInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutOrgInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutOrgInput>
+    createMany?: inout_logCreateManyOrgInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutOrgInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutOrgInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
   }
 
   export type studentsUncheckedUpdateManyWithoutOrgNestedInput = {
@@ -17001,20 +17127,6 @@ export namespace Prisma {
     connect?: user_groupWhereUniqueInput
   }
 
-  export type device_logCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutUserInput>, Enumerable<device_logUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutUserInput>
-    createMany?: device_logCreateManyUserInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
-  }
-
-  export type device_logUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutUserInput>, Enumerable<device_logUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutUserInput>
-    createMany?: device_logCreateManyUserInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
-  }
-
   export type organizationUpdateOneRequiredWithoutUserNestedInput = {
     create?: XOR<organizationCreateWithoutUserInput, organizationUncheckedCreateWithoutUserInput>
     connectOrCreate?: organizationCreateOrConnectWithoutUserInput
@@ -17047,40 +17159,12 @@ export namespace Prisma {
     set?: boolean | null
   }
 
-  export type device_logUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutUserInput>, Enumerable<device_logUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: device_logCreateManyUserInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type device_logUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutUserInput>, Enumerable<device_logUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: device_logCreateManyUserInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
   }
 
   export type organizationCreateNestedOneWithoutUser_groupInput = {
@@ -17243,11 +17327,11 @@ export namespace Prisma {
     connect?: organizationWhereUniqueInput
   }
 
-  export type device_logCreateNestedManyWithoutDoorInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutDoorInput>, Enumerable<device_logUncheckedCreateWithoutDoorInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutDoorInput>
-    createMany?: device_logCreateManyDoorInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
+  export type inout_logCreateNestedManyWithoutDoorInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutDoorInput>, Enumerable<inout_logUncheckedCreateWithoutDoorInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutDoorInput>
+    createMany?: inout_logCreateManyDoorInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
   }
 
   export type devices_setupCreateNestedManyWithoutDoorInput = {
@@ -17257,11 +17341,11 @@ export namespace Prisma {
     connect?: Enumerable<devices_setupWhereUniqueInput>
   }
 
-  export type device_logUncheckedCreateNestedManyWithoutDoorInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutDoorInput>, Enumerable<device_logUncheckedCreateWithoutDoorInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutDoorInput>
-    createMany?: device_logCreateManyDoorInputEnvelope
-    connect?: Enumerable<device_logWhereUniqueInput>
+  export type inout_logUncheckedCreateNestedManyWithoutDoorInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutDoorInput>, Enumerable<inout_logUncheckedCreateWithoutDoorInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutDoorInput>
+    createMany?: inout_logCreateManyDoorInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
   }
 
   export type devices_setupUncheckedCreateNestedManyWithoutDoorInput = {
@@ -17279,18 +17363,18 @@ export namespace Prisma {
     update?: XOR<organizationUpdateWithoutDoorsInput, organizationUncheckedUpdateWithoutDoorsInput>
   }
 
-  export type device_logUpdateManyWithoutDoorNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutDoorInput>, Enumerable<device_logUncheckedCreateWithoutDoorInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutDoorInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutDoorInput>
-    createMany?: device_logCreateManyDoorInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutDoorInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutDoorInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
+  export type inout_logUpdateManyWithoutDoorNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutDoorInput>, Enumerable<inout_logUncheckedCreateWithoutDoorInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutDoorInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutDoorInput>
+    createMany?: inout_logCreateManyDoorInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutDoorInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutDoorInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
   }
 
   export type devices_setupUpdateManyWithoutDoorNestedInput = {
@@ -17307,18 +17391,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<devices_setupScalarWhereInput>
   }
 
-  export type device_logUncheckedUpdateManyWithoutDoorNestedInput = {
-    create?: XOR<Enumerable<device_logCreateWithoutDoorInput>, Enumerable<device_logUncheckedCreateWithoutDoorInput>>
-    connectOrCreate?: Enumerable<device_logCreateOrConnectWithoutDoorInput>
-    upsert?: Enumerable<device_logUpsertWithWhereUniqueWithoutDoorInput>
-    createMany?: device_logCreateManyDoorInputEnvelope
-    set?: Enumerable<device_logWhereUniqueInput>
-    disconnect?: Enumerable<device_logWhereUniqueInput>
-    delete?: Enumerable<device_logWhereUniqueInput>
-    connect?: Enumerable<device_logWhereUniqueInput>
-    update?: Enumerable<device_logUpdateWithWhereUniqueWithoutDoorInput>
-    updateMany?: Enumerable<device_logUpdateManyWithWhereWithoutDoorInput>
-    deleteMany?: Enumerable<device_logScalarWhereInput>
+  export type inout_logUncheckedUpdateManyWithoutDoorNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutDoorInput>, Enumerable<inout_logUncheckedCreateWithoutDoorInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutDoorInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutDoorInput>
+    createMany?: inout_logCreateManyDoorInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutDoorInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutDoorInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
   }
 
   export type devices_setupUncheckedUpdateManyWithoutDoorNestedInput = {
@@ -17377,46 +17461,46 @@ export namespace Prisma {
     deleteMany?: Enumerable<devices_setupScalarWhereInput>
   }
 
-  export type organizationCreateNestedOneWithoutDevice_logInput = {
-    create?: XOR<organizationCreateWithoutDevice_logInput, organizationUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: organizationCreateOrConnectWithoutDevice_logInput
+  export type organizationCreateNestedOneWithoutInout_logInput = {
+    create?: XOR<organizationCreateWithoutInout_logInput, organizationUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: organizationCreateOrConnectWithoutInout_logInput
     connect?: organizationWhereUniqueInput
   }
 
-  export type doorsCreateNestedOneWithoutDevice_logInput = {
-    create?: XOR<doorsCreateWithoutDevice_logInput, doorsUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: doorsCreateOrConnectWithoutDevice_logInput
+  export type doorsCreateNestedOneWithoutInout_logInput = {
+    create?: XOR<doorsCreateWithoutInout_logInput, doorsUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: doorsCreateOrConnectWithoutInout_logInput
     connect?: doorsWhereUniqueInput
   }
 
-  export type userCreateNestedOneWithoutDevice_logInput = {
-    create?: XOR<userCreateWithoutDevice_logInput, userUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: userCreateOrConnectWithoutDevice_logInput
-    connect?: userWhereUniqueInput
+  export type studentsCreateNestedOneWithoutInout_logInput = {
+    create?: XOR<studentsCreateWithoutInout_logInput, studentsUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: studentsCreateOrConnectWithoutInout_logInput
+    connect?: studentsWhereUniqueInput
   }
 
-  export type organizationUpdateOneRequiredWithoutDevice_logNestedInput = {
-    create?: XOR<organizationCreateWithoutDevice_logInput, organizationUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: organizationCreateOrConnectWithoutDevice_logInput
-    upsert?: organizationUpsertWithoutDevice_logInput
+  export type organizationUpdateOneRequiredWithoutInout_logNestedInput = {
+    create?: XOR<organizationCreateWithoutInout_logInput, organizationUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: organizationCreateOrConnectWithoutInout_logInput
+    upsert?: organizationUpsertWithoutInout_logInput
     connect?: organizationWhereUniqueInput
-    update?: XOR<organizationUpdateWithoutDevice_logInput, organizationUncheckedUpdateWithoutDevice_logInput>
+    update?: XOR<organizationUpdateWithoutInout_logInput, organizationUncheckedUpdateWithoutInout_logInput>
   }
 
-  export type doorsUpdateOneRequiredWithoutDevice_logNestedInput = {
-    create?: XOR<doorsCreateWithoutDevice_logInput, doorsUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: doorsCreateOrConnectWithoutDevice_logInput
-    upsert?: doorsUpsertWithoutDevice_logInput
+  export type doorsUpdateOneRequiredWithoutInout_logNestedInput = {
+    create?: XOR<doorsCreateWithoutInout_logInput, doorsUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: doorsCreateOrConnectWithoutInout_logInput
+    upsert?: doorsUpsertWithoutInout_logInput
     connect?: doorsWhereUniqueInput
-    update?: XOR<doorsUpdateWithoutDevice_logInput, doorsUncheckedUpdateWithoutDevice_logInput>
+    update?: XOR<doorsUpdateWithoutInout_logInput, doorsUncheckedUpdateWithoutInout_logInput>
   }
 
-  export type userUpdateOneRequiredWithoutDevice_logNestedInput = {
-    create?: XOR<userCreateWithoutDevice_logInput, userUncheckedCreateWithoutDevice_logInput>
-    connectOrCreate?: userCreateOrConnectWithoutDevice_logInput
-    upsert?: userUpsertWithoutDevice_logInput
-    connect?: userWhereUniqueInput
-    update?: XOR<userUpdateWithoutDevice_logInput, userUncheckedUpdateWithoutDevice_logInput>
+  export type studentsUpdateOneRequiredWithoutInout_logNestedInput = {
+    create?: XOR<studentsCreateWithoutInout_logInput, studentsUncheckedCreateWithoutInout_logInput>
+    connectOrCreate?: studentsCreateOrConnectWithoutInout_logInput
+    upsert?: studentsUpsertWithoutInout_logInput
+    connect?: studentsWhereUniqueInput
+    update?: XOR<studentsUpdateWithoutInout_logInput, studentsUncheckedUpdateWithoutInout_logInput>
   }
 
   export type userCreateNestedManyWithoutRfid_cardInput = {
@@ -17553,6 +17637,20 @@ export namespace Prisma {
     connect?: rfid_cardWhereUniqueInput
   }
 
+  export type inout_logCreateNestedManyWithoutStudentsInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutStudentsInput>, Enumerable<inout_logUncheckedCreateWithoutStudentsInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutStudentsInput>
+    createMany?: inout_logCreateManyStudentsInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
+  }
+
+  export type inout_logUncheckedCreateNestedManyWithoutStudentsInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutStudentsInput>, Enumerable<inout_logUncheckedCreateWithoutStudentsInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutStudentsInput>
+    createMany?: inout_logCreateManyStudentsInputEnvelope
+    connect?: Enumerable<inout_logWhereUniqueInput>
+  }
+
   export type organizationUpdateOneWithoutStudentsNestedInput = {
     create?: XOR<organizationCreateWithoutStudentsInput, organizationUncheckedCreateWithoutStudentsInput>
     connectOrCreate?: organizationCreateOrConnectWithoutStudentsInput
@@ -17581,6 +17679,34 @@ export namespace Prisma {
     delete?: boolean
     connect?: rfid_cardWhereUniqueInput
     update?: XOR<rfid_cardUpdateWithoutStudentsInput, rfid_cardUncheckedUpdateWithoutStudentsInput>
+  }
+
+  export type inout_logUpdateManyWithoutStudentsNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutStudentsInput>, Enumerable<inout_logUncheckedCreateWithoutStudentsInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutStudentsInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutStudentsInput>
+    createMany?: inout_logCreateManyStudentsInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutStudentsInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutStudentsInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
+  }
+
+  export type inout_logUncheckedUpdateManyWithoutStudentsNestedInput = {
+    create?: XOR<Enumerable<inout_logCreateWithoutStudentsInput>, Enumerable<inout_logUncheckedCreateWithoutStudentsInput>>
+    connectOrCreate?: Enumerable<inout_logCreateOrConnectWithoutStudentsInput>
+    upsert?: Enumerable<inout_logUpsertWithWhereUniqueWithoutStudentsInput>
+    createMany?: inout_logCreateManyStudentsInputEnvelope
+    set?: Enumerable<inout_logWhereUniqueInput>
+    disconnect?: Enumerable<inout_logWhereUniqueInput>
+    delete?: Enumerable<inout_logWhereUniqueInput>
+    connect?: Enumerable<inout_logWhereUniqueInput>
+    update?: Enumerable<inout_logUpdateWithWhereUniqueWithoutStudentsInput>
+    updateMany?: Enumerable<inout_logUpdateManyWithWhereWithoutStudentsInput>
+    deleteMany?: Enumerable<inout_logScalarWhereInput>
   }
 
   export type NestedIntFilter = {
@@ -17837,7 +17963,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutOrgInput = {
@@ -17854,7 +17979,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userCreateOrConnectWithoutOrgInput = {
@@ -17905,7 +18029,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logCreateNestedManyWithoutDoorInput
     devices_setup?: devices_setupCreateNestedManyWithoutDoorInput
   }
 
@@ -17917,7 +18041,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutDoorInput
     devices_setup?: devices_setupUncheckedCreateNestedManyWithoutDoorInput
   }
 
@@ -17931,32 +18055,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type device_logCreateWithoutOrgInput = {
-    door: doorsCreateNestedOneWithoutDevice_logInput
-    user: userCreateNestedOneWithoutDevice_logInput
-    log_type: string
-    log_date?: Date | string | null
+  export type inout_logCreateWithoutOrgInput = {
+    organization?: string | null
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    door: doorsCreateNestedOneWithoutInout_logInput
+    studentName?: string | null
+    students: studentsCreateNestedOneWithoutInout_logInput
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logUncheckedCreateWithoutOrgInput = {
+  export type inout_logUncheckedCreateWithoutOrgInput = {
     id?: number
+    organization?: string | null
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
     door_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logCreateOrConnectWithoutOrgInput = {
-    where: device_logWhereUniqueInput
-    create: XOR<device_logCreateWithoutOrgInput, device_logUncheckedCreateWithoutOrgInput>
+  export type inout_logCreateOrConnectWithoutOrgInput = {
+    where: inout_logWhereUniqueInput
+    create: XOR<inout_logCreateWithoutOrgInput, inout_logUncheckedCreateWithoutOrgInput>
   }
 
-  export type device_logCreateManyOrgInputEnvelope = {
-    data: Enumerable<device_logCreateManyOrgInput>
+  export type inout_logCreateManyOrgInputEnvelope = {
+    data: Enumerable<inout_logCreateManyOrgInput>
     skipDuplicates?: boolean
   }
 
@@ -17972,6 +18106,7 @@ export namespace Prisma {
     createdAt?: Date | string
     user_group?: user_groupCreateNestedOneWithoutStudentsInput
     rfid_card?: rfid_cardCreateNestedOneWithoutStudentsInput
+    inout_log?: inout_logCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsUncheckedCreateWithoutOrgInput = {
@@ -17987,6 +18122,7 @@ export namespace Prisma {
     rfid_card_id?: number | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsCreateOrConnectWithoutOrgInput = {
@@ -18123,32 +18259,37 @@ export namespace Prisma {
     createdAt?: DateTimeFilter | Date | string
   }
 
-  export type device_logUpsertWithWhereUniqueWithoutOrgInput = {
-    where: device_logWhereUniqueInput
-    update: XOR<device_logUpdateWithoutOrgInput, device_logUncheckedUpdateWithoutOrgInput>
-    create: XOR<device_logCreateWithoutOrgInput, device_logUncheckedCreateWithoutOrgInput>
+  export type inout_logUpsertWithWhereUniqueWithoutOrgInput = {
+    where: inout_logWhereUniqueInput
+    update: XOR<inout_logUpdateWithoutOrgInput, inout_logUncheckedUpdateWithoutOrgInput>
+    create: XOR<inout_logCreateWithoutOrgInput, inout_logUncheckedCreateWithoutOrgInput>
   }
 
-  export type device_logUpdateWithWhereUniqueWithoutOrgInput = {
-    where: device_logWhereUniqueInput
-    data: XOR<device_logUpdateWithoutOrgInput, device_logUncheckedUpdateWithoutOrgInput>
+  export type inout_logUpdateWithWhereUniqueWithoutOrgInput = {
+    where: inout_logWhereUniqueInput
+    data: XOR<inout_logUpdateWithoutOrgInput, inout_logUncheckedUpdateWithoutOrgInput>
   }
 
-  export type device_logUpdateManyWithWhereWithoutOrgInput = {
-    where: device_logScalarWhereInput
-    data: XOR<device_logUpdateManyMutationInput, device_logUncheckedUpdateManyWithoutDevice_logInput>
+  export type inout_logUpdateManyWithWhereWithoutOrgInput = {
+    where: inout_logScalarWhereInput
+    data: XOR<inout_logUpdateManyMutationInput, inout_logUncheckedUpdateManyWithoutInout_logInput>
   }
 
-  export type device_logScalarWhereInput = {
-    AND?: Enumerable<device_logScalarWhereInput>
-    OR?: Enumerable<device_logScalarWhereInput>
-    NOT?: Enumerable<device_logScalarWhereInput>
+  export type inout_logScalarWhereInput = {
+    AND?: Enumerable<inout_logScalarWhereInput>
+    OR?: Enumerable<inout_logScalarWhereInput>
+    NOT?: Enumerable<inout_logScalarWhereInput>
     id?: IntFilter | number
+    organization?: StringNullableFilter | string | null
     org_id?: IntFilter | number
+    devicePort?: StringNullableFilter | string | null
+    device_id?: IntNullableFilter | number | null
+    doorNo?: StringNullableFilter | string | null
     door_id?: IntFilter | number
-    user_id?: IntFilter | number
-    log_type?: StringFilter | string
-    log_date?: DateTimeNullableFilter | Date | string | null
+    studentName?: StringNullableFilter | string | null
+    student_id?: IntFilter | number
+    operation?: StringFilter | string
+    log_date?: DateTimeFilter | Date | string
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
   }
@@ -18201,7 +18342,7 @@ export namespace Prisma {
     user?: userCreateNestedManyWithoutOrgInput
     user_group?: user_groupCreateNestedManyWithoutOrgInput
     doors?: doorsCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
@@ -18219,7 +18360,7 @@ export namespace Prisma {
     user?: userUncheckedCreateNestedManyWithoutOrgInput
     user_group?: user_groupUncheckedCreateNestedManyWithoutOrgInput
     doors?: doorsUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -18246,7 +18387,7 @@ export namespace Prisma {
     user?: userUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUpdateManyWithoutOrgNestedInput
     doors?: doorsUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
@@ -18264,7 +18405,7 @@ export namespace Prisma {
     user?: userUncheckedUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUncheckedUpdateManyWithoutOrgNestedInput
     doors?: doorsUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -18281,7 +18422,7 @@ export namespace Prisma {
     org_group?: organization_groupCreateNestedManyWithoutOrgInput
     user_group?: user_groupCreateNestedManyWithoutOrgInput
     doors?: doorsCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
@@ -18299,7 +18440,7 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedCreateNestedManyWithoutOrgInput
     user_group?: user_groupUncheckedCreateNestedManyWithoutOrgInput
     doors?: doorsUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -18358,35 +18499,6 @@ export namespace Prisma {
     create: XOR<user_groupCreateWithoutUserInput, user_groupUncheckedCreateWithoutUserInput>
   }
 
-  export type device_logCreateWithoutUserInput = {
-    org: organizationCreateNestedOneWithoutDevice_logInput
-    door: doorsCreateNestedOneWithoutDevice_logInput
-    log_type: string
-    log_date?: Date | string | null
-    updatedAt?: Date | string | null
-    createdAt?: Date | string
-  }
-
-  export type device_logUncheckedCreateWithoutUserInput = {
-    id?: number
-    org_id: number
-    door_id: number
-    log_type: string
-    log_date?: Date | string | null
-    updatedAt?: Date | string | null
-    createdAt?: Date | string
-  }
-
-  export type device_logCreateOrConnectWithoutUserInput = {
-    where: device_logWhereUniqueInput
-    create: XOR<device_logCreateWithoutUserInput, device_logUncheckedCreateWithoutUserInput>
-  }
-
-  export type device_logCreateManyUserInputEnvelope = {
-    data: Enumerable<device_logCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
   export type organizationUpsertWithoutUserInput = {
     update: XOR<organizationUpdateWithoutUserInput, organizationUncheckedUpdateWithoutUserInput>
     create: XOR<organizationCreateWithoutUserInput, organizationUncheckedCreateWithoutUserInput>
@@ -18405,7 +18517,7 @@ export namespace Prisma {
     org_group?: organization_groupUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUpdateManyWithoutOrgNestedInput
     doors?: doorsUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
@@ -18423,7 +18535,7 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUncheckedUpdateManyWithoutOrgNestedInput
     doors?: doorsUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -18477,22 +18589,6 @@ export namespace Prisma {
     students?: studentsUncheckedUpdateManyWithoutUser_groupNestedInput
   }
 
-  export type device_logUpsertWithWhereUniqueWithoutUserInput = {
-    where: device_logWhereUniqueInput
-    update: XOR<device_logUpdateWithoutUserInput, device_logUncheckedUpdateWithoutUserInput>
-    create: XOR<device_logCreateWithoutUserInput, device_logUncheckedCreateWithoutUserInput>
-  }
-
-  export type device_logUpdateWithWhereUniqueWithoutUserInput = {
-    where: device_logWhereUniqueInput
-    data: XOR<device_logUpdateWithoutUserInput, device_logUncheckedUpdateWithoutUserInput>
-  }
-
-  export type device_logUpdateManyWithWhereWithoutUserInput = {
-    where: device_logScalarWhereInput
-    data: XOR<device_logUpdateManyMutationInput, device_logUncheckedUpdateManyWithoutDevice_logInput>
-  }
-
   export type organizationCreateWithoutUser_groupInput = {
     name: string
     address: string
@@ -18506,7 +18602,7 @@ export namespace Prisma {
     org_group?: organization_groupCreateNestedManyWithoutOrgInput
     user?: userCreateNestedManyWithoutOrgInput
     doors?: doorsCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
@@ -18524,7 +18620,7 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedCreateNestedManyWithoutOrgInput
     user?: userUncheckedCreateNestedManyWithoutOrgInput
     doors?: doorsUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -18568,7 +18664,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutUser_groupInput = {
@@ -18585,7 +18680,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userCreateOrConnectWithoutUser_groupInput = {
@@ -18610,6 +18704,7 @@ export namespace Prisma {
     createdAt?: Date | string
     org?: organizationCreateNestedOneWithoutStudentsInput
     rfid_card?: rfid_cardCreateNestedOneWithoutStudentsInput
+    inout_log?: inout_logCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsUncheckedCreateWithoutUser_groupInput = {
@@ -18625,6 +18720,7 @@ export namespace Prisma {
     rfid_card_id?: number | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsCreateOrConnectWithoutUser_groupInput = {
@@ -18655,7 +18751,7 @@ export namespace Prisma {
     org_group?: organization_groupUpdateManyWithoutOrgNestedInput
     user?: userUpdateManyWithoutOrgNestedInput
     doors?: doorsUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
@@ -18673,7 +18769,7 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedUpdateManyWithoutOrgNestedInput
     user?: userUncheckedUpdateManyWithoutOrgNestedInput
     doors?: doorsUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -18791,7 +18887,7 @@ export namespace Prisma {
     org_group?: organization_groupCreateNestedManyWithoutOrgInput
     user?: userCreateNestedManyWithoutOrgInput
     user_group?: user_groupCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
@@ -18809,7 +18905,7 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedCreateNestedManyWithoutOrgInput
     user?: userUncheckedCreateNestedManyWithoutOrgInput
     user_group?: user_groupUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -18818,32 +18914,42 @@ export namespace Prisma {
     create: XOR<organizationCreateWithoutDoorsInput, organizationUncheckedCreateWithoutDoorsInput>
   }
 
-  export type device_logCreateWithoutDoorInput = {
-    org: organizationCreateNestedOneWithoutDevice_logInput
-    user: userCreateNestedOneWithoutDevice_logInput
-    log_type: string
-    log_date?: Date | string | null
+  export type inout_logCreateWithoutDoorInput = {
+    organization?: string | null
+    org: organizationCreateNestedOneWithoutInout_logInput
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    studentName?: string | null
+    students: studentsCreateNestedOneWithoutInout_logInput
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logUncheckedCreateWithoutDoorInput = {
+  export type inout_logUncheckedCreateWithoutDoorInput = {
     id?: number
+    organization?: string | null
     org_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type device_logCreateOrConnectWithoutDoorInput = {
-    where: device_logWhereUniqueInput
-    create: XOR<device_logCreateWithoutDoorInput, device_logUncheckedCreateWithoutDoorInput>
+  export type inout_logCreateOrConnectWithoutDoorInput = {
+    where: inout_logWhereUniqueInput
+    create: XOR<inout_logCreateWithoutDoorInput, inout_logUncheckedCreateWithoutDoorInput>
   }
 
-  export type device_logCreateManyDoorInputEnvelope = {
-    data: Enumerable<device_logCreateManyDoorInput>
+  export type inout_logCreateManyDoorInputEnvelope = {
+    data: Enumerable<inout_logCreateManyDoorInput>
     skipDuplicates?: boolean
   }
 
@@ -18906,7 +19012,7 @@ export namespace Prisma {
     org_group?: organization_groupUpdateManyWithoutOrgNestedInput
     user?: userUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
@@ -18924,24 +19030,24 @@ export namespace Prisma {
     org_group?: organization_groupUncheckedUpdateManyWithoutOrgNestedInput
     user?: userUncheckedUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
-  export type device_logUpsertWithWhereUniqueWithoutDoorInput = {
-    where: device_logWhereUniqueInput
-    update: XOR<device_logUpdateWithoutDoorInput, device_logUncheckedUpdateWithoutDoorInput>
-    create: XOR<device_logCreateWithoutDoorInput, device_logUncheckedCreateWithoutDoorInput>
+  export type inout_logUpsertWithWhereUniqueWithoutDoorInput = {
+    where: inout_logWhereUniqueInput
+    update: XOR<inout_logUpdateWithoutDoorInput, inout_logUncheckedUpdateWithoutDoorInput>
+    create: XOR<inout_logCreateWithoutDoorInput, inout_logUncheckedCreateWithoutDoorInput>
   }
 
-  export type device_logUpdateWithWhereUniqueWithoutDoorInput = {
-    where: device_logWhereUniqueInput
-    data: XOR<device_logUpdateWithoutDoorInput, device_logUncheckedUpdateWithoutDoorInput>
+  export type inout_logUpdateWithWhereUniqueWithoutDoorInput = {
+    where: inout_logWhereUniqueInput
+    data: XOR<inout_logUpdateWithoutDoorInput, inout_logUncheckedUpdateWithoutDoorInput>
   }
 
-  export type device_logUpdateManyWithWhereWithoutDoorInput = {
-    where: device_logScalarWhereInput
-    data: XOR<device_logUpdateManyMutationInput, device_logUncheckedUpdateManyWithoutDevice_logInput>
+  export type inout_logUpdateManyWithWhereWithoutDoorInput = {
+    where: inout_logScalarWhereInput
+    data: XOR<inout_logUpdateManyMutationInput, inout_logUncheckedUpdateManyWithoutInout_logInput>
   }
 
   export type devices_setupUpsertWithWhereUniqueWithoutDoorInput = {
@@ -19037,7 +19143,7 @@ export namespace Prisma {
     data: XOR<devices_setupUpdateManyMutationInput, devices_setupUncheckedUpdateManyWithoutDevices_setupInput>
   }
 
-  export type organizationCreateWithoutDevice_logInput = {
+  export type organizationCreateWithoutInout_logInput = {
     name: string
     address: string
     contact_no: string
@@ -19054,7 +19160,7 @@ export namespace Prisma {
     students?: studentsCreateNestedManyWithoutOrgInput
   }
 
-  export type organizationUncheckedCreateWithoutDevice_logInput = {
+  export type organizationUncheckedCreateWithoutInout_logInput = {
     id?: number
     name: string
     address: string
@@ -19072,12 +19178,12 @@ export namespace Prisma {
     students?: studentsUncheckedCreateNestedManyWithoutOrgInput
   }
 
-  export type organizationCreateOrConnectWithoutDevice_logInput = {
+  export type organizationCreateOrConnectWithoutInout_logInput = {
     where: organizationWhereUniqueInput
-    create: XOR<organizationCreateWithoutDevice_logInput, organizationUncheckedCreateWithoutDevice_logInput>
+    create: XOR<organizationCreateWithoutInout_logInput, organizationUncheckedCreateWithoutInout_logInput>
   }
 
-  export type doorsCreateWithoutDevice_logInput = {
+  export type doorsCreateWithoutInout_logInput = {
     org: organizationCreateNestedOneWithoutDoorsInput
     name: string
     description: string
@@ -19088,7 +19194,7 @@ export namespace Prisma {
     devices_setup?: devices_setupCreateNestedManyWithoutDoorInput
   }
 
-  export type doorsUncheckedCreateWithoutDevice_logInput = {
+  export type doorsUncheckedCreateWithoutInout_logInput = {
     id?: number
     org_id: number
     name: string
@@ -19100,55 +19206,53 @@ export namespace Prisma {
     devices_setup?: devices_setupUncheckedCreateNestedManyWithoutDoorInput
   }
 
-  export type doorsCreateOrConnectWithoutDevice_logInput = {
+  export type doorsCreateOrConnectWithoutInout_logInput = {
     where: doorsWhereUniqueInput
-    create: XOR<doorsCreateWithoutDevice_logInput, doorsUncheckedCreateWithoutDevice_logInput>
+    create: XOR<doorsCreateWithoutInout_logInput, doorsUncheckedCreateWithoutInout_logInput>
   }
 
-  export type userCreateWithoutDevice_logInput = {
-    org: organizationCreateNestedOneWithoutUserInput
+  export type studentsCreateWithoutInout_logInput = {
+    student_id: string
     name: string
     email: string
-    password: string
-    phone_no: string
+    phone: string
     address: string
-    description: string
-    user_img?: string | null
-    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
-    user_group?: user_groupCreateNestedOneWithoutUserInput
     isActive?: boolean | null
+    barcode?: string | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org?: organizationCreateNestedOneWithoutStudentsInput
+    user_group?: user_groupCreateNestedOneWithoutStudentsInput
+    rfid_card?: rfid_cardCreateNestedOneWithoutStudentsInput
   }
 
-  export type userUncheckedCreateWithoutDevice_logInput = {
+  export type studentsUncheckedCreateWithoutInout_logInput = {
     id?: number
-    org_id: number
+    org_id?: number | null
+    student_id: string
     name: string
     email: string
-    password: string
-    phone_no: string
+    phone: string
     address: string
-    description: string
-    user_img?: string | null
+    isActive?: boolean | null
+    barcode?: string | null
     user_group_id?: number | null
     rfid_card_id?: number | null
-    isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
 
-  export type userCreateOrConnectWithoutDevice_logInput = {
-    where: userWhereUniqueInput
-    create: XOR<userCreateWithoutDevice_logInput, userUncheckedCreateWithoutDevice_logInput>
+  export type studentsCreateOrConnectWithoutInout_logInput = {
+    where: studentsWhereUniqueInput
+    create: XOR<studentsCreateWithoutInout_logInput, studentsUncheckedCreateWithoutInout_logInput>
   }
 
-  export type organizationUpsertWithoutDevice_logInput = {
-    update: XOR<organizationUpdateWithoutDevice_logInput, organizationUncheckedUpdateWithoutDevice_logInput>
-    create: XOR<organizationCreateWithoutDevice_logInput, organizationUncheckedCreateWithoutDevice_logInput>
+  export type organizationUpsertWithoutInout_logInput = {
+    update: XOR<organizationUpdateWithoutInout_logInput, organizationUncheckedUpdateWithoutInout_logInput>
+    create: XOR<organizationCreateWithoutInout_logInput, organizationUncheckedCreateWithoutInout_logInput>
   }
 
-  export type organizationUpdateWithoutDevice_logInput = {
+  export type organizationUpdateWithoutInout_logInput = {
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
     contact_no?: StringFieldUpdateOperationsInput | string
@@ -19165,7 +19269,7 @@ export namespace Prisma {
     students?: studentsUpdateManyWithoutOrgNestedInput
   }
 
-  export type organizationUncheckedUpdateWithoutDevice_logInput = {
+  export type organizationUncheckedUpdateWithoutInout_logInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
@@ -19183,12 +19287,12 @@ export namespace Prisma {
     students?: studentsUncheckedUpdateManyWithoutOrgNestedInput
   }
 
-  export type doorsUpsertWithoutDevice_logInput = {
-    update: XOR<doorsUpdateWithoutDevice_logInput, doorsUncheckedUpdateWithoutDevice_logInput>
-    create: XOR<doorsCreateWithoutDevice_logInput, doorsUncheckedCreateWithoutDevice_logInput>
+  export type doorsUpsertWithoutInout_logInput = {
+    update: XOR<doorsUpdateWithoutInout_logInput, doorsUncheckedUpdateWithoutInout_logInput>
+    create: XOR<doorsCreateWithoutInout_logInput, doorsUncheckedCreateWithoutInout_logInput>
   }
 
-  export type doorsUpdateWithoutDevice_logInput = {
+  export type doorsUpdateWithoutInout_logInput = {
     org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -19199,7 +19303,7 @@ export namespace Prisma {
     devices_setup?: devices_setupUpdateManyWithoutDoorNestedInput
   }
 
-  export type doorsUncheckedUpdateWithoutDevice_logInput = {
+  export type doorsUncheckedUpdateWithoutInout_logInput = {
     id?: IntFieldUpdateOperationsInput | number
     org_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
@@ -19211,40 +19315,38 @@ export namespace Prisma {
     devices_setup?: devices_setupUncheckedUpdateManyWithoutDoorNestedInput
   }
 
-  export type userUpsertWithoutDevice_logInput = {
-    update: XOR<userUpdateWithoutDevice_logInput, userUncheckedUpdateWithoutDevice_logInput>
-    create: XOR<userCreateWithoutDevice_logInput, userUncheckedCreateWithoutDevice_logInput>
+  export type studentsUpsertWithoutInout_logInput = {
+    update: XOR<studentsUpdateWithoutInout_logInput, studentsUncheckedUpdateWithoutInout_logInput>
+    create: XOR<studentsCreateWithoutInout_logInput, studentsUncheckedCreateWithoutInout_logInput>
   }
 
-  export type userUpdateWithoutDevice_logInput = {
-    org?: organizationUpdateOneRequiredWithoutUserNestedInput
+  export type studentsUpdateWithoutInout_logInput = {
+    student_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_no?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
-    user_group?: user_groupUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneWithoutStudentsNestedInput
+    user_group?: user_groupUpdateOneWithoutStudentsNestedInput
+    rfid_card?: rfid_cardUpdateOneWithoutStudentsNestedInput
   }
 
-  export type userUncheckedUpdateWithoutDevice_logInput = {
+  export type studentsUncheckedUpdateWithoutInout_logInput = {
     id?: IntFieldUpdateOperationsInput | number
-    org_id?: IntFieldUpdateOperationsInput | number
+    org_id?: NullableIntFieldUpdateOperationsInput | number | null
+    student_id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_no?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     address?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    user_img?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    barcode?: NullableStringFieldUpdateOperationsInput | string | null
     user_group_id?: NullableIntFieldUpdateOperationsInput | number | null
     rfid_card_id?: NullableIntFieldUpdateOperationsInput | number | null
-    isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19262,7 +19364,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutRfid_cardInput = {
@@ -19279,7 +19380,6 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type userCreateOrConnectWithoutRfid_cardInput = {
@@ -19304,6 +19404,7 @@ export namespace Prisma {
     createdAt?: Date | string
     org?: organizationCreateNestedOneWithoutStudentsInput
     user_group?: user_groupCreateNestedOneWithoutStudentsInput
+    inout_log?: inout_logCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsUncheckedCreateWithoutRfid_cardInput = {
@@ -19319,6 +19420,7 @@ export namespace Prisma {
     user_group_id?: number | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutStudentsInput
   }
 
   export type studentsCreateOrConnectWithoutRfid_cardInput = {
@@ -19395,7 +19497,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logCreateNestedManyWithoutDoorInput
   }
 
   export type doorsUncheckedCreateWithoutDevices_setupInput = {
@@ -19407,7 +19509,7 @@ export namespace Prisma {
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
-    device_log?: device_logUncheckedCreateNestedManyWithoutDoorInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutDoorInput
   }
 
   export type doorsCreateOrConnectWithoutDevices_setupInput = {
@@ -19452,7 +19554,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUpdateManyWithoutDoorNestedInput
   }
 
   export type doorsUncheckedUpdateWithoutDevices_setupInput = {
@@ -19464,7 +19566,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutDoorNestedInput
   }
 
   export type organizationCreateWithoutStudentsInput = {
@@ -19481,7 +19583,7 @@ export namespace Prisma {
     user?: userCreateNestedManyWithoutOrgInput
     user_group?: user_groupCreateNestedManyWithoutOrgInput
     doors?: doorsCreateNestedManyWithoutOrgInput
-    device_log?: device_logCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logCreateNestedManyWithoutOrgInput
   }
 
   export type organizationUncheckedCreateWithoutStudentsInput = {
@@ -19499,7 +19601,7 @@ export namespace Prisma {
     user?: userUncheckedCreateNestedManyWithoutOrgInput
     user_group?: user_groupUncheckedCreateNestedManyWithoutOrgInput
     doors?: doorsUncheckedCreateNestedManyWithoutOrgInput
-    device_log?: device_logUncheckedCreateNestedManyWithoutOrgInput
+    inout_log?: inout_logUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type organizationCreateOrConnectWithoutStudentsInput = {
@@ -19557,6 +19659,45 @@ export namespace Prisma {
     create: XOR<rfid_cardCreateWithoutStudentsInput, rfid_cardUncheckedCreateWithoutStudentsInput>
   }
 
+  export type inout_logCreateWithoutStudentsInput = {
+    organization?: string | null
+    org: organizationCreateNestedOneWithoutInout_logInput
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    door: doorsCreateNestedOneWithoutInout_logInput
+    studentName?: string | null
+    operation: string
+    log_date?: Date | string
+    updatedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type inout_logUncheckedCreateWithoutStudentsInput = {
+    id?: number
+    organization?: string | null
+    org_id: number
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    door_id: number
+    studentName?: string | null
+    operation: string
+    log_date?: Date | string
+    updatedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type inout_logCreateOrConnectWithoutStudentsInput = {
+    where: inout_logWhereUniqueInput
+    create: XOR<inout_logCreateWithoutStudentsInput, inout_logUncheckedCreateWithoutStudentsInput>
+  }
+
+  export type inout_logCreateManyStudentsInputEnvelope = {
+    data: Enumerable<inout_logCreateManyStudentsInput>
+    skipDuplicates?: boolean
+  }
+
   export type organizationUpsertWithoutStudentsInput = {
     update: XOR<organizationUpdateWithoutStudentsInput, organizationUncheckedUpdateWithoutStudentsInput>
     create: XOR<organizationCreateWithoutStudentsInput, organizationUncheckedCreateWithoutStudentsInput>
@@ -19576,7 +19717,7 @@ export namespace Prisma {
     user?: userUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUpdateManyWithoutOrgNestedInput
     doors?: doorsUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUpdateManyWithoutOrgNestedInput
   }
 
   export type organizationUncheckedUpdateWithoutStudentsInput = {
@@ -19594,7 +19735,7 @@ export namespace Prisma {
     user?: userUncheckedUpdateManyWithoutOrgNestedInput
     user_group?: user_groupUncheckedUpdateManyWithoutOrgNestedInput
     doors?: doorsUncheckedUpdateManyWithoutOrgNestedInput
-    device_log?: device_logUncheckedUpdateManyWithoutOrgNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type user_groupUpsertWithoutStudentsInput = {
@@ -19647,6 +19788,22 @@ export namespace Prisma {
     user?: userUncheckedUpdateManyWithoutRfid_cardNestedInput
   }
 
+  export type inout_logUpsertWithWhereUniqueWithoutStudentsInput = {
+    where: inout_logWhereUniqueInput
+    update: XOR<inout_logUpdateWithoutStudentsInput, inout_logUncheckedUpdateWithoutStudentsInput>
+    create: XOR<inout_logCreateWithoutStudentsInput, inout_logUncheckedCreateWithoutStudentsInput>
+  }
+
+  export type inout_logUpdateWithWhereUniqueWithoutStudentsInput = {
+    where: inout_logWhereUniqueInput
+    data: XOR<inout_logUpdateWithoutStudentsInput, inout_logUncheckedUpdateWithoutStudentsInput>
+  }
+
+  export type inout_logUpdateManyWithWhereWithoutStudentsInput = {
+    where: inout_logScalarWhereInput
+    data: XOR<inout_logUpdateManyMutationInput, inout_logUncheckedUpdateManyWithoutInout_logInput>
+  }
+
   export type organization_groupCreateManyOrgInput = {
     id?: number
     name: string
@@ -19691,12 +19848,17 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type device_logCreateManyOrgInput = {
+  export type inout_logCreateManyOrgInput = {
     id?: number
+    organization?: string | null
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
     door_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
@@ -19755,7 +19917,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutOrgInput = {
@@ -19772,7 +19933,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateManyWithoutUserInput = {
@@ -19828,7 +19988,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUpdateManyWithoutDoorNestedInput
     devices_setup?: devices_setupUpdateManyWithoutDoorNestedInput
   }
 
@@ -19840,7 +20000,7 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutDoorNestedInput
+    inout_log?: inout_logUncheckedUpdateManyWithoutDoorNestedInput
     devices_setup?: devices_setupUncheckedUpdateManyWithoutDoorNestedInput
   }
 
@@ -19854,31 +20014,46 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUpdateWithoutOrgInput = {
-    door?: doorsUpdateOneRequiredWithoutDevice_logNestedInput
-    user?: userUpdateOneRequiredWithoutDevice_logNestedInput
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type inout_logUpdateWithoutOrgInput = {
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUncheckedUpdateWithoutOrgInput = {
+  export type inout_logUncheckedUpdateWithoutOrgInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
     door_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    student_id?: IntFieldUpdateOperationsInput | number
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUncheckedUpdateManyWithoutDevice_logInput = {
+  export type inout_logUncheckedUpdateManyWithoutInout_logInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
     door_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    student_id?: IntFieldUpdateOperationsInput | number
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19895,6 +20070,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user_group?: user_groupUpdateOneWithoutStudentsNestedInput
     rfid_card?: rfid_cardUpdateOneWithoutStudentsNestedInput
+    inout_log?: inout_logUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsUncheckedUpdateWithoutOrgInput = {
@@ -19910,6 +20086,7 @@ export namespace Prisma {
     rfid_card_id?: NullableIntFieldUpdateOperationsInput | number | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inout_log?: inout_logUncheckedUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsUncheckedUpdateManyWithoutStudentsInput = {
@@ -19923,35 +20100,6 @@ export namespace Prisma {
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     user_group_id?: NullableIntFieldUpdateOperationsInput | number | null
     rfid_card_id?: NullableIntFieldUpdateOperationsInput | number | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type device_logCreateManyUserInput = {
-    id?: number
-    org_id: number
-    door_id: number
-    log_type: string
-    log_date?: Date | string | null
-    updatedAt?: Date | string | null
-    createdAt?: Date | string
-  }
-
-  export type device_logUpdateWithoutUserInput = {
-    org?: organizationUpdateOneRequiredWithoutDevice_logNestedInput
-    door?: doorsUpdateOneRequiredWithoutDevice_logNestedInput
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type device_logUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    org_id?: IntFieldUpdateOperationsInput | number
-    door_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20000,7 +20148,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutUser_groupInput = {
@@ -20017,7 +20164,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type studentsUpdateWithoutUser_groupInput = {
@@ -20032,6 +20178,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: organizationUpdateOneWithoutStudentsNestedInput
     rfid_card?: rfid_cardUpdateOneWithoutStudentsNestedInput
+    inout_log?: inout_logUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsUncheckedUpdateWithoutUser_groupInput = {
@@ -20047,6 +20194,7 @@ export namespace Prisma {
     rfid_card_id?: NullableIntFieldUpdateOperationsInput | number | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inout_log?: inout_logUncheckedUpdateManyWithoutStudentsNestedInput
   }
 
   export type user_groupCreateManyPermissionInput = {
@@ -20079,12 +20227,17 @@ export namespace Prisma {
     students?: studentsUncheckedUpdateManyWithoutUser_groupNestedInput
   }
 
-  export type device_logCreateManyDoorInput = {
+  export type inout_logCreateManyDoorInput = {
     id?: number
+    organization?: string | null
     org_id: number
-    user_id: number
-    log_type: string
-    log_date?: Date | string | null
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    studentName?: string | null
+    student_id: number
+    operation: string
+    log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
   }
@@ -20105,21 +20258,31 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type device_logUpdateWithoutDoorInput = {
-    org?: organizationUpdateOneRequiredWithoutDevice_logNestedInput
-    user?: userUpdateOneRequiredWithoutDevice_logNestedInput
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type inout_logUpdateWithoutDoorInput = {
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type device_logUncheckedUpdateWithoutDoorInput = {
+  export type inout_logUncheckedUpdateWithoutDoorInput = {
     id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
     org_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    log_type?: StringFieldUpdateOperationsInput | string
-    log_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    student_id?: IntFieldUpdateOperationsInput | number
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20262,7 +20425,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUpdateManyWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutRfid_cardInput = {
@@ -20279,7 +20441,6 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    device_log?: device_logUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type studentsUpdateWithoutRfid_cardInput = {
@@ -20294,6 +20455,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: organizationUpdateOneWithoutStudentsNestedInput
     user_group?: user_groupUpdateOneWithoutStudentsNestedInput
+    inout_log?: inout_logUpdateManyWithoutStudentsNestedInput
   }
 
   export type studentsUncheckedUpdateWithoutRfid_cardInput = {
@@ -20307,6 +20469,51 @@ export namespace Prisma {
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     barcode?: NullableStringFieldUpdateOperationsInput | string | null
     user_group_id?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    inout_log?: inout_logUncheckedUpdateManyWithoutStudentsNestedInput
+  }
+
+  export type inout_logCreateManyStudentsInput = {
+    id?: number
+    organization?: string | null
+    org_id: number
+    devicePort?: string | null
+    device_id?: number | null
+    doorNo?: string | null
+    door_id: number
+    studentName?: string | null
+    operation: string
+    log_date?: Date | string
+    updatedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type inout_logUpdateWithoutStudentsInput = {
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type inout_logUncheckedUpdateWithoutStudentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    org_id?: IntFieldUpdateOperationsInput | number
+    devicePort?: NullableStringFieldUpdateOperationsInput | string | null
+    device_id?: NullableIntFieldUpdateOperationsInput | number | null
+    doorNo?: NullableStringFieldUpdateOperationsInput | string | null
+    door_id?: IntFieldUpdateOperationsInput | number
+    studentName?: NullableStringFieldUpdateOperationsInput | string | null
+    operation?: StringFieldUpdateOperationsInput | string
+    log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

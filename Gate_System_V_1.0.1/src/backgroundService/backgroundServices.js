@@ -13,7 +13,7 @@ var ConnectedPorts = [];
 HOST = "localhost";
 
 endpoint = `http://${HOST}:${PORT}/`;
-console.log("Wise Gate Application 3");
+
 
 // commands
 // ::C31 Emergency Exit Mode
@@ -23,21 +23,21 @@ console.log("Wise Gate Application 3");
 
 
 
-// function commandString(command) {
-//   const inputString = command;
-//   let outputBuffer = Buffer.alloc(inputString.length);
-//   for (let i = 0; i < inputString.length; i++) {
-//     outputBuffer[i] = inputString.charCodeAt(i);
-//   }
-//   const startBuffer = Buffer.from([0x02]);
-//   const endBuffer = Buffer.from([0x03]);
-//   const finalBuffer = Buffer.concat([startBuffer, outputBuffer, endBuffer]);
-//   const outputString = finalBuffer.toString("hex").replace(/(\w{2})/g, "\\x$1");
-//   // console.log(outputString);
-//   return outputString;
-// }
+function commandString(command) {
+  const inputString = command;
+  let outputBuffer = Buffer.alloc(inputString.length);
+  for (let i = 0; i < inputString.length; i++) {
+    outputBuffer[i] = inputString.charCodeAt(i);
+  }
+  const startBuffer = Buffer.from([0x02]);
+  const endBuffer = Buffer.from([0x03]);
+  const finalBuffer = Buffer.concat([startBuffer, outputBuffer, endBuffer]);
+  const outputString = finalBuffer.toString("hex").replace(/(\w{2})/g, "\\x$1");
+  // console.log(outputString);
+  return outputString;
+}
 
-// let b = commandString("C31");
+let b = commandString("DI00");
 // console.log(b);
 
 // get serial ports from system
@@ -62,7 +62,7 @@ setInterval(() => {
 setInterval(() => {
   // console.log(registedPorts, "registedPorts---------------------------------------------");
   // console.log(db_get_ports, "db_get_ports============================================");
-  if (!checkEqual(registedPorts, db_get_ports))getTheDataFromDB();
+  if (!checkEqual(registedPorts, db_get_ports)) { getTheDataFromDB(); }
 } , 2000);
 
 // getTheDataFromDB
@@ -109,8 +109,6 @@ const checkEqual = (array1, array2) => {
   return array1.every((value, index) => value === array2[index]);
 }
 
-
-
   
 async function connectSerial(d) {
   // console.log(d.path, "d");
@@ -146,6 +144,8 @@ async function connectSerial(d) {
 
   serialport.on("readable", () => {
     setTimeout(async () => {
+      readerPort = serialport.path;
+      // console.log(readerPort, "serialport.path")
       data = serialport.read();
       if (data) {
         output = data
@@ -153,18 +153,22 @@ async function connectSerial(d) {
           .replace(/[\x02]/g, "")
           .toString()
           .replace(/[\x03]/g, "");
-        console.log(output);
+        // console.log(output);
         door_name = d.door_name;
+        // console.log(door_name, "door_name")
           let studentName = ''
           let cardStatus = ''
           let studentStatus = ''
-          await checkCardNo(output).then((res) => {
-            // console.log(res, "res");
-            if(res == null) return false
-            studentName = res.name
-            cardStatus = res.rfid_card.isActive
-            studentStatus = res.isActive
-          })
+          let student_id = ''
+          let cardDetails =  await checkCardNo(output);
+          
+          if(cardDetails == false) return;
+          
+            student_id = cardDetails.id
+            studentName = cardDetails.name
+            cardStatus = cardDetails.rfid_card.isActive
+            studentStatus = cardDetails.isActive
+          // console.log(student_id, "student_id")
           // console.log(studentName, "studentName")
           // console.log(cardStatus, "cardStatus")
           // console.log(studentStatus, "studentStatus")
@@ -198,61 +202,101 @@ async function connectSerial(d) {
           // console.log(door_name, "1234")
           if (t.door_name == door_name && t.devices_type_opration == "WRITE") {
             gate_port = t.path;
-            console.log(t.path, "888888888888888888888888888")
+            // console.log(t.path, "888888888888888888888888888")
           }
         });
 
-        // console.log(gate_port, "gate_port");
-        // serialHandlers.forEach(function (t) {
-          // if (t.path == gate_port) {
-  //           gate_serial = t.serial;
-  //         }
-  //       });
+        console.log(gate_port, "gate_port");
+        serialHandlers.forEach(function (t) {
+          if (t.path == gate_port) {
+            gate_serial = t.serial;
+          }
+        });
 
-  //       // console.log(serialHandlers)
+        console.log(serialHandlers)
 
-  //       if (gate_serial == null) {
-  //         console.warn("Gate Swing Not Connected");
-  //         return;
-  //       }
-
+        if (gate_serial == null) {
+          console.warn("Gate Swing Not Connected");
+          return;
+        }
+        
         var command =
         devices_type_opration == "READ - IN"
             ? "\x02\x44\x49\x30\x30\x03"
             : "\x02\x44\x4f\x30\x30\x03"; // DI00 : DO00
 
         console.log("Gate Opened");
-        serialport.write(command);
+        gate_serial.write(command);
+
         console.log(serialport.write(command))
+        console.log(door_name, "door_name")
+        console.log(student_id, "student_id")
+        console.log(studentName, "studentName")
+        console.log(readerPort, "readerPort")
+        console.log(devices_type_opration, "devices_type_opration")
+        config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        const Alldata = {
+          door_name: door_name,
+          student_id: student_id,
+          studentName: studentName,
+          readerPort: readerPort,
+          devices_type_opration: devices_type_opration
+        }
+        axios.post(endpoint + "log/addLog", Alldata, config)
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        
+        
       }
     }, 50);
   });
 }
 
 
-const checkCardNo = function checkCardNo(card_no){
+const checkCardNo = async function checkCardNo(card_no){
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    const a = axios
-      .get(endpoint + "rfid/findByCardNo/" + card_no, config)
-      .then((res) => {
-      //  console.log(res.data)
-        if(res.data){
-          // studentName = res.data.name;
-          return res.data
-        }else{
-          return false;
-        }
-      })
-      .catch((err) => {
-        // console.log(err);
-        return false;
-      }
-      );
+    let temp;
+    try {
+      temp = await axios.get(endpoint + "rfid/findByCardNo/" + card_no, config)
+    } catch (error) {
+      return false;
+    }
 
-      return a
+    if(temp.data){
+      return temp.data
+    }else{
+      return false;
+    }
+
+    // const a = axios
+    //   .get(endpoint + "rfid/findByCardNo/" + card_no, config)
+    //   .then((res) => {
+    //   //  console.log(res.data)
+    //     if(res.data){
+    //       // studentName = res.data.name;
+    //       return res.data
+    //     }else{
+    //       return false;
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //     return false;
+    //   }
+    //   );
+
+    //   return a
 
 }

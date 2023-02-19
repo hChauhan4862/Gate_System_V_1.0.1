@@ -1,4 +1,5 @@
 const prompt = require('custom-electron-prompt');
+const { dialog } = require('electron');
 const path = require('path');
 const wnConfig = require('./storage')
 

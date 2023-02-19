@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fileUpload = require("express-fileupload");
-// const managerGroupRouter = require('./managerGroup.router');
-// const managerRouter = require('./manager.router');
-// const nameGroupMstRouter = require('./nameGroupMst.router');
+
 
 const organizationRouter = require('./organization.router');
 const orgGroupRouter = require('./orgGroup.router');
@@ -20,11 +18,9 @@ const rfidRouter = require('./rfid_card.router');
 const devicesSetupRouter = require('./deviceSetup.router');
 const studentsRouter = require('./students.routes');
 const staticRouter = require('./staticRouting.router');
+const logRouter = require('./log.router')
 const { app } = require('electron');
 
-// router.use('/managerGroup', managerGroupRouter);
-// router.use('/manager', managerRouter);
-// router.use('/nameGroupMst', nameGroupMstRouter); 
 
 router.use(fileUpload())
 
@@ -42,6 +38,7 @@ router.use('/rfid', rfidRouter);
 // router.use('/ports', portsRouter);
 router.use('/devicesSetup', devicesSetupRouter);
 router.use('/students', studentsRouter);
+router.use('/log',logRouter)
 
 
 
