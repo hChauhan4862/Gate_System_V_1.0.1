@@ -21,22 +21,55 @@ const Header = () => {
   const [sidebar, setSidebar] = useState(true)
   localStorage.setItem("sidebar", sidebar)
   const [time, setTime] = useState(TimerWithDate());
-  const [user_id, setUser_id] = useState(jwt(token).user_id);
-  const [user_name, setUser_name] = useState(jwt(token).user_name);
-  const [user_email, setUser_email] = useState(jwt(token).user_email);
-  const [user_role, setUser_role] = useState(jwt(token).user_role);
-  const [user_image, setUser_image] = useState(jwt(token).user_image);
+  const [user_id, setUser_id] = useState([]);
+  const [user_name, setUser_name] = useState('');
+  const [user_email, setUser_email] = useState('');
+  const [user_role, setUser_role] = useState('');
+  const [user_image, setUser_image] = useState('');
+
+// console.log(user_image)
+
+
+// check token
+  if(!token){
+    window.location.href = "/login"
+  }
+// console.log(token)
+// check token time
+function checkToken(token) {
+if (token) {
+  const decodedToken = jwt(token);
+  const currentTime = Date.now() / 1000;
+  if (decodedToken.exp < currentTime) {
+    // Token has expired, user is not authenticated
+    window.location.href = "/login"
+  }
+  // Token is valid, user is authenticated
+  let user_id = decodedToken.user_id
+  setUser_id(user_id)
+  getUserData(user_id)
+  return true;
+} else {
+  // Token is invalid, user is not authenticated
+  window.location.href = "/login"
+}
+}
+// checkToken(token)
+useEffect(() => {
+  checkToken(token)
+}, [])
 
 
 
 // get the user data from the database
-const getUserData = () => {
+function getUserData (user_id)  {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }
+  console.log(user_id, "user_id")
   axios.get(endpoint + "user/getUserById/" + user_id, config)
   .then((res) => {
     console.log(res.data)
@@ -53,8 +86,8 @@ const getUserData = () => {
 }
 
 
+
   useEffect(() => {
-    getUserData()
     const interval = setInterval(() => {
       setTime(TimerWithDate());
     }, 1000);
