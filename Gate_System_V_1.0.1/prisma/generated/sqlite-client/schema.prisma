@@ -233,7 +233,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:C:\\harendra/database.sqlite"
+  url      = "file:C:\\Gate_Software/database.sqlite"
 }
 
 model organization {

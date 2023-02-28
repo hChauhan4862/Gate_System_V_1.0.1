@@ -1,0 +1,250 @@
+[
+    {
+        "type": "header",
+        "version": "5.0.4",
+        "comment": "Export to JSON plugin for PHPMyAdmin"
+    },
+    {
+        "type": "database",
+        "name": "gate_system_v_1_0_1"
+    },
+    {
+        "type": "table",
+        "name": "commands",
+        "database": "gate_system_v_1_0_1",
+        "data": [
+            {
+                "id": "1",
+                "name": "DI00",
+                "command_value": "\\x02\\x44\\x49\\x30\\x30\\x03",
+                "description": "Open In Side",
+                "updatedAt": null,
+                "createdAt": "2023-02-14 10:23:03.000"
+            },
+            {
+                "id": "2",
+                "name": "DO00",
+                "command_value": "\\x02\\x44\\x4f\\x30\\x30\\x03",
+                "description": "Open Out Side",
+                "updatedAt": null,
+                "createdAt": "2023-02-14 10:26:42.000"
+            },
+            {
+                "id": "3",
+                "name": "C31",
+                "command_value": "",
+                "description": "Emergency Exit ",
+                "updatedAt": null,
+                "createdAt": "2023-02-14 10:24:45.000"
+            },
+            {
+                "id": "4",
+                "name": "C30",
+                "command_value": "",
+                "description": "Normal Close",
+                "updatedAt": null,
+                "createdAt": "2023-02-14 10:24:45.000"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "devices_setup",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "device_log",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "device_type",
+        "database": "gate_system_v_1_0_1",
+        "data": [
+            {
+                "id": "1",
+                "name": "READ - IN",
+                "description": "READ - IN",
+                "operation": "READ - IN",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 10:14:07.216"
+            },
+            {
+                "id": "2",
+                "name": "READ - OUT",
+                "description": "READ - OUT",
+                "operation": "READ - OUT",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 10:14:24.443"
+            },
+            {
+                "id": "3",
+                "name": "WRITE",
+                "description": "WRITE",
+                "operation": "WRITE",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 10:14:45.403"
+            },
+            {
+                "id": "4",
+                "name": "ISSUE - READER",
+                "description": "ISSUE - READER",
+                "operation": "ISSUE - READER",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-15 10:21:56.000"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "doors",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "organization",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "organization_group",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "permission",
+        "database": "gate_system_v_1_0_1",
+        "data": [
+            {
+                "id": "1",
+                "name": "VIEW | EDIT | DELETE",
+                "description": "All permission",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:53:57.392"
+            },
+            {
+                "id": "2",
+                "name": "VIEW | EDIT",
+                "description": "only view and Edit permission",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:54:31.929"
+            },
+            {
+                "id": "3",
+                "name": "VIEW",
+                "description": "only view permission",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:54:48.482"
+            },
+            {
+                "id": "4",
+                "name": "ACCESS DENIED",
+                "description": "No permission",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:55:09.045"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "rfid_card",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "students",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "user",
+        "database": "gate_system_v_1_0_1",
+        "data": []
+    },
+    {
+        "type": "table",
+        "name": "user_group",
+        "database": "gate_system_v_1_0_1",
+        "data": [
+            {
+                "id": "1",
+                "org_id": "1",
+                "group_name": "ADMIN",
+                "permission_id": "1",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:55:25.414"
+            },
+            {
+                "id": "2",
+                "org_id": "1",
+                "group_name": "MANAGEMENT",
+                "permission_id": "2",
+                "isActive": "1",
+                "updatedAt": "2023-02-13 09:56:26.015",
+                "createdAt": "2023-02-13 09:55:49.380"
+            },
+            {
+                "id": "3",
+                "org_id": "1",
+                "group_name": "FACULTY",
+                "permission_id": "3",
+                "isActive": "1",
+                "updatedAt": "2023-02-13 09:56:46.285",
+                "createdAt": "2023-02-13 09:56:40.112"
+            },
+            {
+                "id": "4",
+                "org_id": "1",
+                "group_name": "STUDENT",
+                "permission_id": "4",
+                "isActive": "1",
+                "updatedAt": null,
+                "createdAt": "2023-02-13 09:56:56.987"
+            }
+        ]
+    },
+    {
+        "type": "table",
+        "name": "_prisma_migrations",
+        "database": "gate_system_v_1_0_1",
+        "data": [
+            {
+                "id": "00de8789-d953-4f6e-99f9-cff72ffeab87",
+                "checksum": "21b4b6918b7adaafe93a2c9495a0fd96639be7f7ecc44befbe063e72788e5c4b",
+                "finished_at": "2023-02-13 12:22:54.564",
+                "migration_name": "20230213122254_init",
+                "logs": null,
+                "rolled_back_at": null,
+                "started_at": "2023-02-13 12:22:54.559",
+                "applied_steps_count": "1"
+            },
+            {
+                "id": "7aa0bb5b-7954-43e2-a169-dcfebec9d43e",
+                "checksum": "38a3642741b73aa865ef00d8cce7837d1d6081f42cfa18b1d86b5204ea22ef5f",
+                "finished_at": "2023-02-13 09:42:34.955",
+                "migration_name": "20230213094234_init",
+                "logs": null,
+                "rolled_back_at": null,
+                "started_at": "2023-02-13 09:42:34.613",
+                "applied_steps_count": "1"
+            }
+        ]
+    }
+]

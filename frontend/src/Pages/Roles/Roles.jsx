@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
+import TimerWithDate  from '../../Components/Timer/Timer';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -18,6 +19,7 @@ let endpoint = endpointData.host
 
 const Roles = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const[org, setOrg] = useState("");
   const [role, setRole] = useState("");
@@ -26,6 +28,7 @@ const Roles = () => {
   const [roleData, setRoleData] = useState([]);
   const [orgData, setOrgData] = useState([]);
   const [permissionData, setPermissionData] = useState([]);
+  const token = localStorage.getItem("token");
   
 
 
@@ -63,6 +66,10 @@ const Roles = () => {
     getRoles();
     getOrgData();
     getPermissionData();
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
   }, [])
  
   // datable implementation
@@ -82,7 +89,7 @@ var table = $("#userGroup").DataTable({
       data: "isActive",
       render: function (data, type, row) {
         if (data === true) {
-          return `<span class="badge bg-success">Active</span>`;
+          return `<span class="badge wn-success">Active</span>`;
         } else {
           return `<span class="badge bg-danger">Inactive</span>`;
         }
@@ -92,11 +99,11 @@ var table = $("#userGroup").DataTable({
       data: "id",
       render: function (data, type, row) {
         return `<div class="action-buttons">
-        <a class="edit" id="editRole" data-id="${data}" onClick="editRole(${data})">
-        <i class="fa fa-pencil"></i>
+        <a class="action-icon" id="editRole" data-id="${data}" onClick="editRole(${data})">
+        <i class="mdi mdi-square-edit-outline"></i>
         </a>
-        <a class="delete" id="deleteRole" data-id="${data}" onClick="deleteRole(${data})">
-        <i class="fa fa-trash"></i>
+        <a class="action-icon" id="deleteRole" data-id="${data}" onClick="deleteRole(${data})">
+        <i class="mdi mdi-delete"></i>
         </a>
         </div>
         `
@@ -194,8 +201,9 @@ $(window).resize(function () {
   
 // get org data
 function getOrgData(){
-  const config ={
+  const config = {
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }
@@ -384,6 +392,23 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
+
+        {/* mobile time */}
+        <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
       
       <div className="body-title">
         <div className="b-title-left">

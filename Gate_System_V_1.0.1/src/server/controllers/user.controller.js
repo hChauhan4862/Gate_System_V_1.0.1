@@ -3,6 +3,7 @@ const { prisma } = require("../../../prisma/myClient");
 // const prisma = new PrismaClient();
 
 const { userModel } = require("../models");
+const bcrypt = require("bcrypt")
 
 // Create a new user 
 const createUser = async(req, res) => {
@@ -38,6 +39,12 @@ const createUser = async(req, res) => {
            return res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
         }
 
+        //Hash the Password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+
+
         console.log("user_img", user_img);
         console.log( req.body)
         
@@ -46,15 +53,22 @@ const createUser = async(req, res) => {
                 org_id: parseInt(org_id),
                 name: name,
                 email: email,
-                password: password,
+                password: hashedPassword,
                 phone_no: phone_no,
                 address: address,
                 description: description,
                 user_img: user_img,
                 user_group_id: parseInt(user_group_id),
                 // rfid_card_id: parseInt(rfid_card_id),
+                user_settings: {
+                    create: {
+                      language: "English",
+                      theme: "Light",
+                      city: "New York",
+                    },
             }
-        });
+        },
+        });  
         message = {
             message: "User created successfully",
             data: user
@@ -74,6 +88,7 @@ const getAllUsers = async(req, res) => {
                 org: true,
                 user_group: true,
                 rfid_card: true,
+                user_settings: true,
             },
         });
 
@@ -95,6 +110,7 @@ const getAllUsers = async(req, res) => {
                 org_name:  user.org.name,
                 user_group_name: user.user_group.group_name,
                 rfid_card_name: rfid_card_name,
+                user_settings: user.user_settings,
             };
         });
 
@@ -134,6 +150,12 @@ const getUserById = async(req, res) => {
             where: {
                 id: Number(id),
             },
+            include: {
+                org: true,
+                user_group: true,
+                rfid_card: true,
+                user_settings: true,
+            },
         });
         if (!user) {
             return res.status(httpStatus.NOT_FOUND).send("User not found");
@@ -154,13 +176,15 @@ const editUser = async(req, res) => {
     const { org_id, name, email, password, phone_no, address, description, user_group_id, rfid_card_id, isActive } = req.body;
    
 
+
+    
+
     try {
-                  
-        //  use joi validation
-        const { error } = userModel.createUserSchema.validate(req.body);
-        if (error) {
-           return res.status(httpStatus.BAD_REQUEST).send(error.details[0].message);
+
+        if(!org_id || !name || !email || !phone_no || !address || !description || !user_group_id || !isActive) {
+            return res.status(httpStatus.BAD_REQUEST).send("All fields are required");
         }
+                  
         
         const user = await prisma.user.update({
             where: {
@@ -170,20 +194,21 @@ const editUser = async(req, res) => {
                 org_id: parseInt(org_id),
                 name: name,
                 email: email,
-                password: password,
+                // password: hashedPassword,
                 phone_no: phone_no,
                 address: address,
                 description: description,
                 user_group_id: parseInt(user_group_id),
-                rfid_card_id: parseInt(rfid_card_id),
+                // rfid_card_id: parseInt(rfid_card_id),
                 isActive: isActive,
                 updatedAt: new Date(),
             },
         });
-        if (!user) {
-            return res.status(httpStatus.NOT_FOUND).send("User not found");
+const message = {
+            message: "User updated successfully",
+            data: user
         }
-        res.status(httpStatus.OK).send(user);
+        res.status(httpStatus.OK).send(message)
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error + " " + error.message);
         console.log(error + " " + error.message);
@@ -194,23 +219,48 @@ const editUser = async(req, res) => {
 const deleteUser = async(req, res) => {
     try {
         const { id } = req.params;
-        const user = await prisma.user.delete({
-            where: {
-                id: Number(id),
-            },
-        });
+        // const user = await prisma.user.delete({
+        //     where: {
+        //         id: Number(id),
+        //     },
+        // });
+        // await prisma.user_settings.delete({
+        //     where: {
+        //         user_id: Number(id),
+        //     },
+        // });
+
+        // Delete user settings first
+    await prisma.user_settings.deleteMany({
+        where: {
+          user_id: parseInt(id),
+        },
+      });
+  
+      // Delete user
+      const deletedUser = await prisma.user.delete({
+        where: {
+          id: parseInt(id),
+        },
+      });
+
+
+
        message ={
               message: "User deleted successfully",
-            user: user
+            user: deletedUser
        }
        res.status(httpStatus.OK).send(message);
+       console.log(message);
     } catch (error) {
         message ={
             message: "something went wrong",
             error: error + "" + error.message
         }
+        console.log(message);
         res.status(httpStatus.BAD_REQUEST).send(message);
     }
+
 };
 
 // bulk delete user

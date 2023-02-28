@@ -113,6 +113,18 @@
     color:#fff;
 }
 
+.navbar-list li ul li a{
+    background: #f1f1f1;
+    border-bottom: 1px solid #cecece;
+    padding: 14px 15px;
+}
+
+.navbar-list li ul li a.active {
+    background:linear-gradient(45deg, #3f2863, #6b3b7a);
+    border-left: 7px solid #877eb4;
+    color: #fff;
+}
+
 .menu-item-toggle {
     display: none;
   

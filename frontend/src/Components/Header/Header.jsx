@@ -1,19 +1,66 @@
-import React from 'react'
+import React,{ useState,useEffect } from 'react'
 import './Header.css'
-import { useState } from 'react'
+import TimerWithDate from '../Timer/Timer'
+import jwt from 'jwt-decode';
+import axios from 'axios';
+
+
+// console.log(token);
+
+// console.log(jwt(token));
+
+import endpointData from '../../endpoint.json'
+// console.log(endpointData)
+let endpoint = endpointData.host
+
 
 const Header = () => {
 
+  const token = localStorage.getItem("token");
+
   const [sidebar, setSidebar] = useState(true)
   localStorage.setItem("sidebar", sidebar)
-  const [hours, setHours] = useState("00")
-  const [minutes, setMinutes] = useState("00")
-  const [seconds, setSeconds] = useState("00")
-  const [day, setDay] = useState("Sunday")
-  const [date, setDate] = useState("01")
-  const [month, setMonth] = useState("January")
-  const [year, setYear] = useState("2021")
-  const [ampm, setAmpm] = useState("am")
+  const [time, setTime] = useState(TimerWithDate());
+  const [user_id, setUser_id] = useState(jwt(token).user_id);
+  const [user_name, setUser_name] = useState(jwt(token).user_name);
+  const [user_email, setUser_email] = useState(jwt(token).user_email);
+  const [user_role, setUser_role] = useState(jwt(token).user_role);
+  const [user_image, setUser_image] = useState(jwt(token).user_image);
+
+
+
+// get the user data from the database
+const getUserData = () => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }
+  axios.get(endpoint + "user/getUserById/" + user_id, config)
+  .then((res) => {
+    console.log(res.data)
+    setUser_name(res.data.user_name)
+    setUser_email(res.data.user_email)
+    setUser_image(res.data.user_img)
+    setUser_role(res.data.user_group.group_name)
+    // setlocalstorage
+    localStorage.setItem("user_role", res.data.user_group.group_name)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+
+  useEffect(() => {
+    getUserData()
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+ 
 
 
   const logoA = localStorage.getItem("logoA");
@@ -21,41 +68,6 @@ const Header = () => {
 
   // console.log(sidebar)
 
-const Timer = () => {
-    const time = new Date();
-    const h = time.getHours();
-    const mint = time.getMinutes();
-    const s = time.getSeconds();
-    const d = time.getDay();
-    const dt = time.getDate();
-    const m = time.getMonth();
-    const y = time.getFullYear();
-    const exch = h >= 12 ? 'pm' : 'am';
-
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    let hours = h > 12 ? h - 12 : h;
-    hours = hours < 10 ? '0' + hours : hours;
-    const minutes = mint < 10 ? '0' + mint : mint;
-    const seconds = s < 10 ? '0' + s : s;
-    const day = days[d];
-    const date = dt < 10 ? '0' + dt : dt;
-    const month = months[m];
-    const year = y;
-    const ampm = exch;
-
-    setHours(hours)
-    setMinutes(minutes)
-    setSeconds(seconds)
-    setDay(day)
-    setDate(date)
-    setMonth(month)
-    setYear(year)
-    setAmpm(ampm)
-  }
-
-  setInterval(Timer, 1000)
 
   const menuhandler = () => {
 // if click on the menu icon then sidebar will hide and show
@@ -80,11 +92,11 @@ const Timer = () => {
         }, 10);
       }
       const logo = document.getElementsByClassName("logo")
-      const img = logo[0].getElementsByTagName("img");
+      const img = document.getElementById("logo-img-side");
       // console.log(img)
-      img[0].src = logoA;
-      img[0].style.height = "40px";
-      img[0].style.width = "40px";
+      img.src = logoA;
+      img.style.height = "40px";
+      img.style.width = "40px";
 
       
     }
@@ -105,15 +117,19 @@ const Timer = () => {
         }, 200);
       }
       const logo = document.getElementsByClassName("logo")
-      const img = logo[0].getElementsByTagName("img");
+      const img = document.getElementById("logo-img-side");
       // console.log(img)
-      img[0].src = logoB;
-      img[0].style.height = "60px";
-      img[0].style.width = "160px";
+      img.src = logoB;
+      img.style.height = "60px";
+      img.style.width = "160px";
       
     }
 
   }
+
+
+      
+      
 
   return (
     <div className={
@@ -131,15 +147,17 @@ const Timer = () => {
                   <div className="time-icon">
                     <img src="./assets/images/clock.png" alt="clock-icon" />
                   </div>
-                  <div className="main-time">{hours}:{minutes} <span>{ampm}</span></div>
+                  <div className="main-time">{time.hours}:{time.minutes} <span>{time.ampm}</span></div>
                   <div className="main-date">
-                    <h5>{day}</h5>
-                    <h6>{date} {month} {year}</h6>
+                    <h5>{time.day}</h5>
+                    <h6>{time.date} {time.month} {time.year}</h6>
                   </div>
                 </div>
                 <ul className="top-header-list">
                   <li><a href="#"> <i class="material-symbols-outlined">dark_mode</i></a></li>
-                  <li><a href="#"> <i class="material-symbols-outlined">account_circle</i></a></li>
+                  <li><a href="#"> 
+                  <img src={!user_image ? "https://cdn-icons-png.flaticon.com/512/149/149071.png" :  "data:image/png;base64," +user_image  }
+                  alt="user" class="rounded-circle" width="35" height="35" /></a></li>
                   <li><a href="#"> <i class="material-symbols-outlined">settings</i></a></li>
                 </ul>
         </div>

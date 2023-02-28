@@ -16,54 +16,67 @@ code {
   font-family: 'Mulish', sans-serif;
 }
 
+
 :root {
-    --bs-indigo: #675aa9;
-    --bs-purple: #6658dd;
-    --bs-red: #f1556c;
-    --bs-orange: #fd7e14;
-    --bs-yellow: #f7b84b;
-    --bs-green: #1abc9c;
-    --bs-teal: #02a8b5;
-    --bs-cyan: #4fc6e1;
-    --bs-white: #fff;
-    --bs-gray: #98a6ad;
-    --bs-gray-dark: #343a40;
-    --bs-gray-100: #f7f8f9;
-    --bs-gray-200: #eceff1;
-    --bs-gray-300: #dee2e6;
-    --bs-gray-400: #ced4da;
-    --bs-gray-500: #adb5bd;
-    --bs-gray-600: #98a6ad;
-    --bs-gray-700: #6c757d;
-    --bs-gray-800: #343a40;
-    --bs-gray-900: #323a46;
-    --bs-primary: #6658dd;
-    --bs-secondary: #6c757d;
-    --bs-success: #1abc9c !important;
-    --bs-info: #4fc6e1;
-    --bs-warning: #f7b84b;
-    --bs-danger: #f1556c;
-    --bs-light: #eceff1;
-    --bs-dark: #323a46;
-    --bs-pink: #f672a7;
-    --bs-blue: #4a81d4;
+  --bs-indigo: #675aa9;
+  --bs-purple: #6658dd;
+  --bs-red: #f1556c;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #f7b84b;
+  --bs-green: #1abc9c;
+  --bs-teal: #02a8b5;
+  --bs-cyan: #4fc6e1;
+  --bs-white: #fff;
+  --bs-gray: #98a6ad;
+  --bs-gray-dark: #343a40;
+  --bs-gray-100: #f7f8f9;
+  --bs-gray-200: #eceff1;
+  --bs-gray-300: #dee2e6;
+  --bs-gray-400: #ced4da;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #98a6ad;
+  --bs-gray-700: #6c757d;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #323a46;
+  --bs-primary: #6658dd;
+  --bs-secondary: #6c757d;
+  --bs-success: #1abc9c !important;
+  --bs-info: #4fc6e1;
+  --bs-warning: #f7b84b;
+  --bs-danger: #f1556c;
+  --bs-light: #eceff1;
+  --bs-dark: #323a46;
+  --bs-pink: #f672a7;
+  --bs-blue: #4a81d4;
 }
 
+
+
+
+
+
 .btn-success {
-    --bs-btn-color: #fff !important;
-    --bs-btn-bg: #1abc9c !important;
-    --bs-btn-border-color: #1abc9c !important;
-    --bs-btn-hover-color: #fff !important;
-    --bs-btn-hover-bg: #157347 !important;
-    --bs-btn-hover-border-color: #146c43 !important;
-    --bs-btn-focus-shadow-rgb: 60,153,110 !important;
-    --bs-btn-active-color: #fff !important;
-    --bs-btn-active-bg: #146c43 !important;
-    --bs-btn-active-border-color: #13653f !important;
-    --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125) !important;
-    --bs-btn-disabled-color: #fff !important;
-    --bs-btn-disabled-bg: #1abc9c !important;
-    --bs-btn-disabled-border-color: #1abc9c !important;
+  --bs-btn-color: #fff !important;
+  --bs-btn-bg: #1abc9c !important;
+  --bs-btn-border-color: #1abc9c !important;
+  --bs-btn-hover-color: #fff !important;
+  --bs-btn-hover-bg: #157347 !important;
+  --bs-btn-hover-border-color: #146c43 !important;
+  --bs-btn-focus-shadow-rgb: 60,153,110 !important;
+  --bs-btn-active-color: #fff !important;
+  --bs-btn-active-bg: #146c43 !important;
+  --bs-btn-active-border-color: #13653f !important;
+  --bs-btn-active-shadow: inset 0 3px 5pxrgba(0, 0, 0, 0.125) !important;
+  --bs-btn-disabled-color: #fff !important;
+  --bs-btn-disabled-bg: #1abc9c !important;
+  --bs-btn-disabled-border-color: #1abc9c !important;
+}
+
+@include color-mode(dark) {
+  .element {
+    color: var(--bs-gray-dark);
+    background-color: var(--bs-primary);
+  }
 }
 
 .btn {
@@ -73,6 +86,15 @@ code {
 
 .row {
   --bs-gutter-x: 1.2rem !important;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.wn-success {
+  background-color: var(--bs-teal);
+  border-radius: 3px !important;
 }
 
 .pagination {
@@ -99,27 +121,27 @@ code {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
-  background: #fff;
+  background: var(--bs-white);
     border: 1px solid #e5e5e5 !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover a {
-  color: #6b6b6b;
+  color: var(--bs-gray-700);
   cursor: default;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  background: #fff;
+  background: var(--bs-white);
   border: 1px solid #e5e5e5 !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button a {
   text-decoration: none;
-    color: #6b6b6b;
+    color: var(--bs-gray-700);
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.active a {
-  color: #fff !important;
+  color: var(--bs-white) !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.active {
@@ -128,7 +150,7 @@ code {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover a{
-  color:#fff;
+  color:var(--bs-white);
 }
 
 .dataTables_wrapper .dataTables_info {
@@ -163,10 +185,11 @@ table.dataTable thead th {
 }
 
 .action-icon {
-  color: #98a6ad;
+  color: var(--bs-gray-500);
   font-size: 1.2rem;
   display: inline-block;
   padding: 0 3px;
+  cursor: pointer;
 }
 
 .dropdown-menu.show {
@@ -179,10 +202,10 @@ table.dataTable thead th {
   padding: 20px;
   margin-top: 10px;
   border-radius: 8px;
-  border: 1px solid #fff;
+  border: 1px solid var(--bs-white);
   overflow: hidden;
   box-shadow: inset 0px 0px 23px 13px #30303069;
-  color: #fff;
+  color: var(--bs-white);
  
   }
 
@@ -247,6 +270,10 @@ table.dataTable thead th {
   display: none;
 }
 
+.mt-10 {
+  margin-top: 0px;
+}
+
 }
 
 @media screen and (max-width: 800px) {
@@ -256,7 +283,7 @@ table.dataTable thead th {
     height: 13px;
     width: 13px;
     border-radius: 50%;
-    border: 1px solid #ffffff;
+    border: 1px solid var(--bs-white);
     box-shadow: 0px 0px 2px 2px #ebe9e9;
     
     display: block;
@@ -274,7 +301,7 @@ table.dataTable thead th {
   }
 
  .icon-data-plus i, .icon-data-minus i {
-    color: #fff;
+    color: var(--bs-white);
     font-size: 8px;
     position: relative;
     top: -6px;

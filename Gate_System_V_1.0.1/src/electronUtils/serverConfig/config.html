@@ -5,129 +5,160 @@
   <meta charset="UTF-8">
   <title></title>
   <style>
-    @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
-
-    #bg {
-      background-image: url('img/background.jpg');
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      filter: blur(5px);
-    }
+   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Mulish:wght@500;600;700;800&display=swap');
 
     body {
-      font-family: 'Lato', sans-serif;
-      color: #4A4A4A;
+      font-family: 'Mulish', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow: hidden;
       margin: 0;
       padding: 0;
-    }
-
-    form {
-      width: 350px;
-      position: relative;
-    }
-
-    form .form-field::before {
-      font-size: 20px;
-      position: absolute;
-      left: 15px;
-      top: 17px;
-      color: #888888;
-      content: " ";
-      display: block;
+      background-image: url('img/background-2.jpg');
       background-size: cover;
-      background-repeat: no-repeat;
     }
 
-    form .form-field:nth-child(1)::before {
-      background-image: url(img/provider-icon.png);
-      width: 20px;
-      height: 20px;
-      top: 15px;
+    .form-container {
+        width: 400px;
+        background-color: #fff;
+        padding: 25px;
+        border: 1px solid #d4d4d4;
+        box-shadow: 0px 0px 20px 0px #0f0f0fac;
     }
 
-    form .form-field:nth-child(2)::before {
-      background-image: url(img/host-icon.png);
-      width: 20px;
-      height: 20px;
-      top: 15px;
+    .form-title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 700;
     }
 
-    form .form-field:nth-child(3)::before {
-      background-image: url(img/user-icon.png);
-      width: 20px;
-      height: 20px;
-      top: 15px;
+    .form-title p {
+        margin: 7px 0px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #999898;
     }
 
-    form .form-field:nth-child(4)::before {
-      background-image: url(img/lock-icon.png);
-      width: 16px;
-      height: 16px;
+    .form-fields {
+        width: 100%;
+        display: block;
     }
 
-    form .form-field:nth-child(5)::before {
-      background-image: url(img/db-icon.png);
-      width: 20px;
-      height: 20px;
-      top: 15px;
+    .icon-01, .icon-02, .icon-03, .icon-04, .icon-05, .icon-06, .icon-07, .icon-08, .icon-09 {
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: 11px;
     }
 
-    form .form-field {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      margin-bottom: 1rem;
-      position: relative;
+    .icon-01 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/9731/9731824.png);
     }
 
-    form input, form select {
-      font-family: inherit;
-      width: 100%;
-      outline: none;
-      background-color: #fff;
-      border-radius: 4px;
-      border: none;
-      display: block;
-      padding: 0.9rem 0.7rem;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-      font-size: 17px;
-      color: #4A4A4A;
-      text-indent: 40px;
+    .icon-02 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/2772/2772128.png);
     }
 
-    form .btn, form .btn_g, form .btn_r {
-      outline: none;
-      border: none;
-      cursor: pointer;
-      display: inline-block;
-      margin: 0 auto;
-      padding: 0.9rem 2.5rem;
-      text-align: center;
-      color: #fff;
-      border-radius: 4px;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-      font-size: 17px;
+    .icon-03 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/2920/2920231.png);
     }
-    form .btn_g{
-      background-color: #47AB11;
+
+    .icon-04 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/7141/7141700.png);
     }
-    form .btn_r{
-      background-color: #FF0000;
+
+    .icon-05 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/3677/3677944.png);
+    }
+
+    .icon-06 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/9438/9438318.png);
+    }
+
+    .icon-07 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/2544/2544085.png);
+    }
+
+    .icon-08 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/3080/3080546.png);
+    }
+
+    .icon-09 {
+        background-image: url(https://cdn-icons-png.flaticon.com/128/1922/1922667.png);
+    }
+
+    .form-fields input, .form-fields select {
+        width:100%;
+        padding: 15px 15px 15px 50px;
+        border: 1px solid #aeaeae;
+        color: #3a3a3a;
+        font-weight: 500;
+        margin-top: 20px;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+        transition: all 300ms ease-in;
+    }
+
+    .form-fields input:focus, .form-fields input:active, .form-fields select:focus, .form-fields select:active {
+        outline: none;
+        border: 1px solid #7e7e7e;
+        background-color: #efefef58;
+    }
+
+    .form-fields input:hover, .form-fields select:hover {
+        outline: none;
+        border: 1px solid #7e7e7e;
+        background-color: #efefef58;
+        transition: all 300ms ease-in;
+    }
+
+    .form-action {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+    }
+
+    .form-btn {
+        border-radius: 7px;
+        border: 1.5px solid #00000066;
+        box-shadow: -1px 3px 7px 1px #3333336b;
+    }
+
+    .form-btn a{
+        width: 150px;
+        float: left;
+        text-align: center;
+        color: #fff;
+        padding: 15px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: inset 0px -7px 0px 0px #0000002b;
+        
+    }
+
+    .success-btn {
+        background: #76ae57;
+        transition: all 200ms ease-in;
+        border-radius: 5px;
+    }
+
+    .cancel-btn {
+        background: #ca5757;
+        transition: all 200ms ease-in;
+        border-radius: 5px;
+    }
+
+    .success-btn:hover {
+        background: #487530;
+        box-shadow: inset 0px 0px 5px 8px #0000002b;
+        transition: all 200ms ease-in;
+    }
+
+    .cancel-btn:hover {
+        background: #963333;
+        box-shadow: inset 0px 0px 5px 8px #0000002b;
+        transition: all 200ms ease-in;
     }
   </style>
 
@@ -135,70 +166,54 @@
 
 <body>
   <div id="bg"></div>
-  <!-- <div style="position: absolute; right: 0; top: 0;">
-    <a style="font-size: 30px;" href="#">&times;</a>
-  </div> -->
-  <form>
 
-    
-    <div class="form-field">
-      <input type="password" placeholder="App Password" id="APP_PASSWORD"/>
+
+  <div class="form-container">
+    <div class="form-title">
+        App Configurations
+        <p>Enter details to configure</p>
     </div>
+    <form>
+        <div class="form-fields">
+            <input type="password" class="icon-01" placeholder="Enter App Password" id="APP_PASSWORD"/>
+            <select  class="icon-02" id="DB_PROVIDER">
+                <option>--Select SQL Option--</option>
+                <option value="SQLITE">Sql Lite</option>
+                <option value="MYSQL">MySql</option>
+            </select>
+            <input type="text" class="icon-03" placeholder="Enter Database Host" id="DB_HOST"/>
+
+            <input type="text" class="icon-04" placeholder="Enter Database Port" id="DB_PORT"/>
+
+            <input type="text" class="icon-05" placeholder="Enter Database User" id="DB_USER"/>
+
+            <input type="password" class="icon-06" placeholder="Enter Database Password" id="DB_PASSWORD"/>
+
+            <input type="text" class="icon-07" placeholder="Enter Database Name" id="DB_NAME"/>
+
+            <select class="icon-08" id="SERVER_HOST_TYPE">
+                <option>--Select Network Option--</option>
+                <option value="myPC">My PC</option>
+                <option value="myNetwork">My Network</option>
+                <option value="public">My Public</option>
+            </select>
+
+            <input type="text" class="icon-09" placeholder="Enter Server Port" id="SERVER_PORT"/>
+        </div>
+        
+        <div class="form-action">
+            <div class="form-btn">
+                <a href="#" class="success-btn" onclick="save()">Test Connection</a>
+            </div>
+            <div class="form-btn cancel-btn">
+                <a href="#" class="cancel-btn" onclick="cancle()">Cancel</a>
+            </div>
+        </div>
+    </form>
+  </div>
 
 
-    <div class="form-field">
-      <select id="DB_PROVIDER">
-        <option value="SQLITE">SqlLite</option>
-        <option value="MYSQL">MySQL</option>
-      </select>
-    </div>
-
-    <div class="form-field">
-      <input type="text" placeholder="Database Host" id="DB_HOST"/>
-    </div>
-
-    
-
-    <div class="form-field">
-      <input type="text" placeholder="Database Port" id="DB_PORT"/>
-    </div>
-    
-
-    <div class="form-field">
-      <input type="text" placeholder="Database User" id="DB_USER" />
-    </div>
-
-    <div class="form-field">
-      <input type="password" placeholder="Database Password" id="DB_PASSWORD"/>
-    </div>
-
-    
-
-    <div class="form-field">
-      <input type="text" placeholder="Database Name" id="DB_NAME" />
-    </div>
-
-    
-    <div class="form-field">
-      <select id="SERVER_HOST_TYPE">
-        <option value="myPC">My PC</option>
-        <option value="myNetwork">My Network</option>
-        <option value="public">Public</option>
-      </select>
-    </div>
-
-    
-    <div class="form-field">
-      <input type="text" placeholder="Server Port" id="SERVER_PORT"/>
-    </div>
-
-    
-
-    <div class="form-field">
-      <a href="#" class="btn btn_g" onclick="save()">Test Connection</a>
-      <a class="btn btn_r">Cancel</a>
-    </div>
-  </form>
+  
   <script src="renderer.js"></script>
 </body>
 

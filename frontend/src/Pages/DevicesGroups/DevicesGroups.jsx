@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
+import TimerWithDate  from '../../Components/Timer/Timer';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -17,6 +18,7 @@ let endpoint = endpointData.host
 
 const DevicesGroups = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -58,6 +60,10 @@ const DevicesGroups = () => {
 
   useEffect(() => {
     getDevicesGroup()
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
   }, [])
 
   // datable implementation
@@ -77,7 +83,7 @@ const DevicesGroups = () => {
         data: "isActive",
         render: function (data, type, row) {
           if (data === true) {
-            return `<span class="badge bg-success">Active</span>`;
+            return `<span class="badge wn-success">Active</span>`;
           } else {
             return `<span class="badge bg-danger">Inactive</span>`;
           }
@@ -87,11 +93,11 @@ const DevicesGroups = () => {
         data: "id",
         render: function (data, type, row) {
           return `<div class="action-buttons">
-          <a class="edit" id="editDeviceType" data-id="${data}" onClick="editDeviceType(${data})">
-          <i class="fa fa-pencil"></i>
+          <a class="action-icon" id="editDeviceType" data-id="${data}" onClick="editDeviceType(${data})">
+          <i class="mdi mdi-square-edit-outline"></i>
           </a>
-          <a class="delete" id="deleteDeviceType" data-id="${data}" onClick="deleteDeviceType(${data})">
-          <i class="fa fa-trash"></i>
+          <a class="action-icon" id="deleteDeviceType" data-id="${data}" onClick="deleteDeviceType(${data})">
+          <i class="mdi mdi-delete"></i>
           </a>
           </div>
           `
@@ -346,9 +352,17 @@ window.deleteDeviceType = function deleteDeviceType(id){
     
     
   return (
-    
-    <main id="main-body" className={sidebar === "true" ? window.innerWidth < 768 ?  "main-body-toggle":"": "main-body-toggle" } >
-    <ToastContainer
+    <main
+      id="main-body"
+      className={
+        sidebar === "true"
+          ? window.innerWidth < 768
+            ? "main-body-toggle"
+            : ""
+          : "main-body-toggle"
+      }
+    >
+      <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -360,12 +374,29 @@ window.deleteDeviceType = function deleteDeviceType(id){
         pauseOnHover
         theme="colored"
       />
-    <div className="body-title">
+
+      {/* time */}
+      <div className="timer" id="mobile-timer">
+        <div className="time-icon">
+          <img src="./assets/images/clock.png" alt="clock-icon" />
+        </div>
+        <div className="main-time">
+          {" "}
+          {time.hours}:{time.minutes} <span>{time.ampm}</span>
+        </div>
+        <div className="main-date">
+          <h5>{time.day}</h5>
+          <h6>
+            {time.date} {time.month} {time.year}
+          </h6>
+        </div>
+      </div>
+
+      <div className="body-title">
         <div className="b-title-left">
           <h2>Devices Group</h2>
           <div id="main"></div>
         </div>
-
 
         <div className="b-title-right">
           <ul className="short-bread">
@@ -440,8 +471,7 @@ window.deleteDeviceType = function deleteDeviceType(id){
           >
             <thead>
               <tr>
-                <th>
-                </th>
+                <th></th>
                 <th>Device Group Name</th>
                 <th>Operation</th>
                 <th>Description</th>
@@ -453,9 +483,9 @@ window.deleteDeviceType = function deleteDeviceType(id){
         </div>
       </div>
 
-       {/* --------------------------------------modal------------------------------------------------- */}
+      {/* --------------------------------------modal------------------------------------------------- */}
 
-       <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Device Group</Modal.Title>
         </Modal.Header>
@@ -511,18 +541,14 @@ window.deleteDeviceType = function deleteDeviceType(id){
                 }}
               />
             </Form.Group>
-            
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" 
-          onClick={addDeviceType}
-          >
+          <Button variant="success" onClick={addDeviceType}>
             Submit
           </Button>
         </Modal.Footer>
       </Modal>
-
 
       {/* --------------------------------------Edit modal------------------------------------------------- */}
 
@@ -594,20 +620,16 @@ window.deleteDeviceType = function deleteDeviceType(id){
                 onChange={handelSwitch}
               />
             </Form.Group>
-            
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" 
-          onClick={updateDeviceType}
-          >
+          <Button variant="success" onClick={updateDeviceType}>
             Submit
           </Button>
         </Modal.Footer>
       </Modal>
-
-  </main>
-  )
+    </main>
+  );
 }
 
 export default DevicesGroups

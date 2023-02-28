@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
+import TimerWithDate  from '../../Components/Timer/Timer';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -19,6 +20,7 @@ let endpoint = endpointData.host
 
 const Doors = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [org, setOrg] = useState("");
@@ -27,6 +29,7 @@ const Doors = () => {
   const [isActive, setIsActive] = useState("");
   const [doorsData, setDoorsData] = useState([]);
   const [orgData, setOrgData] = useState([]);
+  const token = localStorage.getItem("token");
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -60,6 +63,10 @@ const Doors = () => {
   useEffect(() => {
     getDoors()
     getOrgData()
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
   }, [])
 
     // datable implementation
@@ -80,7 +87,7 @@ const Doors = () => {
           data: "isActive",
           render: function (data, type, row) {
             if (data === true) {
-              return `<span class="badge bg-success">Active</span>`;
+              return `<span class="badge wn-success">Active</span>`;
             } else {
               return `<span class="badge bg-danger">Inactive</span>`;
             }
@@ -90,11 +97,11 @@ const Doors = () => {
           data: "id",
           render: function (data, type, row) {
             return `<div class="action-buttons">
-            <a class="edit" id="editDoor" data-id="${data}" onClick="editDoor(${data})">
-            <i class="fa fa-pencil"></i>
+            <a class="action-icon" id="editDoor" data-id="${data}" onClick="editDoor(${data})">
+            <i class="mdi mdi-square-edit-outline"></i>
             </a>
-            <a class="delete" id="deleteDoor" data-id="${data}" onClick="deleteDoor(${data})">
-            <i class="fa fa-trash"></i>
+            <a class="action-icon" id="deleteDoor" data-id="${data}" onClick="deleteDoor(${data})">
+            <i class="mdi mdi-delete"></i>
             </a>
             </div>
             `
@@ -194,8 +201,9 @@ $(window).resize(function () {
 
 // get org data
 function getOrgData(){
-  const config ={
+  const config = {
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }
@@ -388,6 +396,23 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
+      {/* time */}
+      <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
+
     <div className="body-title">
         <div className="b-title-left">
           <h2>Doors</h2>

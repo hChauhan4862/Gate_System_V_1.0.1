@@ -10,6 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
+import TimerWithDate  from '../../Components/Timer/Timer';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -17,6 +18,7 @@ let endpoint = endpointData.host
 
 const Students = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const [StudentId, setStudentId] = useState("");
   const [name, setName] = useState("");
@@ -31,6 +33,7 @@ const Students = () => {
   const [orgData, setOrgData] = useState([]);
   const[groupData, setGroupData] = useState([]);
   const[cardData, setCardData] = useState([]);
+  const token = localStorage.getItem("token");
 
   
   const [show, setShow] = useState(false);
@@ -70,6 +73,10 @@ const Students = () => {
     getOrgData();
     getUserGroupData();
     getRfidCardData();
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
 
@@ -96,7 +103,7 @@ var table = $("#student").DataTable({
       data: "isActive",
       render: function (data, type, row) {
         if (data === true) {
-          return `<span class="badge bg-success">Active</span>`;
+          return `<span class="badge wn-success">Active</span>`;
         } else {
           return `<span class="badge bg-danger">Inactive</span>`;
         }
@@ -106,14 +113,14 @@ var table = $("#student").DataTable({
       data: "id",
       render: function (data, type, row) {
         return `<div class="action-buttons">
-        <a class="edit" id="editStudent" data-id="${data}" onClick="editStudent(${data})">
-        <i class="fa fa-pencil"></i>
+        <a class="action-icon" id="editStudent" data-id="${data}" onClick="editStudent(${data})">
+        <i class="mdi mdi-square-edit-outline"></i>
         </a>
-        <a class="delete" id="deleteStudent" data-id="${data}" onClick="deleteStudent(${data})">
-        <i class="fa fa-trash"></i>
+        <a class="action-icon" id="deleteStudent" data-id="${data}" onClick="deleteStudent(${data})">
+        <i class="mdi mdi-delete"></i>
         </a>
-        <a class="rfidCard" id="issueRfid" data-id="${data}" onClick="issueRfid(${data})">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
+        <a class="action-icon" id="issueRfid" data-id="${data}" onClick="issueRfid(${data})">
+        <i class="mdi mdi-qrcode-scan" aria-hidden="true"></i>
         </a>
         </div>
         `
@@ -214,8 +221,9 @@ useEffect(() => {
 
 // get org data
 function getOrgData(){
-  const config ={
+  const config = {
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }
@@ -467,6 +475,23 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
+  {/* mobile time */}
+  <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
+
     <div className="body-title">
         <div className="b-title-left">
           <h2>Student</h2>

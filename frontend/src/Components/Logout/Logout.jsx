@@ -7,6 +7,10 @@ const Logout = () => {
   // }
 
   // navigate to login page
+// clear lo
+  localStorage.clear();
+
+
   return window.location.href = "/login";
 
 

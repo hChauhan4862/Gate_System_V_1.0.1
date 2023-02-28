@@ -97,10 +97,12 @@ if (isConfigSet) {
     });
     wnConfig("SERVER_HOST", ipAddress);
   } else if (CONFIG.SERVER_HOST_TYPE == "myPC") {
-    wnConfig("SERVER_HOST", "127.0.0.1");
+    wnConfig("SERVER_HOST", "localhost");
   } else if (CONFIG.SERVER_HOST_TYPE == "public") {
     wnConfig("SERVER_HOST", "0.0.0.0");
   }
+
+  // wnConfig("SERVER_HOST", "0.0.0.0"); // just for testing
 
   // Path: src\server\server.js
   const expressServer = require("./server/server");

@@ -4,30 +4,30 @@
 //migration command :: npx prisma generate client
 //migration command :: npx prisma migrate dev --name init
 
-// url      = "mysql://gate_system_v_1_0_1:Wise123@141.148.200.98:3306/gate_system_v_1_0_1"
+// url      = "mysql://gate_system_v_1_0_1:Wise123@141.148.200.98:3306/gate_system_v_1_0_1" || "mysql://root:@localhost:3306/gate_system_v_1.0.0"
 
 // **********************************MYSQL**********************************
-// generator client {
-//   provider = "prisma-client-js"
-//   output   = "./generated/mysql-client"
-// }
-
-// datasource db {
-//   provider = "mysql"
-//   url      = "mysql://root:@localhost:3306/gate_system_v_1.0.0"
-// }
-
-
-// ***************************************SQLITE***************************************
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/sqlite-client"
+  output   = "./generated/mysql-client"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:C:\\harendra/database.sqlite"
+  provider = "mysql"
+  url      = "mysql://root:@localhost:3306/gate_system_v_1.0.0"
 }
+
+
+// ***************************************SQLITE***************************************
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "./generated/sqlite-client"
+// }
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:C:\\Gate_Software/database.sqlite"
+// }
 
 model organization {
   id             Int                  @default(autoincrement())
@@ -74,8 +74,8 @@ model user {
   phone_no      String
   address       String
   description   String
-  user_img      String?     
-  // user_img      String?      @db.LongText
+  // user_img      String?     
+  user_img      String?      @db.LongText
   user_group_id Int?
   rfid_card_id  Int?
   rfid_card     rfid_card?   @relation(fields: [rfid_card_id], references: [id])
@@ -86,6 +86,7 @@ model user {
 
   @@id([id])
   @@unique([id, rfid_card_id])
+  user_settings user_settings[]
 }
 
 model user_group {
@@ -229,6 +230,19 @@ model students {
   user_group    user_group?   @relation(fields: [user_group_id], references: [id])
   rfid_card     rfid_card?    @relation(fields: [rfid_card_id], references: [id])
   inout_log     inout_log[]
+
+  @@id([id])
+}
+
+model user_settings {
+  id          Int      @default(autoincrement())
+  user_id     Int
+  user        user     @relation(fields: [user_id], references: [id])
+  language    String
+  theme       String
+  city        String
+  updatedAt   DateTime?
+  createdAt   DateTime  @default(now())
 
   @@id([id])
 }

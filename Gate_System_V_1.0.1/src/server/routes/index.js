@@ -19,14 +19,19 @@ const devicesSetupRouter = require('./deviceSetup.router');
 const studentsRouter = require('./students.routes');
 const staticRouter = require('./staticRouting.router');
 const logRouter = require('./log.router')
+const login = require('./login.router')
 const { app } = require('electron');
+
+const authenticate  = require('../middlewares/auth')
 
 
 router.use(fileUpload())
+router.use('/login',login)
 
-router.use('/organization', organizationRouter);
-router.use('/orgGroup', orgGroupRouter);
-router.use('/user', userRouter);
+
+router.use('/organization',authenticate, organizationRouter);
+router.use('/orgGroup',authenticate, orgGroupRouter);
+router.use('/user',authenticate, userRouter);
 router.use('/userGroup', userGroupRouter);
 router.use('/permission', permissionRouter);
 router.use('/doors', doorsRouter);
@@ -39,6 +44,10 @@ router.use('/rfid', rfidRouter);
 router.use('/devicesSetup', devicesSetupRouter);
 router.use('/students', studentsRouter);
 router.use('/log',logRouter)
+
+
+
+
 
 
 

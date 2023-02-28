@@ -11,12 +11,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
 import endpointData from '../../endpoint.json'
+import TimerWithDate  from '../../Components/Timer/Timer';
 // console.log(endpointData)
 let endpoint = endpointData.host
 // let endpoint = "http://localhost:8082/";
 
 const User = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [users, setUsers] = useState([]);
   const [id, setId] = useState("");
   const [org, setOrg] = useState([]);
@@ -34,6 +36,7 @@ const User = () => {
   const [isActive, setIsActive] = useState(false);
   const [editData, setEditData] = useState([]);
   const [editId, setEditId] = useState("");
+  const token = localStorage.getItem("token");
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -53,11 +56,10 @@ const User = () => {
 
 // get Users
  function getUsers(){
-  const config ={
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
   axios.get(endpoint + "user/getAllUsers", config).then((res) => {
     setUsers(res.data);
     console.log(res.data);
@@ -72,6 +74,10 @@ const User = () => {
   getUsers();
   getOrgData();
   getUserGroupData();
+  const interval = setInterval(() => {
+    setTime(TimerWithDate());
+  }, 1000);
+  return () => clearInterval(interval);
 }, []);
 
 // datable implementation
@@ -102,7 +108,7 @@ var table = $("#userData").DataTable({
       data: "isActive",
       render: function (data, type, row) {
         if (data === true) {
-          return `<span class="badge bg-success">Active</span>`;
+          return `<span class="badge wn-success">Active</span>`;
         } else {
           return `<span class="badge bg-danger">Inactive</span>`;
         }
@@ -112,14 +118,14 @@ var table = $("#userData").DataTable({
       data: "id",
       render: function (data, type, row) {
         return `<div class="action-buttons">
-        <a class="edit" id="editUser" data-id="${data}" onClick="editUser(${data})">
-        <i class="fa fa-pencil"></i>
+        <a class="action-icon" id="editUser" data-id="${data}" onClick="editUser(${data})">
+        <i class="mdi mdi-square-edit-outline"></i>
         </a>
-        <a class="delete" id="deleteUser" data-id="${data}" onClick="deleteUser(${data})">
-        <i class="fa fa-trash"></i>
+        <a class="action-icon" id="deleteUser" data-id="${data}" onClick="deleteUser(${data})">
+        <i class="mdi mdi-delete"></i>
         </a>
-        <a class="rfidCard" id="viewUser" data-id="${data}" onClick="viewUser(${data})">
-        <i class="fa fa-address-card" aria-hidden="true"></i>
+        <a class="action-icon" id="viewUser" data-id="${data}" onClick="viewUser(${data})">
+        <i class="mdi mdi-qrcode-scan" aria-hidden="true"></i>
         </a>
         </div>
         `
@@ -218,8 +224,10 @@ $(window).resize(function () {
 // add user
 const addUser = (e) => {
   e.preventDefault();
+
   const config ={
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
   }
@@ -297,7 +305,11 @@ const addUser = (e) => {
 
 // organization data for select option
 const getOrgData = () => {
-  axios.get(endpoint + "organization/getAllOrg").then((res) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
+  axios.get(endpoint + "organization/getAllOrg",config).then((res) => {
     if (res.status === 200) {
       console.log(res.data);
       setOrgData(res.data);
@@ -309,7 +321,11 @@ const getOrgData = () => {
 
 // user group data for select option
 const getUserGroupData = () => {
-  axios.get(endpoint + "userGroup/getAllUserGroups").then((res) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
+  axios.get(endpoint + "userGroup/getAllUserGroups",config).then((res) => {
     if (res.status === 200) {
       console.log(res.data);
       setUserGroupData(res.data);
@@ -330,7 +346,11 @@ window.deleteUser = (id) => {
     dangerMode: true,
   }).then((willDelete) => {
     if (willDelete) {
-      axios.delete(endpoint + "user/deleteUser/" + id).then((res) => {
+      const config = {
+        headers: { Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json" },
+      };
+      axios.delete(endpoint + "user/deleteUser/" + id, config).then((res) => {
         if (res.status === 200) {
           swal("Your records has been deleted!", {
             icon: "success",
@@ -352,7 +372,11 @@ window.deleteUser = (id) => {
 // edit user
 window.editUser = function editUser(id) {
   handleShowEdit();
-  axios.get(endpoint + "user/getUserById/" + id).then((res) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
+  axios.get(endpoint + "user/getUserById/" + id, config).then((res) => {
     if (res.status === 200) {
       console.log(res.data);
       setEditData(res.data);
@@ -382,11 +406,10 @@ window.editUser = function editUser(id) {
 // update user
 const updateUser = (e) => {
   e.preventDefault();
-  const config ={
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
   const data = {
     name: name,
     email: email,
@@ -501,6 +524,22 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
+  {/* mobile time */}
+  <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
 
       <div className="body-title">
         <div className="b-title-left">
@@ -843,7 +882,7 @@ const notify = (action, msg) => {
                 }}
               />
             </Form.Group>
-            <Form.Group
+            {/* <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
@@ -859,7 +898,7 @@ const notify = (action, msg) => {
 
                 }}
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"

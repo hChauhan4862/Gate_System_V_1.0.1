@@ -1,8 +1,40 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import './login.css'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import endpointData from '../../endpoint.json'
+// console.log(endpointData)
+let endpoint = endpointData.host
+
 
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const data = {
+      email: email,
+      password: password,
+    };
+    axios
+      .post(endpoint + "login/login", data)
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("token", res.data.token);
+        // navigate("/");
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
   return (
   
     <div className="login-wrapper">
@@ -19,13 +51,24 @@ const Login = () => {
 
             <form action="" class="login-form">
             <label>Email</label>
-            <input type="text"  placeholder="Enter your Email ID" />
+            <input type="text"  placeholder="Enter your Email ID" 
+            onChange={
+             (e)=>{ console.log(e.target.value)
+              setEmail(e.target.value)}
+              }/>
 
             
             <label>Password</label>
-            <input type="password" placeholder="Enter Password" />
+            <input type="password" placeholder="Enter Password" 
+            onChange={
+              (e)=>{ console.log(e.target.value)
+              setPassword(e.target.value)}
+            }
+            />
 
-            <button>Submit</button>
+            <button
+            onClick={handleLogin}
+            >Submit</button>
 
             </form>
 

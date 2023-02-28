@@ -10,12 +10,14 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import endpointData from '../../endpoint.json'
+import TimerWithDate  from '../../Components/Timer/Timer';
 // console.log(endpointData)
 let endpoint = endpointData.host
 
 // let endpoint = "http://localhost:8082/";
 const Groups = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [groups, setGroups] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -24,6 +26,7 @@ const Groups = () => {
   const [org, setOrg] = useState([]);
   const [orgData, setOrgData] = useState([]);
   const [editData, setEditData] = useState([]);
+  const token = localStorage.getItem("token");
 
 
   const [show, setShow] = useState(false);
@@ -41,8 +44,12 @@ const Groups = () => {
 
 
   function getGroups() {
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
     axios
-      .get(endpoint + "orgGroup/getAllOrgGroups")
+      .get(endpoint + "orgGroup/getAllOrgGroups",config)
       .then((res) => {
         setGroups(res.data);
       })
@@ -56,6 +63,10 @@ const Groups = () => {
   useEffect(() => {
     getGroups();
     getOrgData();
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
 
   }, []);
 
@@ -76,7 +87,7 @@ var table = $("#groupData").DataTable({
       data: "isActive",
       render: function (data, type, row) {
         if (data === true) {
-          return `<span class="badge bg-success">Active</span>`;
+          return `<span class="badge wn-success">Active</span>`;
         } else {
           return `<span class="badge bg-danger">Inactive</span>`;
         }
@@ -86,11 +97,11 @@ var table = $("#groupData").DataTable({
       data: "id",
       render: function (data, type, row) {
         return `<div class="action-buttons">
-            <a class="edit" id="editGroup" data-id="${data}" onClick="editGroup(${data})">
-            <i class="fa fa-pencil"></i>
+            <a class="action-icon" id="editGroup" data-id="${data}" onClick="editGroup(${data})">
+            <i class="mdi mdi-square-edit-outline"></i>
             </a>
-            <a class="delete" id="deleteGroup" data-id="${data}" onClick="deleteGroup(${data})">
-            <i class="fa fa-trash"></i>
+            <a class="action-icon" id="deleteGroup" data-id="${data}" onClick="deleteGroup(${data})">
+            <i class="mdi mdi-delete"></i>
             </a>
             </div>
             `
@@ -194,9 +205,8 @@ const addGroup = (e) => {
     description: description,
   };
   const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
   };
   axios
     .post(endpoint + "orgGroup/addOrgGroup", data, config)
@@ -226,8 +236,12 @@ handleClose();
 
 // organization data for select option
 const getOrgData = () => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
   axios
-    .get(endpoint + "organization/getAllOrg")
+    .get(endpoint + "organization/getAllOrg", config)
     .then((res) => {
       if (res.status === 200) {
         const orgData = res.data.filter((item) => item.isActive === true);
@@ -247,8 +261,12 @@ const getOrgData = () => {
   window.editGroup = function editGroup(id) {
     // open edit modal
     handleShowEdit();
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
     axios
-      .get(endpoint + "orgGroup/getOrgGroupById/" + id)
+      .get(endpoint + "orgGroup/getOrgGroupById/" + id, config)
       .then((res) => {
         if (res.status === 200) {
           setEditData(res.data);
@@ -276,9 +294,8 @@ const getOrgData = () => {
       isActive: isActive,
     };
     const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
     };
     axios
       .put(endpoint + "orgGroup/editOrgGroupById/" + editData.id, data, config)
@@ -313,8 +330,12 @@ const getOrgData = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
+        const config = {
+          headers: { Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json" },
+        };
         axios
-          .delete(endpoint + "orgGroup/deleteOrgGroupById/" + id)
+          .delete(endpoint + "orgGroup/deleteOrgGroupById/" + id, config)
           .then((res) => {
             if (res.status === 200) {
               swal("Your records has been deleted!", {
@@ -371,6 +392,22 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
+        {/* mobile time */}
+        <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
 
       <div className="body-title">
         <div className="b-title-left">

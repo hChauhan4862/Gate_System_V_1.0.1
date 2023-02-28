@@ -50,3 +50,8 @@ function loadConfig() {
 }
 
 setTimeout(loadConfig, 1000);
+
+
+let cancle = () => {
+  window.close();
+};

@@ -120,9 +120,12 @@ const getDeviceById = async(req, res) => {
 
     //edit device by id
 const editDeviceById = async(req, res) => {
+    console.log(req.body);
     try {
         const { id } = req.params;
         const { friendlyName, locationId, manufacturer,path,pnpId, productId,serialNumber,vendorId,isActive, devicesType, door_id} = req.body;
+
+
         const device = await prisma.devices_setup.update({
             where: {
                 id: parseInt(id)
@@ -149,6 +152,7 @@ const editDeviceById = async(req, res) => {
         res.status(httpStatus.OK).send(message);
     } catch (error) {
         res.status(httpStatus.BAD_REQUEST).send(error +'' + error.message);
+        console.log(error.message)
     }
 };
 

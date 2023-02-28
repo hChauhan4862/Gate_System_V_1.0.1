@@ -11,6 +11,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import swal from "sweetalert";
+import TimerWithDate  from '../../Components/Timer/Timer';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -19,6 +20,7 @@ let endpoint = endpointData.host
 
 const Orgs = () => {
   const sidebar = localStorage.getItem("sidebar");
+  const [time, setTime] = useState(TimerWithDate());
   const [orgs, setOrgs] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -28,6 +30,7 @@ const Orgs = () => {
   const [contact_person, setContact_person] = useState("");
   const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const token = localStorage.getItem("token");
 
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -44,11 +47,17 @@ const Orgs = () => {
     setIsActive(!isActive);
     console.log(isActive);
   };
+ 
 
+  
   // get all orgs from apis
   function getOrgs() {
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
     axios
-      .get(endpoint + "organization/getAllOrg")
+      .get(endpoint + "organization/getAllOrg", config)
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -66,226 +75,141 @@ const Orgs = () => {
 
   useEffect(() => {
     getOrgs();
+    const interval = setInterval(() => {
+      setTime(TimerWithDate());
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
-  // data table with orgs data
-  var table = $("#orgData").DataTable({
-    data: orgs,
-    columns: [
-      {
-        className: "dt-control",
-        orderable: false,
-        data: id,
-        defaultContent: "",
-      },
-      { data: "name" },
-      { data: "address" },
-      { data: "contact_no" },
-      { data: "contact_person" },
-      { data: "email" },
-      { data: "description" },
-      {
-        // if isActive is true then show active else show inactive
-        render: function (data, type, row) {
-          if (data === true) {
-            return `<span class="badge bg-success">Active</span>`;
-          } else {
-            return `<span class="badge bg-danger">Inactive</span>`;
-          }
+    // datable implementation
+    var table = $("#orgData").DataTable({
+      data: orgs,
+      columns: [
+        {
+          className: "dt-control",
+          orderable: false,
+          data: id,
+          defaultContent: "",
         },
-        data: "isActive",
+        { data: "name" },
+        { data: "address" },
+        { data: "contact_no" },
+        { data: "contact_person" },
+        { data: "email" },
+        { data: "description" },
+        {
+          // if isActive is true then show active else show inactive
+          render: function (data, type, row) {
+            if (data === true) {
+              return `<span class="badge wn-success">Active</span>`;
+            } else {
+              return `<span class="badge bg-danger">Inactive</span>`;
+            }
+          },
+          data: "isActive",
+        },
+        {
+          data: "id",
+          render: function (data, type, row) {
+            return `<div class="action-buttons">
+            <a class="action-icon" id="editStudent" data-id="${data}" onClick="editStudent(${data})">
+            <i class="mdi mdi-square-edit-outline"></i>
+            </a>
+            <a class="action-icon" id="deleteStudent" data-id="${data}" onClick="deleteStudent(${data})">
+            <i class="mdi mdi-delete"></i>
+            </a>
+            </div>
+            `
       },
-      {
-        data: null,
-        defaultContent:
-          '<div class="action-buttons">' +
-          '<span class="edit"><i class="mdi mdi-square-edit-outline "></i></span> ' +
-          '<span class="remove"><i class="mdi mdi-delete"></i></span> ' +
-          '<span class="cancel"></span>' +
-          "</div>",
-        className: "row-edit dt-center",
-        orderable: false,
-      },
-    ],
-    select: {
-      style: "os",
-      selector: "td:first-child",
     },
-    responsive: true,
-    retrieve: true,
-    dom: "lBfrtip",
-    buttons: [
-      {
-        extend: "print",
-        text: "Print",
-        className: "btn btn-success btn-sm d-none",
-        exportOptions: {
-          columns: [1, 2, 3, 4, 5, 6, 7],
-        },
+  ],
+  select: {
+    style: "os",
+    selector: "td:first-child",
+  },
+  responsive: true,
+  retrieve: true,
+  dom: "lBfrtip",
+  buttons: [
+    {
+      extend: "print",
+      text: "Print",
+      className: "btn btn-success btn-sm d-none",
+      exportOptions: {
+        columns: [1, 2, 3, 4, 5, 6, 7],
       },
-      {
-        extend: "copy",
-        text: "Copy",
-        className: "btn btn-success btn-sm d-none",
-        exportOptions: {
-          columns: [1, 2, 3, 4, 5, 6, 7],
-        },
+    },
+    {
+      extend: "copy",
+      text: "Copy",
+      className: "btn btn-success btn-sm d-none",
+      exportOptions: {
+        columns: [1, 2, 3, 4, 5, 6, 7],
       },
-      {
-        extend: "csv",
-        text: "Export to CSV",
-        className: "btn btn-success btn-sm d-none",
-        exportOptions: {
-          columns: [1, 2, 3, 4, 5, 6, 7],
-        },
+    },
+    {
+      extend: "csv",
+      text: "Export to CSV",
+      className: "btn btn-success btn-sm d-none",
+      exportOptions: {
+        columns: [1, 2, 3, 4, 5, 6, 7],
       },
-      {
-        extend: "pdf",
-        text: "Export to PDF",
-        className: "btn btn-success btn-sm d-none",
-        orientation: "landscape",
-        exportOptions: {
-          columns: [1, 2, 3, 4, 5, 6, 7],
-        },
+    },
+    {
+      extend: "pdf",
+      text: "Export to PDF",
+      className: "btn btn-success btn-sm d-none",
+      orientation: "landscape",
+      exportOptions: {
+        columns: [1, 2, 3, 4, 5, 6, 7],
       },
-    ],
-  });
+    },
+  ],
+});
 
-  // implement reload table
-  useEffect(() => {
-    table.clear().draw();
-    table.rows.add(orgs);
-    table.columns.adjust().draw();
-  }, [orgs]);
+// implement reload table
+useEffect(() => {
+  table.clear().draw();
+  table.rows.add(orgs);
+  table.columns.adjust().draw();
+}, [orgs]);
 
-  /* Formatting function for row details - modify as you need */
-  function format(d) {
-    // `d` is the original data object for the row
-    return (
-      "<tr>" +
-      "<td> Adress:</td>" +
-      "<td>" +
-      d.address +
-      "</td>" +
-      "</tr>" +
-      "<tr>" +
-      "<td>Contact No:</td>" +
-      "<td>" +
-      d.contact +
-      "</td>" +
-      "</tr>" +
-      "<td>Contact Person:</td>" +
-      "<td>" +
-      d.contact_person +
-      "</td>" +
-      "</tr>" +
-      "<tr>" +
-      "<td>Description:</td>" +
-      "<td>" +
-      d.description +
-      "</td>" +
-      "</tr>" +
-      "<td>Email Id:</td>" +
-      "<td>" +
-      d.email +
-      "</td>" +
-      "</tr>" +
-      "<td>Status No:</td>" +
-      "<td>" +
-      d.isActive +
-      "</td>" +
-      "</tr>" +
-      "<td>Actions:</td>" +
-      "<td>" +
-      '<div class="action-buttons">' +
-      `<span class="edit"><i class="mdi mdi-square-edit-outline"></i></span> ` +
-      '<span class="remove"><i class="mdi mdi-delete"></i></span> ' +
-      '<span class="cancel"></span>' +
-      "</div>" +
-      "</td>" +
-      "</table>"
-    );
+
+    //  custome toggle for three dots
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+      <p
+        ref={ref}
+        onClick={(e) => {
+          e.preventDefault();
+          onClick(e);
+        }}
+      >
+        {/* custom icon */}
+        {children}
+      </p>
+    ));
+
+
+    
+  //Get Screan Size and use for + - icon
+  function getScreanSize() {
+    if (window.innerWidth >= 768) {
+      $("#orgData").DataTable().columns(0).visible(false);
+    } else {
+      $("#orgData").DataTable().columns(0).visible(true);
+    }
   }
 
 
-
-
-  // Add event listener for opening and closing details
-  $("#orgData tbody").on("click", "td.row-edit", function () {
-    var tr = $(this).closest("tr");
-    var row = table.row(tr);
-    if (row.child.isShown()) {
-      // This row is already open - close it
-      row.child.hide();
-      tr.removeClass("shown");
+  getScreanSize();
+  // resize window
+  $(window).resize(function () {
+    if ($(window).width() >= 768) {
+      table.column(0).visible(false);
     } else {
-      // Open this row
-      row.child(format(row.data())).show();
-      tr.addClass("shown");
+      table.column(0).visible(true);
     }
   });
-
-  // mdi-square-edit-outline use for edit data
-  $("#orgData tbody").on("click", "span.edit", function () {
-    var tr = $(this).closest("tr");
-    var row = table.row(tr);
-    handleShowEdit();
-    editOrganization(row.data().id);
-    setEditData(row.data());
-  });
-
-
-
-  // mdi-delete use for delete data
-  $("#orgData tbody").on("click", "span.remove", function () {
-    var tr = $(this).closest("tr");
-    var row = table.row(tr);
-    console.log(row);
-    // sweet alert
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this record!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        console.log(row.data().id);
-        axios
-          .delete(endpoint + "organization/deleteOrg/" + row.data().id)
-          .then((res) => {
-            if (res.status === 200) {
-              swal("Your records has been deleted!", {
-                icon: "success",
-              });
-            }
-            getOrgs();
-          })
-          .catch((err) => {
-            console.log(err);
-            notify("error", err.response.data.message);
-          });
-
-      } else {
-        swal("Your record is safe!");
-      }
-    });
-    setEditData(row.data());
-  });
-
-  //  custome toggle for three dots
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <p
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {/* custom icon */}
-      {children}
-    </p>
-  ));
 
   // addOrganization
   const addOrganization = (e) => {
@@ -298,8 +222,12 @@ const Orgs = () => {
       description: description,
       email: email,
     };
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
     axios
-      .post(endpoint + "organization/addOrg", data)
+      .post(endpoint + "organization/addOrg", data, config)
       .then((res) => {
         if (res.status === 200) {
           notify("success", res.data.message);
@@ -323,17 +251,16 @@ const Orgs = () => {
     handleClose();
   };
 
-  // editOrganization
-  const editOrganization = (id) => {
-    console.log(id);
-    const headers={
-      headers: {
-        "Content-Type": "application/json",
-    },
-    }
-
+// edit organization
+window.editStudent = (id) => {
+  console.log(id);
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
+    };
+    handleShowEdit();
     axios
-      .get(endpoint + "organization/getOrg/" + id,headers)
+      .get(endpoint + "organization/getOrg/" + id,config)
       .then((res) => {
         if (res.status === 200) {
           setEditData(res.data);
@@ -352,8 +279,9 @@ const Orgs = () => {
       });
   };
 
-  // updateOrganization
-  const updateOrganization = (e) => {
+
+   // updateOrganization
+   const updateOrganization = (e) => {
     e.preventDefault();
     const data = {
       name: name,
@@ -364,14 +292,13 @@ const Orgs = () => {
       email: email,
       isActive: isActive,
     };
-    const headers = {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const config = {
+      headers: { Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json" },
     };
 
     axios
-      .put(endpoint + "organization/editOrg/" + id, data, headers)
+      .put(endpoint + "organization/editOrg/" + id, data, config)
       .then((res) => {
         if (res.status === 200) {
           // console.log(res.data)
@@ -396,25 +323,45 @@ const Orgs = () => {
     handleCloseEdit();
   };
 
- //Get Screan Size and use for + - icon
-  function getScreanSize() {
-    if (window.innerWidth >= 768) {
-      $("#orgData").DataTable().columns(0).visible(false);
-    } else {
-      $("#orgData").DataTable().columns(0).visible(true);
-    }
-  }
-// resize window
-  $(window).resize(function () {
-    if ($(window).width() >= 768) {
-      table.column(0).visible(false);
-    } else {
-      table.column(0).visible(true);
-    }
-  });
+// delete organization
+window.deleteStudent = (id) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json" },
+  };
+  console.log(id);
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this user!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      axios
+          .delete(endpoint + "organization/deleteOrg/" + id, config)
+          .then((res) => {
+            if (res.status === 200) {
+              swal("Your records has been deleted!", {
+                icon: "success",
+              });
+            }
+            getOrgs();
+          })
+          .catch((err) => {
+            console.log(err);
+            notify("error", err.response.data.message);
+          });
+
+      } else {
+        swal("Your record is safe!");
+      }
+    });
+   
+  };
 
 
-  getScreanSize()
+
 
   //Notification Tost
   const notify = (action, msg) => {
@@ -433,6 +380,7 @@ const Orgs = () => {
       },
     });
   };
+  
 
   return (
     <main
@@ -445,6 +393,24 @@ const Orgs = () => {
           : "main-body-toggle"
       }
     >
+
+      {/* mobile time */}
+      <div className="timer" id="mobile-timer">
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time">
+            {" "}
+            {time.hours}:{time.minutes} <span>{time.ampm}</span>
+          </div>
+          <div className="main-date">
+            <h5>{time.day}</h5>
+            <h6>
+              {time.date} {time.month} {time.year}
+            </h6>
+          </div>
+        </div>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

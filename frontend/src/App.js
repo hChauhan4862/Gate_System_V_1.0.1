@@ -19,12 +19,10 @@ import Students from './Pages/Students/Students';
 import Commands from './Pages/Commands/Commands';
 import Settings from './Pages/Settings/Settings';
 import Report from './Pages/Reports/Reports';
-import DailyReports from './Pages/Reports/DailyReports';
-import WeeklyReports from './Pages/Reports/WeeklyReports';
-import MonthlyReports from './Pages/Reports/MonthlyReports';
-import YearlyReports from './Pages/Reports/YearlyReports';
+import ReportPunchWise from './Pages/Reports/ReportPunchWise';
 import Logout from './Components/Logout/Logout';
 import Login from './Components/Login/Login';
+
 
 
 function App() {
@@ -41,28 +39,23 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/orgs" element={<Orgs />} />
       <Route path="/groups" element={<Groups />} />
-      {/* <Route path="/departments" element={<Departments />} /> */}
       <Route path="/user" element={<User />} />
       <Route path="/roles" element={<Roles />} />
       <Route path="/permissions" element={<Permissions />} />
       <Route path="/doors" element={<Doors />} />
       <Route path="/devices" element={<Devices />} />
-      {/* <Route path="/deviceType" element={<DeviceType />} /> */}
       <Route path="/deviceGroup" element={<DeviceGroup />} />
       <Route path="/Students" element={<Students />} />
       <Route path="/commands" element={<Commands />} />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/report" element={<Report />} />
-      <Route path="/daily" element={<DailyReports />} />
-      <Route path="/weekly" element={<WeeklyReports />} />
-      <Route path="/monthly" element={<MonthlyReports />} />
-      <Route path="/yearly" element={<YearlyReports />} />
+      <Route path="/reports" element={<Report />} />  
+     <Route path="/reportPunchWise" element={<ReportPunchWise />} />
       <Route path="/logout" element={<Logout />} />
       <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
     </div>
   );
-}
+} 
 
 export default App;

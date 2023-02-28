@@ -16,12 +16,12 @@
     cursor: pointer;
     float: left;
     padding: 15px;
-    color:#fff;
+    color:var(--bs-white)
 }
 
 .search-btn {
     padding: 10px 0px;
-    color: #fff;
+    color:var(--bs-white);
 }
 
 
@@ -43,7 +43,7 @@
     position: fixed;
     right: 200px;
     background: #03000036;
-    color: #fff;
+    color: var(--bs-white);
     padding: 0px 16px;
 }
 
@@ -79,7 +79,7 @@
     margin-bottom: 2px;
     margin-top: 4px;
     font-weight: 700;
-    color: #fcdc1b;
+    color: var(--bs-warning)
 }
 
 
@@ -109,11 +109,11 @@ ul.top-header-list {
 ul.top-header-list li {
     list-style: none;
     float: left;
-    color: #fff;
+    color: var(--bs-white);
 }
 
 ul.top-header-list li a {
-    color: #fff;
+    color: var(--bs-white);
     margin: 13px;
     display: block;
 }

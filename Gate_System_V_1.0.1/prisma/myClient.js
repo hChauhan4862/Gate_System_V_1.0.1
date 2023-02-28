@@ -3,6 +3,7 @@ const wnConfig = require('../src/electronUtils/storage')
 let PROVIDER = wnConfig('DB_PROVIDER') || process.env.DB_PROVIDER;
 let DB_URL = wnConfig('DATABASE_URL') || process.env.DATABASE_URL;
 
+console.log(DB_URL,"66666666666666666666666666666666666666666666666")
 
 PROVIDER = (DB_URL==="") ? "SQLITE" : PROVIDER;
 // DB_URL   = (DB_URL==="") ? "sqlite:///C:/database.sqlite" : DB_URL;

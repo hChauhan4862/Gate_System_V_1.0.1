@@ -248,6 +248,16 @@ exports.Prisma.User_groupScalarFieldEnum = makeEnum({
   createdAt: 'createdAt'
 });
 
+exports.Prisma.User_settingsScalarFieldEnum = makeEnum({
+  id: 'id',
+  user_id: 'user_id',
+  language: 'language',
+  theme: 'theme',
+  city: 'city',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   organization: 'organization',
@@ -261,7 +271,8 @@ exports.Prisma.ModelName = makeEnum({
   commands: 'commands',
   rfid_card: 'rfid_card',
   devices_setup: 'devices_setup',
-  students: 'students'
+  students: 'students',
+  user_settings: 'user_settings'
 });
 
 /**

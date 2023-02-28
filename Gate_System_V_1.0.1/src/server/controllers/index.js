@@ -13,3 +13,5 @@ module.exports.portsController = require('./ports.controller');
 module.exports.devicesSetupController = require('./devicesSetup.controller');
 module.exports.studentsController = require('./students.controller');
 module.exports.logController = require('./log.controller')
+module.exports.userSettings = require('./userSettings.controller')
+module.exports.loginController = require('./login.controller')
