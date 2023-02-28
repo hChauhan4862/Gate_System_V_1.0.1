@@ -10,7 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -18,13 +18,14 @@ let endpoint = endpointData.host
 
 const DevicesGroups = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
+
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [operation, setOperation] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [devicesGroup, setDevicesGroup] = useState([]);
+
 
 
   const [show, setShow] = useState(false);
@@ -58,12 +59,10 @@ const DevicesGroups = () => {
     })
   }
 
+
+
   useEffect(() => {
     getDevicesGroup()
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
   }, [])
 
   // datable implementation
@@ -375,22 +374,21 @@ window.deleteDeviceType = function deleteDeviceType(id){
         theme="colored"
       />
 
-      {/* time */}
+      {/* mobile time */}
       <div className="timer" id="mobile-timer">
-        <div className="time-icon">
-          <img src="./assets/images/clock.png" alt="clock-icon" />
+          <div className="time-icon">
+            <img src="./assets/images/clock.png" alt="clock-icon" />
+          </div>
+          <div className="main-time" id="hm_ampm">
+            {" "}
+          </div>
+          <div className="main-date">
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
+            </h6>
+          </div>
         </div>
-        <div className="main-time">
-          {" "}
-          {time.hours}:{time.minutes} <span>{time.ampm}</span>
-        </div>
-        <div className="main-date">
-          <h5>{time.day}</h5>
-          <h6>
-            {time.date} {time.month} {time.year}
-          </h6>
-        </div>
-      </div>
 
       <div className="body-title">
         <div className="b-title-left">

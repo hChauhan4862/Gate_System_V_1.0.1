@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState,useRef} from 'react'
 import './Roles.css'
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +10,8 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
+
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -19,7 +20,6 @@ let endpoint = endpointData.host
 
 const Roles = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const[org, setOrg] = useState("");
   const [role, setRole] = useState("");
@@ -29,6 +29,7 @@ const Roles = () => {
   const [orgData, setOrgData] = useState([]);
   const [permissionData, setPermissionData] = useState([]);
   const token = localStorage.getItem("token");
+
   
 
 
@@ -61,15 +62,13 @@ const Roles = () => {
     })
 
  }
+
+
   
   useEffect(() => {
     getRoles();
     getOrgData();
     getPermissionData();
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
   }, [])
  
   // datable implementation
@@ -393,19 +392,18 @@ const notify = (action, msg) => {
         theme="colored"
       />
 
-        {/* mobile time */}
-        <div className="timer" id="mobile-timer">
+      {/* mobile time */}
+      <div className="timer" id="mobile-timer">
           <div className="time-icon">
             <img src="./assets/images/clock.png" alt="clock-icon" />
           </div>
-          <div className="main-time">
+          <div className="main-time" id="hm_ampm">
             {" "}
-            {time.hours}:{time.minutes} <span>{time.ampm}</span>
           </div>
           <div className="main-date">
-            <h5>{time.day}</h5>
-            <h6>
-              {time.date} {time.month} {time.year}
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
             </h6>
           </div>
         </div>

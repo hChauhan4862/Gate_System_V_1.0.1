@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import "jszip";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 import {
   LineChart,
   Line,
@@ -30,7 +30,6 @@ let endpoint = endpointData.host;
 
 const Reports = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [logData, setLogData] = useState([]);
@@ -88,10 +87,6 @@ const Reports = () => {
   useEffect(() => {
     getAlllogs();
     getAllOrganization();
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
   }, []);
 
 
@@ -268,19 +263,18 @@ const Reports = () => {
       }
     >
 
-{/* mobile time */}
-<div className="timer" id="mobile-timer">
+      {/* mobile time */}
+      <div className="timer" id="mobile-timer">
           <div className="time-icon">
             <img src="./assets/images/clock.png" alt="clock-icon" />
           </div>
-          <div className="main-time">
+          <div className="main-time" id="hm_ampm">
             {" "}
-            {time.hours}:{time.minutes} <span>{time.ampm}</span>
           </div>
           <div className="main-date">
-            <h5>{time.day}</h5>
-            <h6>
-              {time.date} {time.month} {time.year}
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
             </h6>
           </div>
         </div>

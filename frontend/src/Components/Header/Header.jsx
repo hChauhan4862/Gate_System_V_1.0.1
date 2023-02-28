@@ -186,13 +186,23 @@ function getUserData (user_id)  {
                     <h6>{time.date} {time.month} {time.year}</h6>
                   </div>
                 </div>
-                <ul className="top-header-list">
-                  <li><a href="#"> <i class="material-symbols-outlined">dark_mode</i></a></li>
-                  <li><a href="#"> 
-                  <img src={!user_image ? "https://cdn-icons-png.flaticon.com/512/149/149071.png" :  "data:image/png;base64," +user_image  }
-                  alt="user" class="rounded-circle" width="35" height="35" /></a></li>
-                  <li><a href="#"> <i class="material-symbols-outlined">settings</i></a></li>
-                </ul>
+                <div className="top-header-nav">
+                <ul id="menu">
+                    <li><a href="#"><i class="material-symbols-outlined">dark_mode</i></a></li>
+                    <li><a href="#"><img src={!user_image ? "https://cdn-icons-png.flaticon.com/512/149/149071.png" :  "data:image/png;base64," +user_image  }
+                  alt="user" class="rounded-circle" width="30" height="30" /></a>
+                      <ul>
+                      <li><a href="#"><i class="icon-user"></i> Account</a></li>
+                      <li><a href="#"><i class="icon-envelope"></i> Inbox</a></li>
+                      <li><a href="#"><i class="icon-speedometer"></i> Taskboard</a></li>
+                      <li><a href="#"><i class="icon-settings"></i> Settings</a></li>
+                      <li><a href="#"><i class="icon-logout"></i> Logout</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#"><i class="material-symbols-outlined">settings</i></a></li>
+                  </ul>
+                </div>
+                
         </div>
 
        

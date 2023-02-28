@@ -10,7 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 
 
 
@@ -20,7 +20,6 @@ let endpoint = endpointData.host
 
 const Devices = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
   const [devices, setDevices] = useState([]);
   const [id, setId] = useState("");
   const [friendlyName, setFriendlyName] = useState("");
@@ -73,15 +72,13 @@ function getDevices() {
   });
 }
 
+
+
 useEffect(() => {
   getDevices();
   getConnectDevices();
   getDeviceTypes();
   getDoors();
-  const interval = setInterval(() => {
-    setTime(TimerWithDate());
-  }, 1000);
-  return () => clearInterval(interval);
 }, []);
 
 // datable implementation
@@ -522,15 +519,19 @@ const mapedDevice = (e) => {
         pauseOnHover
         theme="colored"
       />
-{/* time */}
-                <div className="timer" id='mobile-timer'>
+        {/* time */}
+              <div className="timer" id="mobile-timer">
                   <div className="time-icon">
                     <img src="./assets/images/clock.png" alt="clock-icon" />
                   </div>
-                  <div className="main-time"> {time.hours}:{time.minutes} <span>{time.ampm}</span></div>
+                  <div className="main-time" id="hm_ampm">
+                    {" "}
+                  </div>
                   <div className="main-date">
-                    <h5>{time.day}</h5>
-                    <h6>{time.date} {time.month} {time.year}</h6>
+                    <h5 id="day_dom">
+                      </h5>
+                    <h6 id="date_dom">
+                    </h6>
                   </div>
                 </div>
 

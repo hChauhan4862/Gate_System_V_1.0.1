@@ -10,7 +10,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "jszip";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -20,7 +20,6 @@ let endpoint = endpointData.host
 
 const Doors = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [org, setOrg] = useState("");
@@ -30,6 +29,7 @@ const Doors = () => {
   const [doorsData, setDoorsData] = useState([]);
   const [orgData, setOrgData] = useState([]);
   const token = localStorage.getItem("token");
+
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -63,10 +63,6 @@ const Doors = () => {
   useEffect(() => {
     getDoors()
     getOrgData()
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
   }, [])
 
     // datable implementation
@@ -396,19 +392,18 @@ const notify = (action, msg) => {
         pauseOnHover
         theme="colored"
       />
-      {/* time */}
+      {/* mobile time */}
       <div className="timer" id="mobile-timer">
           <div className="time-icon">
             <img src="./assets/images/clock.png" alt="clock-icon" />
           </div>
-          <div className="main-time">
+          <div className="main-time" id="hm_ampm">
             {" "}
-            {time.hours}:{time.minutes} <span>{time.ampm}</span>
           </div>
           <div className="main-date">
-            <h5>{time.day}</h5>
-            <h6>
-              {time.date} {time.month} {time.year}
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
             </h6>
           </div>
         </div>

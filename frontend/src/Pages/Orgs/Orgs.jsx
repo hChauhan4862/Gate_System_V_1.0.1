@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import "./Orgs.css";
 import "jszip";
 import $ from "jquery";
@@ -11,7 +11,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import swal from "sweetalert";
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
@@ -20,7 +20,7 @@ let endpoint = endpointData.host
 
 const Orgs = () => {
   const sidebar = localStorage.getItem("sidebar");
-  const [time, setTime] = useState(TimerWithDate());
+
   const [orgs, setOrgs] = useState([]);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -41,6 +41,8 @@ const Orgs = () => {
   const handleCloseEdit = () => setShowEdit(false);
 
   const [editData, setEditData] = useState(false);
+
+
 
   //handelSwitch
   const handleSwitch = () => {
@@ -75,11 +77,10 @@ const Orgs = () => {
 
   useEffect(() => {
     getOrgs();
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
   }, []);
+
+
+
 
     // datable implementation
     var table = $("#orgData").DataTable({
@@ -399,14 +400,13 @@ window.deleteStudent = (id) => {
           <div className="time-icon">
             <img src="./assets/images/clock.png" alt="clock-icon" />
           </div>
-          <div className="main-time">
+          <div className="main-time" id="hm_ampm">
             {" "}
-            {time.hours}:{time.minutes} <span>{time.ampm}</span>
           </div>
           <div className="main-date">
-            <h5>{time.day}</h5>
-            <h6>
-              {time.date} {time.month} {time.year}
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
             </h6>
           </div>
         </div>

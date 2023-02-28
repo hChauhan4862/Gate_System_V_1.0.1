@@ -1,8 +1,8 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect,useRef} from "react";
 import "./Home.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
-import TimerWithDate  from '../../Components/Timer/Timer';
+import '../../Components/Timer/Timer2';
 import jwt from 'jwt-decode';
 import axios from "axios";
 
@@ -45,7 +45,6 @@ const pdata = [
 
 const Home = () => {
   const token = localStorage.getItem("token");
-  const [time, setTime] = useState(TimerWithDate());
   const sidebar = localStorage.getItem("sidebar");
   const [user_id, setUser_id] = useState(jwt(token).user_id);
   const [userData, setUserData] = useState([]);
@@ -103,14 +102,11 @@ axios.get(endpoint + "user/getUserById/" + user_id, config)
 })
 }
 
+
+
   useEffect(() => {
     checkToken(token)
     getUserById(user_id)
-    const interval = setInterval(() => {
-      setTime(TimerWithDate());
-    }, 1000);
-    return () => clearInterval(interval);
-    
   }, []);
 
 
@@ -240,19 +236,19 @@ useEffect(() => {
       }
     >
       <div className="body-main">
-        {/* mobile time */}
-        <div className="timer" id="mobile-timer">
+
+      {/* mobile time */}
+      <div className="timer" id="mobile-timer">
           <div className="time-icon">
             <img src="./assets/images/clock.png" alt="clock-icon" />
           </div>
-          <div className="main-time">
+          <div className="main-time" id="hm_ampm">
             {" "}
-            {time.hours}:{time.minutes} <span>{time.ampm}</span>
           </div>
           <div className="main-date">
-            <h5>{time.day}</h5>
-            <h6>
-              {time.date} {time.month} {time.year}
+            <h5 id="day_dom">
+              </h5>
+            <h6 id="date_dom">
             </h6>
           </div>
         </div>
