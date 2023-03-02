@@ -430,12 +430,7 @@ useEffect(() => {
                 </div>
               </div>
               <div className="card-body">
-              {/* <div data-bs-theme="blue">
-                <p>adfadf</p>
-                <p>adfadf</p>
-                <p>adfadf</p>
-                <p>adfadf</p>
-              </div> */}
+
                 <div className="command-log">
                 <p>src\Components\Header\Header.jsx</p>
                 <p>Line 78:23:  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-

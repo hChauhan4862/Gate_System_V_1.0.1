@@ -5,17 +5,12 @@ import jwt from 'jwt-decode';
 import axios from 'axios';
 
 
-// console.log(token);
-
-// console.log(jwt(token));
-
 import endpointData from '../../endpoint.json'
 // console.log(endpointData)
 let endpoint = endpointData.host
 
 
 const Header = () => {
-
   const token = localStorage.getItem("token");
 
   const [sidebar, setSidebar] = useState(true)
@@ -26,6 +21,7 @@ const Header = () => {
   const [user_email, setUser_email] = useState('');
   const [user_role, setUser_role] = useState('');
   const [user_image, setUser_image] = useState('');
+  const [theme, setTheme] = useState([]);
 
 // console.log(user_image)
 
@@ -60,6 +56,104 @@ useEffect(() => {
 }, [])
 
 
+// Dark Theme Function
+function darkTheme() {
+  //add class in body
+  document.body.classList.toggle("dark-theme");
+      //remove class in body
+  document.body.classList.remove("light-theme");
+  // get the class
+  const theme_toggler = document.querySelector(".theme-toggler");
+// get the all i tag inside the theme_toggler
+  const i = theme_toggler.getElementsByTagName("i");
+  // add the class to the i tag for first i tag
+  i[0].classList.add("active");
+  // remove the class to the i tag for second i tag
+  i[1].classList.remove("active");
+}
+
+// Light Theme Function
+function LightTheme() {
+  //add class in body
+  document.body.classList.toggle("light-theme");
+  //remove class in body
+  document.body.classList.remove("dark-theme");
+  // get the class
+  const theme_toggler = document.querySelector(".theme-toggler");
+// get the all i tag inside the theme_toggler
+  const i = theme_toggler.getElementsByTagName("i");
+  // add the class to the i tag for first i tag
+  i[1].classList.add("active");
+  // remove the class to the i tag for second i tag
+  i[0].classList.remove("active");
+
+  
+} 
+
+
+// Apply Theme
+const applyTheme = (theme) => {
+  if (theme === "Dark") {
+    darkTheme();
+    // console.log("Dark")
+    updateTheme("Dark")
+  } else {
+    LightTheme();
+    // console.log("Light")
+    updateTheme("Light")
+  }
+}
+
+
+
+// update Theme in DB
+function updateTheme(theme) {
+  const config = {
+    headers: {
+      // Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }
+  const data = {
+    theme: theme,
+  }
+  axios.put(endpoint + "userSettings/editTheme/" + user_id, data, config)
+  .then((res) => {
+    console.log(res.data)
+    getUserData(user_id)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+// check the theme from local storage
+useEffect(() => {
+  console.log(localStorage.getItem("theme"),"theme")
+  
+  if(localStorage.getItem("theme") === "Dark"){
+    document.body.classList.toggle("dark-theme");
+      //remove class in body
+    document.body.classList.remove("light-theme");
+  // get the class
+    const theme_toggler = document.querySelector(".theme-toggler");
+// get the all i tag inside the theme_toggler
+    const i = theme_toggler.getElementsByTagName("i");
+  // add the class to the i tag for first i tag
+    i[0].classList.add("active");
+  // remove the class to the i tag for second i tag
+    i[1].classList.remove("active");
+  }
+  return () => {
+    document.body.classList.remove("dark-theme");
+    document.body.classList.remove("light-theme");
+  }
+
+}, []);
+
+
+
+
 
 // get the user data from the database
 function getUserData (user_id)  {
@@ -77,8 +171,10 @@ function getUserData (user_id)  {
     setUser_email(res.data.user_email)
     setUser_image(res.data.user_img)
     setUser_role(res.data.user_group.group_name)
+    setTheme(res.data.user_settings[0].theme)
     // setlocalstorage
     localStorage.setItem("user_role", res.data.user_group.group_name)
+    localStorage.setItem("theme", res.data.user_settings[0].theme)
   })
   .catch((err) => {
     console.log(err)
@@ -187,8 +283,24 @@ function getUserData (user_id)  {
                   </div>
                 </div>
                 <div className="top-header-nav">
+
+                    {/* theme ICON */}
+                      <div class="theme-toggler">
+                        <i class="material-symbols-outlined" onClick={
+                          () => {
+                            applyTheme("Dark")
+                          }
+
+                        } >dark_mode</i>
+                        <i class="material-symbols-outlined active" 
+                        onClick={
+                          () => {
+                            applyTheme("Light")
+                          }
+                        }>light_mode</i>
+                      </div>
+
                 <ul id="menu">
-                    <li><a href="#"><i class="material-symbols-outlined">dark_mode</i></a></li>
                     <li><a href="#"><img src={!user_image ? "https://cdn-icons-png.flaticon.com/512/149/149071.png" :  "data:image/png;base64," +user_image  }
                   alt="user" class="rounded-circle" width="30" height="30" /></a>
                       <ul>

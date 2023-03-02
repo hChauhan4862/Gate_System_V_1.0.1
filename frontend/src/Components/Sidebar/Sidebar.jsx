@@ -221,7 +221,7 @@ const Sidebar = () => {
             <NavLink to="/settings" activeclassname="active">
               <i className="ti-settings"></i>{" "}
               <span style={window.innerWidth < 768? { display: "none" } : { display: "block" } }>
-                Settings - hold
+                Settings
               </span>
             </NavLink>
           </li>
@@ -229,7 +229,7 @@ const Sidebar = () => {
             <NavLink to="/logout" activeclassname="active">
               <i className="icon-logout"></i>{" "}
               <span style={window.innerWidth < 768? { display: "none" } : { display: "block" } }>
-                Logout - hold
+                Logout
               </span>
             </NavLink>
           </li>

@@ -1,5 +1,5 @@
 body{
-    background-color: #f2f0ff !important;
+    background-color: var(--bs-pink) !important;
     margin: 0;
     padding: 0;
 } 
@@ -60,7 +60,7 @@ ul.short-bread li {
     list-style: none;
     font-size: 14px;
     padding-top: 7px;
-    color:#222;
+    color:var(--bs-dark);
 }
 
 ul.short-bread li:after{
@@ -76,7 +76,7 @@ ul.short-bread li:last-of-type:after{
 }
 
 ul.short-bread li span {
-    color: #aaa;
+    color: var(--bs-gray-500);
 }
 
 ul.short-bread li a {
@@ -87,6 +87,7 @@ ul.short-bread li a {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 0px;
+    color: var(--bs-dark);
 }
 
 
@@ -95,33 +96,37 @@ ul.short-bread li a {
 }
 
 .card {
-    border: #fff !important;
-    box-shadow: 6px 11px 41px -28px #796eb1;
-    -webkit-box-shadow: 6px 11px 41px -28px #796eb1;
+    border: var(--bs-white) !important;
+    box-shadow: 6px 11px 41px -28px var(--bs-secondary);
+    -webkit-box-shadow: 6px 11px 41px -28px var(--bs-secondary);
     margin:10px 0px;
 }
 
 .card-body table, .dataTables_info, .dataTables_paginate, .dataTables_length, .dataTables_filter label, .device-list, .form-select, .react-datepicker-wrapper input {
     font-size: 13px !important;
+    color: var(--bs-gray-dark) !important;
+    background: var(--bs-white) !important;
 }
 
 .card-title {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--bs-gray-300);
+    color: var(--bs-dark);
 }
 
 .card-title h4 {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 1px;
+    color: var(--bs-dark);
 }
 
 .card-title p {
     margin-bottom: 0px;
     font-size: 12px;
-    color: #8a8a8a;
+    color: var(--bs-gray-500);
 }
 
 .card-body {
@@ -144,7 +149,7 @@ ul.short-bread li a {
     width: 70px;
     height: 70px;
     border-radius: 5px;
-    color: #fff;
+    color: var(--bs-white);
     text-align: center;
     margin-right: 10px;
     padding: 7px;
@@ -155,30 +160,31 @@ ul.short-bread li a {
 }
 
 .wn-data-icon .wn-icon.color-01 {
-    background: #6f3ed2;
+    background: var(--bs-primary);
 }
 
 .wn-data-icon .wn-icon.color-02 {
-    background: #f66b4e;
+    background: var(--bs-orange);
 }
 
 .wn-data-icon .wn-icon.color-03 {
-    background: #1ca2d5;
+    background: var(--bs-blue);
 }
 
 .wn-data-icon .wn-icon.color-04 {
-    background: #21a544;
+    background: var(--bs-teal);
 }
 
 .wn-data-icon h5 {
     font-weight: 600;
     padding-top: 10px;
+    color: var(--bs-dark);
 }
 
 .wn-data-icon h6 {
     font-size: 14px;
     font-weight: 400;
-    color:#a5a1a1;
+    color:var(--bs-gray);
 }
 
 .wn-data-icon h6 span {
@@ -191,12 +197,12 @@ ul.short-bread li a {
 
 .wn-data-icon h6 span.positive {
     background: #82ca9d63;
-    color: #207c42;
+    color: var(--bs-success);
 }
 
 .wn-data-icon h6 span.negative {
     background: #ff99995c;
-    color: #cd0303;
+    color: var(--bs-danger);
 }
 
 .wn-data-figure {
@@ -206,6 +212,7 @@ ul.short-bread li a {
 .wn-count {
     font-size: 24px;
     font-weight: 700;
+    color: var(--bs-dark);
 }
 
 .form-label {
@@ -214,7 +221,7 @@ ul.short-bread li a {
 
 .form-control {
     font-size: 13px !important;
-    color: #333 !important;
+    color: var(--bs-gray-dark) !important;
 }
 
 .modal-title {
@@ -223,9 +230,9 @@ ul.short-bread li a {
 }
 
 .command-log {
-    background: #000;
+    background: var(--bs-dark);
     padding: 10px;
-    color: #fff;
+    color: var(--bs-white);
     font-size: 14px;
     line-height: 20px;
     font-family: 'IBM Plex Mono', monospace;  
@@ -243,18 +250,18 @@ ul.short-bread li a {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    border: 1px solid #ced4da;
+    color: var(--bs-gray-dark);
+    background-color: var(--bs-white);
+    border: 1px solid var(--bs-gray-100);
     border-radius: 0.375rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     appearance: none;
 }
 
 .react-datepicker-wrapper input:focus {
-    border-color: #86b7fe;
+    border-color: var(--bs-input-focus);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+    box-shadow: 0 0 0 0.25rem var(--bs-input-shadow);
 }
 
 

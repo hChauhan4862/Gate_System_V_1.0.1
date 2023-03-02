@@ -118,7 +118,7 @@ var table = $("#groupData").DataTable({
       text: "Print",
       className: "btn btn-success btn-sm d-none",
       exportOptions: {
-        columns: [1, 2, 3, 4, 5, 6, 7],
+        columns: [1, 2, 3, 4],
       },
     },
     {
@@ -126,7 +126,7 @@ var table = $("#groupData").DataTable({
       text: "Copy",
       className: "btn btn-success btn-sm d-none",
       exportOptions: {
-        columns: [1, 2, 3, 4, 5, 6, 7],
+        columns: [1, 2, 3, 4],
       },
     },
     {
@@ -134,7 +134,7 @@ var table = $("#groupData").DataTable({
       text: "Export to CSV",
       className: "btn btn-success btn-sm d-none",
       exportOptions: {
-        columns: [1, 2, 3, 4, 5, 6, 7],
+        columns: [1, 2, 3, 4],
       },
     },
     {
@@ -143,7 +143,7 @@ var table = $("#groupData").DataTable({
       className: "btn btn-success btn-sm d-none",
       orientation: "landscape",
       exportOptions: {
-        columns: [1, 2, 3, 4, 5, 6, 7],
+        columns: [1, 2, 3, 4],
       },
     },
   ],
@@ -432,7 +432,7 @@ const notify = (action, msg) => {
             </a>
           </div>
           <div className="title-right">
-            <Dropdown>
+          <Dropdown>
               <Dropdown.Toggle as={CustomToggle}>
                 <i class="icon-options-vertical"></i>
               </Dropdown.Toggle>
@@ -444,7 +444,7 @@ const notify = (action, msg) => {
                     $("#groupData").DataTable().button(0).trigger();
                   }}
                 >
-                  Print
+                  <i className="mdi mdi-printer"></i> Print
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="copy_id"
@@ -452,7 +452,7 @@ const notify = (action, msg) => {
                     $("#groupData").DataTable().button(1).trigger();
                   }}
                 >
-                  Copy
+                  <i className="mdi mdi-content-copy"></i> Copy
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="csv_id"
@@ -460,7 +460,7 @@ const notify = (action, msg) => {
                     $("#groupData").DataTable().button(2).trigger();
                   }}
                 >
-                  CSV
+                  <i className="mdi mdi-microsoft-excel"></i> CSV
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="pdf_id"
@@ -468,7 +468,7 @@ const notify = (action, msg) => {
                     $("#groupData").DataTable().button(3).trigger();
                   }}
                 >
-                  PDF
+                 <i className="mdi mdi-file-pdf-outline"></i> PDF
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

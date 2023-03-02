@@ -452,7 +452,7 @@ window.deleteStudent = (id) => {
             </a>
           </div>
           <div className="title-right">
-            <Dropdown>
+          <Dropdown>
               <Dropdown.Toggle as={CustomToggle}>
                 <i class="icon-options-vertical"></i>
               </Dropdown.Toggle>
@@ -464,7 +464,7 @@ window.deleteStudent = (id) => {
                     $("#orgData").DataTable().button(0).trigger();
                   }}
                 >
-                  Print
+                  <i className="mdi mdi-printer"></i> Print
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="copy_id"
@@ -472,7 +472,7 @@ window.deleteStudent = (id) => {
                     $("#orgData").DataTable().button(1).trigger();
                   }}
                 >
-                  Copy
+                  <i className="mdi mdi-content-copy"></i> Copy
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="csv_id"
@@ -480,7 +480,7 @@ window.deleteStudent = (id) => {
                     $("#orgData").DataTable().button(2).trigger();
                   }}
                 >
-                  CSV
+                  <i className="mdi mdi-microsoft-excel"></i> CSV
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="pdf_id"
@@ -488,7 +488,7 @@ window.deleteStudent = (id) => {
                     $("#orgData").DataTable().button(3).trigger();
                   }}
                 >
-                  PDF
+                 <i className="mdi mdi-file-pdf-outline"></i> PDF
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

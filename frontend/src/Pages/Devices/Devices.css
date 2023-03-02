@@ -21,18 +21,18 @@
 .edit{
     text-decoration: none;
     cursor: pointer;
-    color: black;
+    color: var(--bs-dark);
 }
 
 .delete{
     text-decoration: none;
     cursor: pointer;
-    color:red;
+    color:var(--bs-danger);
 }
 .map{
     text-decoration: none;
     cursor: pointer;
-    color:blue
+    color:var(--bs-blue);
 }
 
 .device-list {
@@ -48,7 +48,7 @@
 .device-list li {
     list-style: none;
     padding: 10px 10px 10px 0px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--bs-gray);
 }
 
 .device-list li:last-child {
@@ -61,7 +61,7 @@
 }
 
 .device-list li span i{
-    color: green;
+    color: var(--bs-success)
 
 }
 

@@ -20,6 +20,7 @@ const studentsRouter = require('./students.routes');
 const staticRouter = require('./staticRouting.router');
 const logRouter = require('./log.router')
 const login = require('./login.router')
+const userSettingsRouter = require('./userSettings.router')
 const { app } = require('electron');
 
 const authenticate  = require('../middlewares/auth')
@@ -44,6 +45,7 @@ router.use('/rfid', rfidRouter);
 router.use('/devicesSetup', devicesSetupRouter);
 router.use('/students', studentsRouter);
 router.use('/log',logRouter)
+router.use('/userSettings', userSettingsRouter);
 
 
 

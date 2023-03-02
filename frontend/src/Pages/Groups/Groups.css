@@ -19,11 +19,11 @@
 .edit{
     text-decoration: none;
     cursor: pointer;
-    color: black;
+    color: var(--bs-dark);
 }
 
 .delete{
     text-decoration: none;
     cursor: pointer;
-    color:red;
+    color:var(--bs-danger);
 }

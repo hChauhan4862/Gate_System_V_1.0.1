@@ -334,27 +334,6 @@ const Reports = () => {
                 </Form.Select>
               </Form.Group>
             </div>
-            {/* <div className="col-md-3">
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Report</Form.Label>
-                <Form.Select
-                  aria-label="Default select example"
-                  value={report_type}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    setReport_type(e.target.value);
-                  }}
-                >
-                  <option value={" "}>Select Report</option>
-                  {reportTypeList.map((item) => (
-                    <option value={item.id}>{item.name}</option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </div> */}
 
             <div className="col-md-3">
               <Form.Group
@@ -397,7 +376,7 @@ const Reports = () => {
           </div>
 
           <div className="title-right">
-            <Dropdown>
+          <Dropdown>
               <Dropdown.Toggle as={CustomToggle}>
                 <i class="icon-options-vertical"></i>
               </Dropdown.Toggle>
@@ -409,7 +388,7 @@ const Reports = () => {
                     $("#report").DataTable().button(0).trigger();
                   }}
                 >
-                  Print
+                  <i className="mdi mdi-printer"></i> Print
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="copy_id"
@@ -417,7 +396,7 @@ const Reports = () => {
                     $("#report").DataTable().button(1).trigger();
                   }}
                 >
-                  Copy
+                  <i className="mdi mdi-content-copy"></i> Copy
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="csv_id"
@@ -425,7 +404,7 @@ const Reports = () => {
                     $("#report").DataTable().button(2).trigger();
                   }}
                 >
-                  CSV
+                  <i className="mdi mdi-microsoft-excel"></i> CSV
                 </Dropdown.Item>
                 <Dropdown.Item
                   id="pdf_id"
@@ -433,7 +412,7 @@ const Reports = () => {
                     $("#report").DataTable().button(3).trigger();
                   }}
                 >
-                  PDF
+                 <i className="mdi mdi-file-pdf-outline"></i> PDF
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
