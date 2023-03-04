@@ -16,18 +16,16 @@ ipcMain.on("saveUserConfig", async (event, data) => {
   let DB_URL = "";
   if (data.DB_PROVIDER == "SQLITE") {
     // ****************************** SQLITE ****************************** //
-    DB_URL = `file:${app.getPath("userData") + "/wn_bd.dll"}`;
-    DB_OBJ = { datasources: { db: { url: DB_URL } } };
-    const { PrismaClient } = require("../../../prisma/generated/sqlite-client");
-    try {
-      prisma = new PrismaClient(DB_OBJ);
-      await prisma.$connect();
-    } catch (error) {
+    DB_URL = `${app.getPath("userData") + "/wn_bd.dll"}`;
+    const createDatabaseIfNotExistsAndMigrate = require("../../../prisma/migrators/sqlite");
+    let isSuccessful = await createDatabaseIfNotExistsAndMigrate(DB_URL);
+    if (!isSuccessful) {
       dialog.showMessageBoxSync({ type: "error", title: "Error", message: "Error connecting to database", });
       return;
     }
+
   }
-  if (data.DB_PROVIDER == "MYSQL") {
+  else if (data.DB_PROVIDER == "MYSQL") {
     // ****************************** MYSQL ****************************** 
     const createDatabaseIfNotExistsAndMigrate = require("../../../prisma/migrators/mysql");
     let isSuccessful = await createDatabaseIfNotExistsAndMigrate(data.DB_HOST, data.DB_USER, data.DB_PASSWORD, data.DB_NAME);
