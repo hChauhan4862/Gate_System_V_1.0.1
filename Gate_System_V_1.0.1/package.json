@@ -50,13 +50,14 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.1.2",
     "serialport": "^10.5.0",
-    "sqlite": "^4.1.2"
+    "sqlite": "^4.1.2",
+    "sqlite3": "^5.1.4"
   },
   "devDependencies": {
     "builder": "^5.0.0",
     "electron": "^22.0.0",
-    "electron-builder": "^23.6.0",
-    "electron-packager": "^15.3.0",
+    "electron-builder": "^22.10.3",
+    "electron-packager": "^17.1.1",
     "electron-rebuild": "^3.2.9",
     "prisma": "^4.10.1"
   }
