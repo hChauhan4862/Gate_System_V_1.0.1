@@ -509,8 +509,8 @@ export namespace Prisma {
 
 
   /**
-   * Prisma Client JS version: 4.10.1
-   * Query Engine version: aead147aa326ccb985dcfed5b065b4fdabd44b19
+   * Prisma Client JS version: 4.11.0
+   * Query Engine version: 8fde8fef4033376662cad983758335009d522acb
    */
   export type PrismaVersion = {
     client: string
@@ -2851,13 +2851,13 @@ export namespace Prisma {
 
   export type organization_groupSelect = {
     id?: boolean
-    org?: boolean | organizationArgs
     org_id?: boolean
     name?: boolean
     description?: boolean
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    org?: boolean | organizationArgs
   }
 
 
@@ -3894,7 +3894,6 @@ export namespace Prisma {
   export type userSelect = {
     id?: boolean
     org_id?: boolean
-    org?: boolean | organizationArgs
     name?: boolean
     email?: boolean
     password?: boolean
@@ -3904,11 +3903,12 @@ export namespace Prisma {
     user_img?: boolean
     user_group_id?: boolean
     rfid_card_id?: boolean
-    rfid_card?: boolean | rfid_cardArgs
-    user_group?: boolean | user_groupArgs
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    org?: boolean | organizationArgs
+    rfid_card?: boolean | rfid_cardArgs
+    user_group?: boolean | user_groupArgs
     user_settings?: boolean | user$user_settingsArgs
     _count?: boolean | UserCountOutputTypeArgs
   }
@@ -4933,13 +4933,13 @@ export namespace Prisma {
   export type user_groupSelect = {
     id?: boolean
     org_id?: boolean
-    org?: boolean | organizationArgs
     group_name?: boolean
     permission_id?: boolean
-    permission?: boolean | permissionArgs
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    org?: boolean | organizationArgs
+    permission?: boolean | permissionArgs
     user?: boolean | user_group$userArgs
     students?: boolean | user_group$studentsArgs
     _count?: boolean | User_groupCountOutputTypeArgs
@@ -6987,13 +6987,13 @@ export namespace Prisma {
   export type doorsSelect = {
     id?: boolean
     org_id?: boolean
-    org?: boolean | organizationArgs
     name?: boolean
     description?: boolean
     door_no?: boolean
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    org?: boolean | organizationArgs
     inout_log?: boolean | doors$inout_logArgs
     devices_setup?: boolean | doors$devices_setupArgs
     _count?: boolean | DoorsCountOutputTypeArgs
@@ -9092,19 +9092,19 @@ export namespace Prisma {
     id?: boolean
     organization?: boolean
     org_id?: boolean
-    org?: boolean | organizationArgs
     devicePort?: boolean
     device_id?: boolean
     doorNo?: boolean
     door_id?: boolean
-    door?: boolean | doorsArgs
     studentName?: boolean
     student_id?: boolean
-    students?: boolean | studentsArgs
     operation?: boolean
     log_date?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    org?: boolean | organizationArgs
+    door?: boolean | doorsArgs
+    students?: boolean | studentsArgs
   }
 
 
@@ -12104,12 +12104,12 @@ export namespace Prisma {
     serialNumber?: boolean
     vendorId?: boolean
     devicesType?: boolean
-    device_type?: boolean | device_typeArgs
     door_id?: boolean
-    door?: boolean | doorsArgs
     isActive?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    device_type?: boolean | device_typeArgs
+    door?: boolean | doorsArgs
   }
 
 
@@ -14178,12 +14178,12 @@ export namespace Prisma {
   export type user_settingsSelect = {
     id?: boolean
     user_id?: boolean
-    user?: boolean | userArgs
     language?: boolean
     theme?: boolean
     city?: boolean
     updatedAt?: boolean
     createdAt?: boolean
+    user?: boolean | userArgs
   }
 
 
@@ -15258,24 +15258,24 @@ export namespace Prisma {
     OR?: Enumerable<organization_groupWhereInput>
     NOT?: Enumerable<organization_groupWhereInput>
     id?: IntFilter | number
-    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     org_id?: IntFilter | number
     name?: StringFilter | string
     description?: StringFilter | string
     isActive?: BoolFilter | boolean
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
   }
 
   export type organization_groupOrderByWithRelationInput = {
     id?: SortOrder
-    org?: organizationOrderByWithRelationInput
     org_id?: SortOrder
     name?: SortOrder
     description?: SortOrder
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    org?: organizationOrderByWithRelationInput
   }
 
   export type organization_groupWhereUniqueInput = {
@@ -15316,7 +15316,6 @@ export namespace Prisma {
     NOT?: Enumerable<userWhereInput>
     id?: IntFilter | number
     org_id?: IntFilter | number
-    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     name?: StringFilter | string
     email?: StringFilter | string
     password?: StringFilter | string
@@ -15326,18 +15325,18 @@ export namespace Prisma {
     user_img?: StringNullableFilter | string | null
     user_group_id?: IntNullableFilter | number | null
     rfid_card_id?: IntNullableFilter | number | null
-    rfid_card?: XOR<Rfid_cardRelationFilter, rfid_cardWhereInput> | null
-    user_group?: XOR<User_groupRelationFilter, user_groupWhereInput> | null
     isActive?: BoolNullableFilter | boolean | null
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
+    rfid_card?: XOR<Rfid_cardRelationFilter, rfid_cardWhereInput> | null
+    user_group?: XOR<User_groupRelationFilter, user_groupWhereInput> | null
     user_settings?: User_settingsListRelationFilter
   }
 
   export type userOrderByWithRelationInput = {
     id?: SortOrder
     org_id?: SortOrder
-    org?: organizationOrderByWithRelationInput
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
@@ -15347,11 +15346,12 @@ export namespace Prisma {
     user_img?: SortOrder
     user_group_id?: SortOrder
     rfid_card_id?: SortOrder
-    rfid_card?: rfid_cardOrderByWithRelationInput
-    user_group?: user_groupOrderByWithRelationInput
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    org?: organizationOrderByWithRelationInput
+    rfid_card?: rfid_cardOrderByWithRelationInput
+    user_group?: user_groupOrderByWithRelationInput
     user_settings?: user_settingsOrderByRelationAggregateInput
   }
 
@@ -15408,13 +15408,13 @@ export namespace Prisma {
     NOT?: Enumerable<user_groupWhereInput>
     id?: IntFilter | number
     org_id?: IntFilter | number
-    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     group_name?: StringFilter | string
     permission_id?: IntFilter | number
-    permission?: XOR<PermissionRelationFilter, permissionWhereInput>
     isActive?: BoolNullableFilter | boolean | null
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
+    permission?: XOR<PermissionRelationFilter, permissionWhereInput>
     user?: UserListRelationFilter
     students?: StudentsListRelationFilter
   }
@@ -15422,13 +15422,13 @@ export namespace Prisma {
   export type user_groupOrderByWithRelationInput = {
     id?: SortOrder
     org_id?: SortOrder
-    org?: organizationOrderByWithRelationInput
     group_name?: SortOrder
     permission_id?: SortOrder
-    permission?: permissionOrderByWithRelationInput
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    org?: organizationOrderByWithRelationInput
+    permission?: permissionOrderByWithRelationInput
     user?: userOrderByRelationAggregateInput
     students?: studentsOrderByRelationAggregateInput
   }
@@ -15524,13 +15524,13 @@ export namespace Prisma {
     NOT?: Enumerable<doorsWhereInput>
     id?: IntFilter | number
     org_id?: IntFilter | number
-    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     name?: StringFilter | string
     description?: StringFilter | string
     door_no?: StringFilter | string
     isActive?: BoolNullableFilter | boolean | null
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     inout_log?: Inout_logListRelationFilter
     devices_setup?: Devices_setupListRelationFilter
   }
@@ -15538,13 +15538,13 @@ export namespace Prisma {
   export type doorsOrderByWithRelationInput = {
     id?: SortOrder
     org_id?: SortOrder
-    org?: organizationOrderByWithRelationInput
     name?: SortOrder
     description?: SortOrder
     door_no?: SortOrder
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    org?: organizationOrderByWithRelationInput
     inout_log?: inout_logOrderByRelationAggregateInput
     devices_setup?: devices_setupOrderByRelationAggregateInput
   }
@@ -15647,38 +15647,38 @@ export namespace Prisma {
     id?: IntFilter | number
     organization?: StringNullableFilter | string | null
     org_id?: IntFilter | number
-    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
     devicePort?: StringNullableFilter | string | null
     device_id?: IntNullableFilter | number | null
     doorNo?: StringNullableFilter | string | null
     door_id?: IntFilter | number
-    door?: XOR<DoorsRelationFilter, doorsWhereInput>
     studentName?: StringNullableFilter | string | null
     student_id?: IntFilter | number
-    students?: XOR<StudentsRelationFilter, studentsWhereInput>
     operation?: StringFilter | string
     log_date?: DateTimeFilter | Date | string
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    org?: XOR<OrganizationRelationFilter, organizationWhereInput>
+    door?: XOR<DoorsRelationFilter, doorsWhereInput>
+    students?: XOR<StudentsRelationFilter, studentsWhereInput>
   }
 
   export type inout_logOrderByWithRelationInput = {
     id?: SortOrder
     organization?: SortOrder
     org_id?: SortOrder
-    org?: organizationOrderByWithRelationInput
     devicePort?: SortOrder
     device_id?: SortOrder
     doorNo?: SortOrder
     door_id?: SortOrder
-    door?: doorsOrderByWithRelationInput
     studentName?: SortOrder
     student_id?: SortOrder
-    students?: studentsOrderByWithRelationInput
     operation?: SortOrder
     log_date?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    org?: organizationOrderByWithRelationInput
+    door?: doorsOrderByWithRelationInput
+    students?: studentsOrderByWithRelationInput
   }
 
   export type inout_logWhereUniqueInput = {
@@ -15845,12 +15845,12 @@ export namespace Prisma {
     serialNumber?: StringNullableFilter | string | null
     vendorId?: StringNullableFilter | string | null
     devicesType?: IntNullableFilter | number | null
-    device_type?: XOR<Device_typeRelationFilter, device_typeWhereInput> | null
     door_id?: IntNullableFilter | number | null
-    door?: XOR<DoorsRelationFilter, doorsWhereInput> | null
     isActive?: BoolFilter | boolean
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    device_type?: XOR<Device_typeRelationFilter, device_typeWhereInput> | null
+    door?: XOR<DoorsRelationFilter, doorsWhereInput> | null
   }
 
   export type devices_setupOrderByWithRelationInput = {
@@ -15864,12 +15864,12 @@ export namespace Prisma {
     serialNumber?: SortOrder
     vendorId?: SortOrder
     devicesType?: SortOrder
-    device_type?: device_typeOrderByWithRelationInput
     door_id?: SortOrder
-    door?: doorsOrderByWithRelationInput
     isActive?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    device_type?: device_typeOrderByWithRelationInput
+    door?: doorsOrderByWithRelationInput
   }
 
   export type devices_setupWhereUniqueInput = {
@@ -16011,23 +16011,23 @@ export namespace Prisma {
     NOT?: Enumerable<user_settingsWhereInput>
     id?: IntFilter | number
     user_id?: IntFilter | number
-    user?: XOR<UserRelationFilter, userWhereInput>
     language?: StringFilter | string
     theme?: StringFilter | string
     city?: StringFilter | string
     updatedAt?: DateTimeNullableFilter | Date | string | null
     createdAt?: DateTimeFilter | Date | string
+    user?: XOR<UserRelationFilter, userWhereInput>
   }
 
   export type user_settingsOrderByWithRelationInput = {
     id?: SortOrder
     user_id?: SortOrder
-    user?: userOrderByWithRelationInput
     language?: SortOrder
     theme?: SortOrder
     city?: SortOrder
     updatedAt?: SortOrder
     createdAt?: SortOrder
+    user?: userOrderByWithRelationInput
   }
 
   export type user_settingsWhereUniqueInput = {
@@ -16175,12 +16175,12 @@ export namespace Prisma {
   }
 
   export type organization_groupCreateInput = {
-    org: organizationCreateNestedOneWithoutOrg_groupInput
     name: string
     description: string
     isActive?: boolean
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutOrg_groupInput
   }
 
   export type organization_groupUncheckedCreateInput = {
@@ -16194,12 +16194,12 @@ export namespace Prisma {
   }
 
   export type organization_groupUpdateInput = {
-    org?: organizationUpdateOneRequiredWithoutOrg_groupNestedInput
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutOrg_groupNestedInput
   }
 
   export type organization_groupUncheckedUpdateInput = {
@@ -16241,7 +16241,6 @@ export namespace Prisma {
   }
 
   export type userCreateInput = {
-    org: organizationCreateNestedOneWithoutUserInput
     name: string
     email: string
     password: string
@@ -16249,11 +16248,12 @@ export namespace Prisma {
     address: string
     description: string
     user_img?: string | null
-    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
-    user_group?: user_groupCreateNestedOneWithoutUserInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUserInput
+    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
+    user_group?: user_groupCreateNestedOneWithoutUserInput
     user_settings?: user_settingsCreateNestedManyWithoutUserInput
   }
 
@@ -16276,7 +16276,6 @@ export namespace Prisma {
   }
 
   export type userUpdateInput = {
-    org?: organizationUpdateOneRequiredWithoutUserNestedInput
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -16284,11 +16283,12 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
-    user_group?: user_groupUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUserNestedInput
+    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
+    user_group?: user_groupUpdateOneWithoutUserNestedInput
     user_settings?: user_settingsUpdateManyWithoutUserNestedInput
   }
 
@@ -16358,12 +16358,12 @@ export namespace Prisma {
   }
 
   export type user_groupCreateInput = {
-    org: organizationCreateNestedOneWithoutUser_groupInput
     group_name: string
-    permission: permissionCreateNestedOneWithoutUser_groupInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUser_groupInput
+    permission: permissionCreateNestedOneWithoutUser_groupInput
     user?: userCreateNestedManyWithoutUser_groupInput
     students?: studentsCreateNestedManyWithoutUser_groupInput
   }
@@ -16381,12 +16381,12 @@ export namespace Prisma {
   }
 
   export type user_groupUpdateInput = {
-    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
     group_name?: StringFieldUpdateOperationsInput | string
-    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
+    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     user?: userUpdateManyWithoutUser_groupNestedInput
     students?: studentsUpdateManyWithoutUser_groupNestedInput
   }
@@ -16495,13 +16495,13 @@ export namespace Prisma {
   }
 
   export type doorsCreateInput = {
-    org: organizationCreateNestedOneWithoutDoorsInput
     name: string
     description: string
     door_no: string
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutDoorsInput
     inout_log?: inout_logCreateNestedManyWithoutDoorInput
     devices_setup?: devices_setupCreateNestedManyWithoutDoorInput
   }
@@ -16520,13 +16520,13 @@ export namespace Prisma {
   }
 
   export type doorsUpdateInput = {
-    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     door_no?: StringFieldUpdateOperationsInput | string
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     inout_log?: inout_logUpdateManyWithoutDoorNestedInput
     devices_setup?: devices_setupUpdateManyWithoutDoorNestedInput
   }
@@ -16648,17 +16648,17 @@ export namespace Prisma {
 
   export type inout_logCreateInput = {
     organization?: string | null
-    org: organizationCreateNestedOneWithoutInout_logInput
     devicePort?: string | null
     device_id?: number | null
     doorNo?: string | null
-    door: doorsCreateNestedOneWithoutInout_logInput
     studentName?: string | null
-    students: studentsCreateNestedOneWithoutInout_logInput
     operation: string
     log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutInout_logInput
+    door: doorsCreateNestedOneWithoutInout_logInput
+    students: studentsCreateNestedOneWithoutInout_logInput
   }
 
   export type inout_logUncheckedCreateInput = {
@@ -16679,17 +16679,17 @@ export namespace Prisma {
 
   export type inout_logUpdateInput = {
     organization?: NullableStringFieldUpdateOperationsInput | string | null
-    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
     devicePort?: NullableStringFieldUpdateOperationsInput | string | null
     device_id?: NullableIntFieldUpdateOperationsInput | number | null
     doorNo?: NullableStringFieldUpdateOperationsInput | string | null
-    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
     studentName?: NullableStringFieldUpdateOperationsInput | string | null
-    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
     operation?: StringFieldUpdateOperationsInput | string
     log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
   }
 
   export type inout_logUncheckedUpdateInput = {
@@ -16889,11 +16889,11 @@ export namespace Prisma {
     productId?: string | null
     serialNumber?: string | null
     vendorId?: string | null
-    device_type?: device_typeCreateNestedOneWithoutDevices_setupInput
-    door?: doorsCreateNestedOneWithoutDevices_setupInput
     isActive?: boolean
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    device_type?: device_typeCreateNestedOneWithoutDevices_setupInput
+    door?: doorsCreateNestedOneWithoutDevices_setupInput
   }
 
   export type devices_setupUncheckedCreateInput = {
@@ -16922,11 +16922,11 @@ export namespace Prisma {
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
     vendorId?: NullableStringFieldUpdateOperationsInput | string | null
-    device_type?: device_typeUpdateOneWithoutDevices_setupNestedInput
-    door?: doorsUpdateOneWithoutDevices_setupNestedInput
     isActive?: BoolFieldUpdateOperationsInput | boolean
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    device_type?: device_typeUpdateOneWithoutDevices_setupNestedInput
+    door?: doorsUpdateOneWithoutDevices_setupNestedInput
   }
 
   export type devices_setupUncheckedUpdateInput = {
@@ -17105,12 +17105,12 @@ export namespace Prisma {
   }
 
   export type user_settingsCreateInput = {
-    user: userCreateNestedOneWithoutUser_settingsInput
     language: string
     theme: string
     city: string
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    user: userCreateNestedOneWithoutUser_settingsInput
   }
 
   export type user_settingsUncheckedCreateInput = {
@@ -17124,12 +17124,12 @@ export namespace Prisma {
   }
 
   export type user_settingsUpdateInput = {
-    user?: userUpdateOneRequiredWithoutUser_settingsNestedInput
     language?: StringFieldUpdateOperationsInput | string
     theme?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: userUpdateOneRequiredWithoutUser_settingsNestedInput
   }
 
   export type user_settingsUncheckedUpdateInput = {
@@ -17485,6 +17485,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter | number | null
   }
 
+  export type BoolNullableFilter = {
+    equals?: boolean | null
+    not?: NestedBoolNullableFilter | boolean | null
+  }
+
   export type Rfid_cardRelationFilter = {
     is?: rfid_cardWhereInput | null
     isNot?: rfid_cardWhereInput | null
@@ -17493,11 +17498,6 @@ export namespace Prisma {
   export type User_groupRelationFilter = {
     is?: user_groupWhereInput | null
     isNot?: user_groupWhereInput | null
-  }
-
-  export type BoolNullableFilter = {
-    equals?: boolean | null
-    not?: NestedBoolNullableFilter | boolean | null
   }
 
   export type User_settingsListRelationFilter = {
@@ -18422,6 +18422,10 @@ export namespace Prisma {
     connect?: Enumerable<user_settingsWhereUniqueInput>
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type organizationUpdateOneRequiredWithoutUserNestedInput = {
     create?: XOR<organizationCreateWithoutUserInput, organizationUncheckedCreateWithoutUserInput>
     connectOrCreate?: organizationCreateOrConnectWithoutUserInput
@@ -18448,10 +18452,6 @@ export namespace Prisma {
     delete?: boolean
     connect?: user_groupWhereUniqueInput
     update?: XOR<user_groupUpdateWithoutUserInput, user_groupUncheckedUpdateWithoutUserInput>
-  }
-
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
   }
 
   export type user_settingsUpdateManyWithoutUserNestedInput = {
@@ -19295,11 +19295,11 @@ export namespace Prisma {
     address: string
     description: string
     user_img?: string | null
-    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
-    user_group?: user_groupCreateNestedOneWithoutUserInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
+    user_group?: user_groupCreateNestedOneWithoutUserInput
     user_settings?: user_settingsCreateNestedManyWithoutUserInput
   }
 
@@ -19332,10 +19332,10 @@ export namespace Prisma {
 
   export type user_groupCreateWithoutOrgInput = {
     group_name: string
-    permission: permissionCreateNestedOneWithoutUser_groupInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    permission: permissionCreateNestedOneWithoutUser_groupInput
     user?: userCreateNestedManyWithoutUser_groupInput
     students?: studentsCreateNestedManyWithoutUser_groupInput
   }
@@ -19399,13 +19399,13 @@ export namespace Prisma {
     devicePort?: string | null
     device_id?: number | null
     doorNo?: string | null
-    door: doorsCreateNestedOneWithoutInout_logInput
     studentName?: string | null
-    students: studentsCreateNestedOneWithoutInout_logInput
     operation: string
     log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    door: doorsCreateNestedOneWithoutInout_logInput
+    students: studentsCreateNestedOneWithoutInout_logInput
   }
 
   export type inout_logUncheckedCreateWithoutOrgInput = {
@@ -19813,12 +19813,12 @@ export namespace Prisma {
   }
 
   export type user_groupCreateWithoutUserInput = {
-    org: organizationCreateNestedOneWithoutUser_groupInput
     group_name: string
-    permission: permissionCreateNestedOneWithoutUser_groupInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUser_groupInput
+    permission: permissionCreateNestedOneWithoutUser_groupInput
     students?: studentsCreateNestedManyWithoutUser_groupInput
   }
 
@@ -19935,12 +19935,12 @@ export namespace Prisma {
   }
 
   export type user_groupUpdateWithoutUserInput = {
-    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
     group_name?: StringFieldUpdateOperationsInput | string
-    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
+    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     students?: studentsUpdateManyWithoutUser_groupNestedInput
   }
 
@@ -20047,7 +20047,6 @@ export namespace Prisma {
   }
 
   export type userCreateWithoutUser_groupInput = {
-    org: organizationCreateNestedOneWithoutUserInput
     name: string
     email: string
     password: string
@@ -20055,10 +20054,11 @@ export namespace Prisma {
     address: string
     description: string
     user_img?: string | null
-    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUserInput
+    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
     user_settings?: user_settingsCreateNestedManyWithoutUserInput
   }
 
@@ -20225,11 +20225,11 @@ export namespace Prisma {
   }
 
   export type user_groupCreateWithoutPermissionInput = {
-    org: organizationCreateNestedOneWithoutUser_groupInput
     group_name: string
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUser_groupInput
     user?: userCreateNestedManyWithoutUser_groupInput
     students?: studentsCreateNestedManyWithoutUser_groupInput
   }
@@ -20313,16 +20313,16 @@ export namespace Prisma {
 
   export type inout_logCreateWithoutDoorInput = {
     organization?: string | null
-    org: organizationCreateNestedOneWithoutInout_logInput
     devicePort?: string | null
     device_id?: number | null
     doorNo?: string | null
     studentName?: string | null
-    students: studentsCreateNestedOneWithoutInout_logInput
     operation: string
     log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutInout_logInput
+    students: studentsCreateNestedOneWithoutInout_logInput
   }
 
   export type inout_logUncheckedCreateWithoutDoorInput = {
@@ -20359,10 +20359,10 @@ export namespace Prisma {
     productId?: string | null
     serialNumber?: string | null
     vendorId?: string | null
-    device_type?: device_typeCreateNestedOneWithoutDevices_setupInput
     isActive?: boolean
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    device_type?: device_typeCreateNestedOneWithoutDevices_setupInput
   }
 
   export type devices_setupUncheckedCreateWithoutDoorInput = {
@@ -20492,10 +20492,10 @@ export namespace Prisma {
     productId?: string | null
     serialNumber?: string | null
     vendorId?: string | null
-    door?: doorsCreateNestedOneWithoutDevices_setupInput
     isActive?: boolean
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    door?: doorsCreateNestedOneWithoutDevices_setupInput
   }
 
   export type devices_setupUncheckedCreateWithoutDevice_typeInput = {
@@ -20581,13 +20581,13 @@ export namespace Prisma {
   }
 
   export type doorsCreateWithoutInout_logInput = {
-    org: organizationCreateNestedOneWithoutDoorsInput
     name: string
     description: string
     door_no: string
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutDoorsInput
     devices_setup?: devices_setupCreateNestedManyWithoutDoorInput
   }
 
@@ -20690,13 +20690,13 @@ export namespace Prisma {
   }
 
   export type doorsUpdateWithoutInout_logInput = {
-    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     door_no?: StringFieldUpdateOperationsInput | string
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     devices_setup?: devices_setupUpdateManyWithoutDoorNestedInput
   }
 
@@ -20749,7 +20749,6 @@ export namespace Prisma {
   }
 
   export type userCreateWithoutRfid_cardInput = {
-    org: organizationCreateNestedOneWithoutUserInput
     name: string
     email: string
     password: string
@@ -20757,10 +20756,11 @@ export namespace Prisma {
     address: string
     description: string
     user_img?: string | null
-    user_group?: user_groupCreateNestedOneWithoutUserInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUserInput
+    user_group?: user_groupCreateNestedOneWithoutUserInput
     user_settings?: user_settingsCreateNestedManyWithoutUserInput
   }
 
@@ -20889,13 +20889,13 @@ export namespace Prisma {
   }
 
   export type doorsCreateWithoutDevices_setupInput = {
-    org: organizationCreateNestedOneWithoutDoorsInput
     name: string
     description: string
     door_no: string
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutDoorsInput
     inout_log?: inout_logCreateNestedManyWithoutDoorInput
   }
 
@@ -20946,13 +20946,13 @@ export namespace Prisma {
   }
 
   export type doorsUpdateWithoutDevices_setupInput = {
-    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     door_no?: StringFieldUpdateOperationsInput | string
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutDoorsNestedInput
     inout_log?: inout_logUpdateManyWithoutDoorNestedInput
   }
 
@@ -21009,12 +21009,12 @@ export namespace Prisma {
   }
 
   export type user_groupCreateWithoutStudentsInput = {
-    org: organizationCreateNestedOneWithoutUser_groupInput
     group_name: string
-    permission: permissionCreateNestedOneWithoutUser_groupInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUser_groupInput
+    permission: permissionCreateNestedOneWithoutUser_groupInput
     user?: userCreateNestedManyWithoutUser_groupInput
   }
 
@@ -21060,16 +21060,16 @@ export namespace Prisma {
 
   export type inout_logCreateWithoutStudentsInput = {
     organization?: string | null
-    org: organizationCreateNestedOneWithoutInout_logInput
     devicePort?: string | null
     device_id?: number | null
     doorNo?: string | null
-    door: doorsCreateNestedOneWithoutInout_logInput
     studentName?: string | null
     operation: string
     log_date?: Date | string
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutInout_logInput
+    door: doorsCreateNestedOneWithoutInout_logInput
   }
 
   export type inout_logUncheckedCreateWithoutStudentsInput = {
@@ -21143,12 +21143,12 @@ export namespace Prisma {
   }
 
   export type user_groupUpdateWithoutStudentsInput = {
-    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
     group_name?: StringFieldUpdateOperationsInput | string
-    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
+    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     user?: userUpdateManyWithoutUser_groupNestedInput
   }
 
@@ -21204,7 +21204,6 @@ export namespace Prisma {
   }
 
   export type userCreateWithoutUser_settingsInput = {
-    org: organizationCreateNestedOneWithoutUserInput
     name: string
     email: string
     password: string
@@ -21212,11 +21211,12 @@ export namespace Prisma {
     address: string
     description: string
     user_img?: string | null
-    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
-    user_group?: user_groupCreateNestedOneWithoutUserInput
     isActive?: boolean | null
     updatedAt?: Date | string | null
     createdAt?: Date | string
+    org: organizationCreateNestedOneWithoutUserInput
+    rfid_card?: rfid_cardCreateNestedOneWithoutUserInput
+    user_group?: user_groupCreateNestedOneWithoutUserInput
   }
 
   export type userUncheckedCreateWithoutUser_settingsInput = {
@@ -21247,7 +21247,6 @@ export namespace Prisma {
   }
 
   export type userUpdateWithoutUser_settingsInput = {
-    org?: organizationUpdateOneRequiredWithoutUserNestedInput
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -21255,11 +21254,12 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
-    user_group?: user_groupUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUserNestedInput
+    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
+    user_group?: user_groupUpdateOneWithoutUserNestedInput
   }
 
   export type userUncheckedUpdateWithoutUser_settingsInput = {
@@ -21387,11 +21387,11 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
-    user_group?: user_groupUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
+    user_group?: user_groupUpdateOneWithoutUserNestedInput
     user_settings?: user_settingsUpdateManyWithoutUserNestedInput
   }
 
@@ -21430,10 +21430,10 @@ export namespace Prisma {
 
   export type user_groupUpdateWithoutOrgInput = {
     group_name?: StringFieldUpdateOperationsInput | string
-    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permission?: permissionUpdateOneRequiredWithoutUser_groupNestedInput
     user?: userUpdateManyWithoutUser_groupNestedInput
     students?: studentsUpdateManyWithoutUser_groupNestedInput
   }
@@ -21496,13 +21496,13 @@ export namespace Prisma {
     devicePort?: NullableStringFieldUpdateOperationsInput | string | null
     device_id?: NullableIntFieldUpdateOperationsInput | number | null
     doorNo?: NullableStringFieldUpdateOperationsInput | string | null
-    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
     studentName?: NullableStringFieldUpdateOperationsInput | string | null
-    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
     operation?: StringFieldUpdateOperationsInput | string
     log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
   }
 
   export type inout_logUncheckedUpdateWithoutOrgInput = {
@@ -21648,7 +21648,6 @@ export namespace Prisma {
   }
 
   export type userUpdateWithoutUser_groupInput = {
-    org?: organizationUpdateOneRequiredWithoutUserNestedInput
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -21656,10 +21655,11 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUserNestedInput
+    rfid_card?: rfid_cardUpdateOneWithoutUserNestedInput
     user_settings?: user_settingsUpdateManyWithoutUserNestedInput
   }
 
@@ -21721,11 +21721,11 @@ export namespace Prisma {
   }
 
   export type user_groupUpdateWithoutPermissionInput = {
-    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
     group_name?: StringFieldUpdateOperationsInput | string
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUser_groupNestedInput
     user?: userUpdateManyWithoutUser_groupNestedInput
     students?: studentsUpdateManyWithoutUser_groupNestedInput
   }
@@ -21774,16 +21774,16 @@ export namespace Prisma {
 
   export type inout_logUpdateWithoutDoorInput = {
     organization?: NullableStringFieldUpdateOperationsInput | string | null
-    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
     devicePort?: NullableStringFieldUpdateOperationsInput | string | null
     device_id?: NullableIntFieldUpdateOperationsInput | number | null
     doorNo?: NullableStringFieldUpdateOperationsInput | string | null
     studentName?: NullableStringFieldUpdateOperationsInput | string | null
-    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
     operation?: StringFieldUpdateOperationsInput | string
     log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    students?: studentsUpdateOneRequiredWithoutInout_logNestedInput
   }
 
   export type inout_logUncheckedUpdateWithoutDoorInput = {
@@ -21810,10 +21810,10 @@ export namespace Prisma {
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
     vendorId?: NullableStringFieldUpdateOperationsInput | string | null
-    device_type?: device_typeUpdateOneWithoutDevices_setupNestedInput
     isActive?: BoolFieldUpdateOperationsInput | boolean
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    device_type?: device_typeUpdateOneWithoutDevices_setupNestedInput
   }
 
   export type devices_setupUncheckedUpdateWithoutDoorInput = {
@@ -21873,10 +21873,10 @@ export namespace Prisma {
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
     vendorId?: NullableStringFieldUpdateOperationsInput | string | null
-    door?: doorsUpdateOneWithoutDevices_setupNestedInput
     isActive?: BoolFieldUpdateOperationsInput | boolean
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    door?: doorsUpdateOneWithoutDevices_setupNestedInput
   }
 
   export type devices_setupUncheckedUpdateWithoutDevice_typeInput = {
@@ -21927,7 +21927,6 @@ export namespace Prisma {
   }
 
   export type userUpdateWithoutRfid_cardInput = {
-    org?: organizationUpdateOneRequiredWithoutUserNestedInput
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
@@ -21935,10 +21934,11 @@ export namespace Prisma {
     address?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     user_img?: NullableStringFieldUpdateOperationsInput | string | null
-    user_group?: user_groupUpdateOneWithoutUserNestedInput
     isActive?: NullableBoolFieldUpdateOperationsInput | boolean | null
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutUserNestedInput
+    user_group?: user_groupUpdateOneWithoutUserNestedInput
     user_settings?: user_settingsUpdateManyWithoutUserNestedInput
   }
 
@@ -22007,16 +22007,16 @@ export namespace Prisma {
 
   export type inout_logUpdateWithoutStudentsInput = {
     organization?: NullableStringFieldUpdateOperationsInput | string | null
-    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
     devicePort?: NullableStringFieldUpdateOperationsInput | string | null
     device_id?: NullableIntFieldUpdateOperationsInput | number | null
     doorNo?: NullableStringFieldUpdateOperationsInput | string | null
-    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
     studentName?: NullableStringFieldUpdateOperationsInput | string | null
     operation?: StringFieldUpdateOperationsInput | string
     log_date?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: organizationUpdateOneRequiredWithoutInout_logNestedInput
+    door?: doorsUpdateOneRequiredWithoutInout_logNestedInput
   }
 
   export type inout_logUncheckedUpdateWithoutStudentsInput = {

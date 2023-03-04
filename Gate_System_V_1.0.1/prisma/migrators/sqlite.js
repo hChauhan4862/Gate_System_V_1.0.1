@@ -1,10 +1,15 @@
 const sqlite3 = require('sqlite3');
+const { open } = require('sqlite');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
 async function createDatabaseIfNotExistsAndMigrate(databasePath) {
-    const db = new sqlite3.Database(databasePath);
+    sqlite3.verbose();
+    const db = await open({
+        filename: databasePath,
+        driver: sqlite3.Database,
+    });
     try {
         // Create the migration table if it does not exist
         await db.run(`CREATE TABLE IF NOT EXISTS _prisma_migrations (
@@ -31,12 +36,8 @@ async function createDatabaseIfNotExistsAndMigrate(databasePath) {
             return { name: dirent.name, sql: migrationSql };
         });
 
-        // disable foreign key checks
-        await db.run('PRAGMA foreign_keys = OFF');
-        await db.run('BEGIN TRANSACTION');
-
         // Check that all migrations are recorded in the database
-        const rows = await db.all('SELECT `migration_name` FROM `_prisma_migrations` ORDER BY `migration_name` ASC');
+        let rows = await db.all('SELECT `migration_name` FROM `_prisma_migrations` ORDER BY `migration_name` ASC');
         console.log(rows);
 
 
@@ -64,11 +65,19 @@ async function createDatabaseIfNotExistsAndMigrate(databasePath) {
 
         console.log(`Applying ${unrecordedMigrations.length} new migration(s)`);
 
+        // disable foreign key checks
+        await db.run('PRAGMA foreign_keys = OFF');
+        await db.run('BEGIN TRANSACTION');
+
         for (const migration of unrecordedMigrations) {
-            console.log(`Applying migration ${ migration.name }`);
+            console.log(`Applying migration ${migration.name}`);
             try {
-                await db.run(migration.sql);
-                A = await db.run(`INSERT INTO '_prisma_migrations'('id', 'checksum', 'finished_at', 'migration_name', 'logs', 'rolled_back_at', 'started_at', 'applied_steps_count') VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, [
+                for (const statement of migration.sql.split(';')) {
+                    if (statement.trim()) {
+                        await db.run(statement);
+                    }
+                }
+                A = await db.run(`INSERT INTO '_prisma_migrations' ('id', 'checksum', 'finished_at', 'migration_name', 'logs', 'rolled_back_at', 'started_at', 'applied_steps_count') VALUES(?, ?, ?, ?, ?, ?, ?, ?)`, [
                     generateRandomId(),
                     generateRandomChecksum(migration.sql),
                     new Date().toISOString(),
@@ -79,37 +88,53 @@ async function createDatabaseIfNotExistsAndMigrate(databasePath) {
                     1,
                 ]);
             } catch (error) {
-                console.error(`Error applying migration ${ migration.name }: ${ error }`);
+                console.error(`Error applying migration ${migration.name}: ${error}`);
                 return;
             }
         }
 
         console.log("All migrations have been applied successfully!");
 
+        console.log("Inserting default data");
+
         const defaultConfig = JSON.parse(fs.readFileSync(path.join(__dirname, "../", "default.json")));
         for (const [index, obj] of Object.entries(defaultConfig)) {
             if (obj.type === "table" && obj.name !== "_prisma_migrations") {
                 const tableName = obj.name;
                 const tableData = obj.data;
+                console.log(`Inserting data into ${tableName}`);
                 for (const rowData of tableData) {
-                    const columns = Object.keys(rowData);
-                    const values = Object.values(rowData);
-                    const columnsString = columns.join(", ");
-                    const placeholders = values.map(() => "?").join(", ");
-                    const updateString = columns.map(column => `${column} = excluded.${column}`).join(", ");
-                    const query = `INSERT INTO ${tableName} (${columnsString}) VALUES (${placeholders}) ON CONFLICT DO UPDATE SET ${updateString}`;
-                    await db.run(query, values);
+                    let columns = Object.keys(rowData);
+                    let values = Object.values(rowData);
+                    let columnsString = columns.join(", ");
+                    let valuesString = values.map(() => "?").join(", ");
+                    // if id in columns then select row with id and update else insert
+                    let dup = await db.get(`SELECT * FROM ${tableName} WHERE ${columns[0]} = ?`, values[0]);
+                    if (dup) {
+                        console.log(`Row with id ${values[0]} already exists in ${tableName}`);
+
+                        query = `UPDATE ${tableName} SET ${columns.map(column => `${column} = ?`).join(", ")} WHERE ${columns[0]} = ?`;
+                        values.push(values[0]);
+                        await db.run(query, values);
+                    }
+                    else {
+
+                        let query = `INSERT INTO ${tableName} (${columnsString}) VALUES (${valuesString})`;
+                        // insert data and update if already exists
+                        let res = await db.run(query, values);
+                    }
                 }
             }
         }
 
         await db.run('COMMIT');
         await db.run('PRAGMA foreign_keys = ON');
+        return true;
     } catch (e) {
         // commit
         console.error(e);
         // Rollback the transaction if there was an error
-        await db.run('COMMIT');
+        await db.run('ROLLBACK');
         return false;
     }
 }
@@ -129,9 +154,10 @@ function generateRandomChecksum(sql) {
     return crypto.createHash('md5').update(sql).digest('hex');
 }
 
-(async () => {
-    let test = await createDatabaseIfNotExistsAndMigrate(path.join(__dirname, '..', 'db.sqlite'));
-    console.log(test);
-})();
+// (async () => {
+//     console.log("Running migrations", path.join(__dirname, '..', 'db.sqlite'));
+//     let test = await createDatabaseIfNotExistsAndMigrate(path.join(__dirname, '..', 'db.sqlite'));
+//     console.log(test);
+// })();
 
 module.exports = createDatabaseIfNotExistsAndMigrate;
