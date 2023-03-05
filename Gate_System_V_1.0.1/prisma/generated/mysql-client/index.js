@@ -28,12 +28,12 @@ const Prisma = {}
 exports.Prisma = Prisma
 
 /**
- * Prisma Client JS version: 4.11.0
- * Query Engine version: 8fde8fef4033376662cad983758335009d522acb
+ * Prisma Client JS version: 4.10.1
+ * Query Engine version: aead147aa326ccb985dcfed5b065b4fdabd44b19
  */
 Prisma.prismaVersion = {
-  client: "4.11.0",
-  engine: "8fde8fef4033376662cad983758335009d522acb"
+  client: "4.10.1",
+  engine: "aead147aa326ccb985dcfed5b065b4fdabd44b19"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -294,7 +294,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\wise Neosco India\\SOFTWARE PROJECT\\Gate_System_V_1.0.1\\Gate_System_V_1.0.1\\prisma\\generated\\mysql-client",
+      "value": "D:\\Test Frontend\\byHari_formated\\WISE PROJECT-HC\\Gate_System_V_1.0.1\\prisma\\generated\\mysql-client",
       "fromEnvVar": null
     },
     "config": {
@@ -305,19 +305,20 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": "..\\..\\..\\.env",
+    "schemaEnvPath": "..\\..\\..\\.env"
   },
   "relativePath": "..\\..",
-  "clientVersion": "4.11.0",
-  "engineVersion": "8fde8fef4033376662cad983758335009d522acb",
+  "clientVersion": "4.10.1",
+  "engineVersion": "aead147aa326ccb985dcfed5b065b4fdabd44b19",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "mysql",
   "dataProxy": false
 }
-config.dirname = dirname
 config.document = dmmf
+config.dirname = dirname
 
 
 
@@ -328,7 +329,6 @@ warnEnvConflicts({
     rootEnvPath: config.relativeEnvPaths.rootEnvPath && path.resolve(dirname, config.relativeEnvPaths.rootEnvPath),
     schemaEnvPath: config.relativeEnvPaths.schemaEnvPath && path.resolve(dirname, config.relativeEnvPaths.schemaEnvPath)
 })
-
 
 const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient

@@ -7,12 +7,13 @@ const bcrypt = require("bcrypt")
 
 // Create a new user 
 const createUser = async(req, res) => {
+    console.log(req.body);
+    console.log(req.files)
 
     const user_img = req.files['user_img'] ? req.files['user_img'].data.toString('base64') : null;
     const { org_id, name, email, password, phone_no, address, description, user_group_id, rfid_card_id } = req.body;
 
-    console.log(req.body);
-    console.log(req.files)
+  
 
 
     try {

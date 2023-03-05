@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 //migration command :: npx prisma generate client
-//migration command :: npx prisma migrate dev --name init
+//migration command :: npx prisma migrate dev --name init     --create-only
 
 // url      = "mysql://gate_system_v_1_0_1:Wise123@141.148.200.98:3306/gate_system_v_1_0_1" || "mysql://root:@localhost:3306/gate_system_v_1.0.0"
 
@@ -246,3 +246,5 @@ model user_settings {
 
   @@id([id])
 }
+
+

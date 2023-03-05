@@ -26,6 +26,32 @@ const editTheme = async (req, res) => {
     }
 };
 
+const editSettings = async (req, res) => {
+    const {  language, city } = req.body;
+    const { id } = req.params;
+    console.log(language, city, id)
+
+    try{
+        const userSettings = await prisma.user_settings.updateMany({
+            where: { user_id: parseInt(id) },
+            data: {
+                language: language,
+                city: city,
+                updatedAt: new Date()
+            },
+        });
+        const message = {
+            message:"Settings updated successfully",
+            userSettings: userSettings
+        }
+        return res.status(httpStatus.OK).send(message);
+    }
+    catch(err){
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message );
+    }
+};
+
 module.exports = {
     editTheme,
+    editSettings
 };
